@@ -8,8 +8,10 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card"
 
-export interface NewsCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+export interface NewsCardProps extends Omit<
+  React.ComponentProps<typeof Card>,
+  "children"
+> {
   image: string
   title: string
   description: string

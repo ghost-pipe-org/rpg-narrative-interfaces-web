@@ -142,7 +142,13 @@ function ThreeDCardInner({
     if (backgroundImage && bgRef.current) {
       bgRef.current.style.opacity = "0"
     }
-  }, [applyIdleCard, backgroundImage, enableGlow, glowOpacity, smoothTransition])
+  }, [
+    applyIdleCard,
+    backgroundImage,
+    enableGlow,
+    glowOpacity,
+    smoothTransition,
+  ])
 
   useEffect(
     () => () => {
@@ -166,7 +172,7 @@ function ThreeDCardInner({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "relative isolate transform-3d overflow-hidden rounded-2xl bg-black",
+          "relative isolate overflow-hidden rounded-2xl bg-black transform-3d",
           className
         )}
       >

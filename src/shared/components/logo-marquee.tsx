@@ -16,8 +16,8 @@ export const MarqueeRow = ({
 }: MarqueeRowProps) => {
   const numItems = logos.length
   const speed = "12s"
-  const itemWidth = "120px"
-  const itemGap = "1px"
+  const itemWidth = "160px"
+  const itemGap = "0px"
 
   const outerStyle = {
     containerType: "inline-size",
@@ -43,7 +43,7 @@ export const MarqueeRow = ({
             style={
               {
                 width: itemWidth,
-                aspectRatio: "1 / 1.2",
+                aspectRatio: "1",
                 marginRight: itemGap,
                 animation: `logo-marquee-move ${speed} linear infinite`,
                 animationDirection: direction,
@@ -65,7 +65,10 @@ export interface LogoMarqueeProps {
   direction?: "normal" | "reverse"
 }
 
-export const LogoMarquee = ({ logos, direction = "normal" }: LogoMarqueeProps) => {
+export const LogoMarquee = ({
+  logos,
+  direction = "normal",
+}: LogoMarqueeProps) => {
   return (
     <div className="flex w-full flex-col items-center overflow-hidden">
       <div className="flex w-full max-w-2xl flex-col">

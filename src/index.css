@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@200..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -7,8 +7,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: 'Orbitron', sans-serif;
-  --font-body: 'Exo 2', sans-serif;
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Exo 2", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -79,7 +79,7 @@
 
   --border: rgba(43, 184, 179, 0.25);
   --input: rgba(43, 184, 179, 0.15);
-  --ring: rgba(107, 92, 255, 0.40);
+  --ring: rgba(107, 92, 255, 0.4);
 
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
@@ -95,7 +95,7 @@
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #ffe4f1;
   --sidebar-accent-foreground: #3a1025;
-  --sidebar-border: rgba(43, 184, 179, 0.20);
+  --sidebar-border: rgba(43, 184, 179, 0.2);
   --sidebar-ring: rgba(107, 92, 255, 0.35);
 }
 
@@ -143,7 +143,7 @@
   --sidebar-accent: #2a2e36;
   --sidebar-accent-foreground: #cfd5df;
   --sidebar-border: rgba(34, 179, 173, 0.18);
-  --sidebar-ring: rgba(122, 108, 255, 0.40);
+  --sidebar-ring: rgba(122, 108, 255, 0.4);
 }
 
 @layer base {
@@ -152,7 +152,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background font-body text-foreground;
 
     background-image: linear-gradient(
       135deg,
@@ -180,14 +180,16 @@
     @apply font-heading;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     @apply font-bold;
     font-family: var(--font-heading);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
-  h3, h4 {
+  h3,
+  h4 {
     @apply font-bold;
     font-family: var(--font-heading);
   }

@@ -1,5 +1,6 @@
 import { CardTitle } from "./ui/card"
 import { cn } from "@/shared/lib/utils"
+
 import { Badge } from "./ui/badge"
 import ThreeDCard from "./ui/threed-card"
 
@@ -35,7 +36,6 @@ const ageRatingStyles: Record<
     bg: "bg-neutral-950/65",
   },
 }
-
 interface RpgSessionCardProps {
   title: string
   image: string
@@ -81,28 +81,31 @@ export const RpgSessionCard = ({
             aria-hidden
           />
 
-          <div className="relative z-10 flex w-full items-end justify-between gap-3 px-4 pb-4 sm:gap-4 sm:px-3 sm:pb-3">
-            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <div className="relative z-10 flex h-full w-full flex-col items-end justify-between gap-3 px-4 pb-4 sm:gap-4 sm:px-3 sm:pb-3">
+            <div className="flex w-full flex-row justify-between pt-2">
               <Badge
                 className="w-fit rounded-sm text-[10px] leading-tight"
-                variant={isOpen ? "success" : "destructive"}
+                variant={isOpen ? "black" : "destructive"}
               >
                 {status}
               </Badge>
-              <CardTitle className="font-body text-base leading-snug text-white sm:text-lg">
-                {title}
-              </CardTitle>
-              <p className="text-xs leading-snug text-white/80">
-                {date}, às {hours}
-              </p>
-            </div>
 
-            <div className="flex shrink-0 flex-col items-end justify-end gap-1">
               <img
                 src={system_icon}
                 alt={system}
-                className="h-6 object-contain object-right sm:h-7"
+                className="h-8 object-contain object-right sm:h-9"
               />
+            </div>
+
+            <div className="flex w-full shrink-0 flex-row items-end justify-between gap-1">
+              <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <CardTitle className="font-body text-base leading-snug text-white sm:text-lg">
+                  {title}
+                </CardTitle>
+                <p className="text-xs leading-snug text-white/80">
+                  {date}, às {hours}
+                </p>
+              </div>
               <span
                 className={cn(
                   "flex min-h-7 min-w-7 translate-z-0 items-center justify-center rounded-md border border-white/70 px-1 text-[10px] leading-none font-bold text-white tabular-nums ring-1 ring-inset",

@@ -1,57 +1,99 @@
+import { Link } from "react-router"
+import { ArrowRightIcon, PlusIcon } from "lucide-react"
+
 import {
   Button,
   FaqCard,
-  LogoMarquee,
   NewsCard,
   RootLayout,
   MemberCard,
+  LogoMarquee,
   RpgSessionCard,
+  type LogoItem,
 } from "@/shared/components"
-import type { LogoItem } from "@/shared/components/logo-marquee"
-import { Link } from "react-router"
 import { BookCover } from "book-cover-3d"
-import bgArt from "@/shared/assets/bg_art.png"
-import bookCover from "@/shared/assets/book.jpg"
-import { menuLanding } from "@/shared/routes/menus"
-import { ArrowRightIcon, PlusIcon } from "lucide-react"
 
-const ReactLogo = () => (
-  <svg viewBox="175.7 78 490.6 436.9" xmlns="http://www.w3.org/2000/svg">
-    <g fill="currentColor">
-      <path d="m666.3 296.5c0-32.5-40.7-63.3-103.1-82.4 14.4-63.6 8-114.2-20.2-130.4-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6 0 8.3.9 11.4 2.6 13.6 7.8 19.5 37.5 14.9 75.7-1.1 9.4-2.9 19.3-5.1 29.4-19.6-4.8-41-8.5-63.5-10.9-13.5-18.5-27.5-35.3-41.6-50 32.6-30.3 63.2-46.9 84-46.9v-22.3c-27.5 0-63.5 19.6-99.9 53.6-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7 0 51.4 16.5 84 46.6-14 14.7-28 31.4-41.3 49.9-22.6 2.4-44 6.1-63.6 11-2.3-10-4-19.7-5.2-29-4.7-38.2 1.1-67.9 14.6-75.8 3-1.8 6.9-2.6 11.5-2.6v-22.3c-8.4 0-16 1.8-22.6 5.6-28.1 16.2-34.4 66.7-19.9 130.1-62.2 19.2-102.7 49.9-102.7 82.3 0 32.5 40.7 63.3 103.1 82.4-14.4 63.6-8 114.2 20.2 130.4 6.5 3.8 14.1 5.6 22.5 5.6 27.5 0 63.5-19.6 99.9-53.6 36.4 33.8 72.4 53.2 99.9 53.2 8.4 0 16-1.8 22.6-5.6 28.1-16.2 34.4-66.7 19.9-130.1 62-19.1 102.5-49.9 102.5-82.3zm-130.2-66.7c-3.7 12.9-8.3 26.2-13.5 39.5-4.1-8-8.4-16-13.1-24-4.6-8-9.5-15.8-14.4-23.4 14.2 2.1 27.9 4.7 41 7.9zm-45.8 106.5c-7.8 13.5-15.8 26.3-24.1 38.2-14.9 1.3-30 2-45.2 2-15.1 0-30.2-.7-45-1.9-8.3-11.9-16.4-24.6-24.2-38-7.6-13.1-14.5-26.4-20.8-39.8 6.2-13.4 13.2-26.8 20.7-39.9 7.8-13.5 15.8-26.3 24.1-38.2 14.9-1.3 30-2 45.2-2 15.1 0 30.2.7 45 1.9 8.3 11.9 16.4 24.6 24.2 38 7.6 13.1 14.5 26.4 20.8 39.8-6.3 13.4-13.2 26.8-20.7 39.9zm32.3-13c5.4 13.4 10 26.8 13.8 39.8-13.1 3.2-26.9 5.9-41.2 8 4.9-7.7 9.8-15.6 14.4-23.7 4.6-8 8.9-16.1 13-24.1zm-101.4 106.7c-9.3-9.6-18.6-20.3-27.8-32 9 .4 18.2.7 27.5.7 9.4 0 18.7-.2 27.8-.7-9 11.7-18.3 22.4-27.5 32zm-74.4-58.9c-14.2-2.1-27.9-4.7-41-7.9 3.7-12.9 8.3-26.2 13.5-39.5 4.1 8 8.4 16 13.1 24s9.5 15.8 14.4 23.4zm73.9-208.1c9.3 9.6 18.6 20.3 27.8 32-9-.4-18.2-.7-27.5-.7-9.4 0-18.7.2-27.8.7 9-11.7 18.3-22.4 27.5-32zm-74 58.9c-4.9 7.7-9.8 15.6-14.4 23.7-4.6 8-8.9 16-13 24-5.4-13.4-10-26.8-13.8-39.8 13.1-3.1 26.9-5.8 41.2-7.9zm-90.5 125.2c-35.4-15.1-58.3-34.9-58.3-50.6s22.9-35.6 58.3-50.6c8.6-3.7 18-7 27.7-10.1 5.7 19.6 13.2 40 22.5 60.9-9.2 20.8-16.6 41.1-22.2 60.6-9.9-3.1-19.3-6.5-28-10.2zm53.8 142.9c-13.6-7.8-19.5-37.5-14.9-75.7 1.1-9.4 2.9-19.3 5.1-29.4 19.6 4.8 41 8.5 63.5 10.9 13.5 18.5 27.5 35.3 41.6 50-32.6 30.3-63.2 46.9-84 46.9-4.5-.1-8.3-1-11.3-2.7zm237.2-76.2c4.7 38.2-1.1 67.9-14.6 75.8-3 1.8-6.9 2.6-11.5 2.6-20.7 0-51.4-16.5-84-46.6 14-14.7 28-31.4 41.3-49.9 22.6-2.4 44-6.1 63.6-11 2.3 10.1 4.1 19.8 5.2 29.1zm38.5-66.7c-8.6 3.7-18 7-27.7 10.1-5.7-19.6-13.2-40-22.5-60.9 9.2-20.8 16.6-41.1 22.2-60.6 9.9 3.1 19.3 6.5 28.1 10.2 35.4 15.1 58.3 34.9 58.3 50.6-.1 15.7-23 35.6-58.4 50.6z" />
-      <circle cx="420.9" cy="296.5" r="45.7" />
-    </g>
-  </svg>
-)
+import { menuLanding } from "@/shared/routes/menus"
+import {
+  bookCover,
+  bgHero,
+  bgArt,
+  logoUEPB,
+  logoConedu,
+} from "@/shared/assets"
 
 const logos: LogoItem[] = [
-  { id: "1", component: <ReactLogo /> },
-  { id: "2", component: <ReactLogo /> },
-  { id: "3", component: <ReactLogo /> },
-  { id: "4", component: <ReactLogo /> },
-  { id: "5", component: <ReactLogo /> },
-  { id: "6", component: <ReactLogo /> },
-  { id: "7", component: <ReactLogo /> },
-  { id: "8", component: <ReactLogo /> },
-  { id: "9", component: <ReactLogo /> },
+  {
+    id: "1",
+    component: (
+      <img src={logoConedu} alt="Logo Conedu" className="h-36 object-contain" />
+    ),
+  },
+  {
+    id: "2",
+    component: (
+      <img src={logoUEPB} alt="Logo UEPB" className="h-48 object-contain" />
+    ),
+  },
+]
+
+const teamMembers = [
+  {
+    id: "1",
+    name: "Anniely Mariah",
+    role: "Desenvolvedora",
+    image: "https://avatars.githubusercontent.com/u/95944772?v=4",
+  },
+  {
+    id: "2",
+    name: "Victor Xavier",
+    role: "Designer",
+    image: "https://avatars.githubusercontent.com/u/104697605?v=4",
+  },
+  {
+    id: "3",
+    name: "Uemerson Lustosa",
+    role: "Designer",
+    image: "https://avatars.githubusercontent.com/u/173008440?v=4",
+  },
+  {
+    id: "3",
+    name: "Gabriel Menezes",
+    role: "Desenvolvedor",
+    image: "https://avatars.githubusercontent.com/u/130420155?v=4",
+  },
 ]
 
 export const Landing = () => {
   return (
     <RootLayout menuItems={menuLanding}>
-      <div className="flex w-full flex-col items-center gap-6 text-sm">
-        {/* HERO */}
-        <section className="relative mt-8 flex min-h-[70vh] w-full flex-col items-center justify-between bg-cover bg-fixed bg-center p-6">
-          <p className="text-center text-xs tracking-widest text-muted-foreground">
+      <div className="flex w-full flex-col items-center gap-0 text-sm">
+        <section className="relative flex min-h-[90vh] w-full flex-col items-center justify-between pt-24">
+          <div
+            className="pointer-events-none absolute inset-0 bg-background bg-cover bg-center opacity-20 bg-blend-exclusion dark:bg-blend-color-dodge"
+            style={{
+              backgroundImage: `url(${bgArt})`,
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgb(0 0 0), rgb(0 0 0 / 0.05))",
+              maskImage:
+                "linear-gradient(to bottom, rgb(0 0 0), rgb(0 0 0 / 0.05))",
+            }}
+            aria-hidden
+          />
+          <p className="relative z-10 mt-16 text-center text-xs tracking-widest text-muted-foreground">
             <span className="text-secondary">UEPB - PATOS</span>
           </p>
-          <span className="flex flex-col gap-2">
-            <h1 className="relative z-10 text-center text-4xl font-bold">
+          <span className="relative z-10 flex flex-col gap-2 px-8">
+            <h1 className="text-center text-4xl font-medium">
               Interfaces Narrativas
             </h1>
-            <p className="text-center">Um projeto ...</p>
+            <p className="text-center">
+              Um projeto de extensão da Universidade Estadual da Paraíba
+            </p>
           </span>
-          <LogoMarquee logos={logos} direction="normal" />
+          <div className="relative z-10 w-full">
+            <LogoMarquee logos={logos} direction="normal" />
+          </div>
         </section>
 
         {/* SESSÕES */}
@@ -71,36 +113,38 @@ export const Landing = () => {
         </section>
 
         {/* PROJETO */}
-        <section className="text-reverted-foreground relative flex w-full flex-col items-center gap-6 overflow-hidden px-6 py-8 sm:px-8 lg:px-12">
+        <section className="text-reverted-foreground relative my-12 flex w-full flex-col items-center gap-6 overflow-hidden bg-gray-400 px-6 py-24 sm:px-8 lg:px-12">
           <div
-            className="absolute inset-0 bg-cover bg-fixed bg-center"
-            style={{ backgroundImage: `url(${bgArt})` }}
+            className="absolute inset-0 bg-cover bg-fixed bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${bgHero})`,
+              mixBlendMode: "multiply",
+            }}
             aria-hidden
           />
           <div
-            className="bg-reverted-background/82 absolute inset-0 backdrop-blur-[1px]"
+            className="bg-reverted-background/80 absolute inset-0 backdrop-blur-[1px]"
             aria-hidden
           />
 
-          <div className="relative z-10 flex w-full flex-col items-center gap-6">
-            <p className="text-center text-xs tracking-widest text-muted-foreground">
-              <span className="text-secondary">KAOS</span> EM NOVA PATOS
+          <div className="relative z-10 flex w-full flex-col items-center gap-3 text-white">
+            <p className="mb-3 text-center text-xs tracking-widest text-white">
+              <span className="text-white">KAOS</span> EM NOVA PATOS · 2224
             </p>
 
             <div className="flex w-full max-w-2xl flex-wrap items-center justify-center gap-6">
-              <div className="max-w-xs space-y-3">
-                <p className="text-xs font-semibold tracking-wider text-secondary uppercase">
-                  Nova Patos · 2224
-                </p>
-                <p className="text-sm leading-relaxed">
-                  A <span className="font-semibold">Valianty</span> explora o{" "}
+              <div className="max-w-xs space-y-3 px-6 text-justify">
+                <p className="text-sm leading-relaxed text-white">
+                  A Valianty explora o{" "}
                   <span className="text-primary">Patônio</span> e controla a
-                  cidade. Surge o{" "}
-                  <span className="text-destructive">Neo Cangaço</span> — a
-                  resistência.
+                  cidade. Surge o Neo Cangaço — a resistência.
                 </p>
-                <p className="text-xs text-muted-foreground italic">
-                  Quer mergulhar nesse cenário?
+                <p>
+                  Será que{" "}
+                  <span className="font-semibold text-destructive">
+                    Luiza Martina
+                  </span>{" "}
+                  é a última esperança, ou será que ela é a causa do caos?
                 </p>
               </div>
               <BookCover
@@ -118,9 +162,12 @@ export const Landing = () => {
               >
                 <img src={bookCover} alt="Book Cover" />
               </BookCover>
+              <p className="mt-3 text-center text-xs font-light text-gray-200 uppercase">
+                Quer mergulhar nesse cenário de RPG?
+              </p>
             </div>
 
-            <Button className="mt-3" asChild variant="secondary">
+            <Button asChild variant="secondary">
               <Link to="/kaos-em-nova-patos">
                 VEJA NOSSO PROJETO
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
@@ -152,16 +199,16 @@ export const Landing = () => {
         <section className="flex w-full flex-col items-center justify-center gap-4 px-6 py-8 sm:px-6 lg:px-12">
           <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
-          <MemberCard
-            image="https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1"
-            name="Usuário Teste"
-            role="Developer"
-          />
-          <MemberCard
-            image="https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1"
-            name="Usuário Teste"
-            role="Designer"
-          />
+          <div className="flex w-full flex-wrap gap-4 flex-col items-center justify-center">
+            {teamMembers.map((member) => (
+              <MemberCard
+                key={member.id}
+                image={member.image}
+                name={member.name}
+                role={member.role}
+              />
+            ))}
+          </div>
         </section>
 
         {/* FAQ */}
@@ -195,6 +242,57 @@ export const Landing = () => {
         {/* SOCIAL */}
         <section className="flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
           <h2 className="text-xl font-bold text-primary">Siga-nos</h2>
+
+          <div className="flex w-full max-w-xl flex-wrap justify-center gap-3">
+            <Button
+              asChild
+              size="icon"
+              className="size-12 bg-muted text-foreground"
+            >
+              <a href="https://www.instagram.com/kaosemnovapatos/">
+                <span className="sr-only">Instagram</span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 448 512"
+                  className="size-8 shrink-0 fill-current"
+                >
+                  <path d="M224.3 141a115 115 0 1 0-.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1-.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1-53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                </svg>
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="icon"
+              className="size-12 bg-muted text-foreground"
+            >
+              <a href="https://www.linkedin.com/company/kaos-em-nova-patos/">
+                <span className="sr-only">LinkedIn</span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 448 512"
+                  className="size-8 shrink-0 fill-current"
+                >
+                  <path d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z" />
+                </svg>
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="icon"
+              className="size-12 bg-muted text-foreground"
+            >
+              <a href="mailto:contato@kaosemnovapatos.com.br">
+                <span className="sr-only">Gmail</span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 512 512"
+                  className="size-8 shrink-0 fill-current"
+                >
+                  <path d="M61.4 64C27.5 64 0 91.5 0 125.4 0 126.3 0 127.1 .1 128L0 128 0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256-.1 0c0-.9 .1-1.7 .1-2.6 0-33.9-27.5-61.4-61.4-61.4L61.4 64zM464 192.3L464 384c0 8.8-7.2 16-16 16L64 400c-8.8 0-16-7.2-16-16l0-191.7 154.8 117.4c31.4 23.9 74.9 23.9 106.4 0L464 192.3zM48 125.4C48 118 54 112 61.4 112l389.2 0c7.4 0 13.4 6 13.4 13.4 0 4.2-2 8.2-5.3 10.7L280.2 271.5c-14.3 10.8-34.1 10.8-48.4 0L53.3 136.1c-3.3-2.5-5.3-6.5-5.3-10.7z" />
+                </svg>
+              </a>
+            </Button>
+          </div>
         </section>
       </div>
     </RootLayout>

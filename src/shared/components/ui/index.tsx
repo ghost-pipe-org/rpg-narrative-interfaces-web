@@ -1,6 +1,14 @@
 // components
 export { Button } from "./button"
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent } from "./card"
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+} from "./card"
 export { ThreeDCard } from "./threed-card"
 export { Badge } from "./badge"
 

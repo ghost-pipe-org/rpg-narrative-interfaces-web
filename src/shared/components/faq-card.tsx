@@ -40,7 +40,9 @@ export const FaqCard = ({
           )}
         />
       </button>
-      <div id={panelId} aria-hidden={!open}
+      <div
+        id={panelId}
+        aria-hidden={!open}
         className={cn(
           "grid transition-[grid-template-rows] duration-200 ease-out",
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
