@@ -1,0 +1,1 @@
+export { menuLanding } from "./menuLanding"
