@@ -249,7 +249,7 @@ export const Landing = () => {
               size="icon"
               className="size-12 bg-muted text-foreground"
             >
-              <a href="https://www.instagram.com/kaosemnovapatos/">
+              <a href="https://www.instagram.com/rpg.uepbpatos/">
                 <span className="sr-only">Instagram</span>
                 <svg
                   aria-hidden
@@ -265,7 +265,7 @@ export const Landing = () => {
               size="icon"
               className="size-12 bg-muted text-foreground"
             >
-              <a href="https://www.linkedin.com/company/kaos-em-nova-patos/">
+              {/* <a href="https://www.linkedin.com/company/uepb-patos/">
                 <span className="sr-only">LinkedIn</span>
                 <svg
                   aria-hidden
@@ -280,8 +280,8 @@ export const Landing = () => {
               asChild
               size="icon"
               className="size-12 bg-muted text-foreground"
-            >
-              <a href="mailto:contato@kaosemnovapatos.com.br">
+            > */}
+              <a href="mailto:rpg.uepbpatos@gmail.com">
                 <span className="sr-only">Gmail</span>
                 <svg
                   aria-hidden
