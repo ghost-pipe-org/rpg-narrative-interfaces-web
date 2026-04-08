@@ -1,11 +1,7 @@
 import { Link } from "react-router"
 import { ArrowRightIcon, PlusIcon } from "lucide-react"
 
-import {
-  bgArt,
-  bgHero,
-  bookCover,
-} from "@/shared/assets"
+import { bgArt, bgHero, bookCover } from "@/shared/assets"
 
 import {
   Button,
@@ -25,7 +21,7 @@ export const Landing = () => {
   return (
     <RootLayout menuItems={menuLanding}>
       <div className="flex w-full flex-col items-center gap-0 text-sm">
-        <section className="relative flex min-h-[90vh] w-full flex-col items-center justify-between pt-24">
+        <section className="relative flex min-h-[80vh] w-full flex-col items-center justify-between">
           <div
             className="pointer-events-none absolute inset-0 bg-background bg-cover bg-center opacity-20 bg-blend-exclusion dark:bg-blend-color-dodge"
             style={{
@@ -54,7 +50,7 @@ export const Landing = () => {
         </section>
 
         {/* SESSÕES */}
-        <section className="mt-10 bg-reverted-background text-reverted-foreground flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
+        <section className="bg-reverted-background text-reverted-foreground mt-10 flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
           <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
           <RpgSessionCard
@@ -156,7 +152,7 @@ export const Landing = () => {
         <section className="flex w-full flex-col items-center justify-center gap-4 px-6 py-8 sm:px-6 lg:px-12">
           <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
-          <div className="flex w-full flex-wrap gap-4 flex-col items-center justify-center">
+          <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4">
             {teamMembers.map((member) => (
               <MemberCard
                 key={member.id}
@@ -166,6 +162,13 @@ export const Landing = () => {
               />
             ))}
           </div>
+
+          <Button asChild className="mt-2">
+            <Link to="/membros">
+              VER TODOS OS MEMBROS
+              <ArrowRightIcon className="size-4" data-icon="inline-end" />
+            </Link>
+          </Button>
         </section>
 
         {/* FAQ */}

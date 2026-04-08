@@ -28,7 +28,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
 
           <span className="flex flex-row items-center justify-end">
             <ToggleTheme />
-            <ProfileButton />
+            {/* <ProfileButton /> */}
           </span>
         </div>
         {menuItems.length > 0 && (
@@ -44,7 +44,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
         )}
       </header>
       <main
-        className={`flex flex-col "pt-14"`}
+        className={`flex flex-col pt-22`}
       >
         <div className="relative z-10">{children}</div>
       </main>

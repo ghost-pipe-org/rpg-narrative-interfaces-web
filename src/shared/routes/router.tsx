@@ -1,10 +1,14 @@
 import { createBrowserRouter } from "react-router"
-import { Landing, NotFound } from "@/shared/pages"
+import { Landing, Members,  NotFound } from "@/shared/pages"
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "/membros",
+    element: <Members />,
   },
   {
     path: "/kaos-em-nova-patos",

@@ -1,4 +1,5 @@
 export { default as bookCover } from "./book.jpg"
+export { default as defaultUser } from "./default_icon.jpg"
 
 export { default as bgArt } from "./backgrounds/bg_art.png"
 export { default as bgHero } from "./backgrounds/bg_street.png"
