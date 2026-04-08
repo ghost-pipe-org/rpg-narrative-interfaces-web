@@ -6,15 +6,16 @@ export interface TeamMember {
 
 export const orientationMembers: TeamMember[] = [
   {
-    name: "Vinícius Augusto",
+    name: "Vinícius Augustos",
     role: "Orientador",
+    image: "https://avatars.githubusercontent.com/u/130420155?v=4",
   },
   {
-    name: "Suéllen",
+    name: "Suéllen Rodrigues",
     role: "Orientadora",
   },
   {
-    name: "Regina",
+    name: "Maria Regina",
     role: "Orientadora",
   },
 ]
@@ -36,7 +37,7 @@ export const developersMembers: TeamMember[] = [
     image: "https://avatars.githubusercontent.com/u/65502666?v=4",
   },
   {
-    name: "Nilton Junior",
+    name: "Nilton Pereira",
     role: "Desenvolvedor frontend",
   },
   {
@@ -90,12 +91,13 @@ export const rpgMembers: TeamMember[] = [
     role: "Mestre de Jogo",
   },
   { 
-    name: "Giovanni",
+    name: "Giovanni Miguel",
     role: "Mestre de Jogo",
   },
   {	
-    name: "Galvão",
+    name: "Galvão Neto",
     role: "Mestre de Jogo",
+    image: "https://avatars.githubusercontent.com/u/119622866?v=4",
   }
 ]
 

@@ -44,7 +44,7 @@ const linkedEvents: LogoItem[] = [
     ),
   },
   {
-    id: "",
+    id: "3",
     component: (
       <>
         <img
