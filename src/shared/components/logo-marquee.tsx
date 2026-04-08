@@ -14,45 +14,29 @@ export const MarqueeRow = ({
   logos,
   direction = "normal",
 }: MarqueeRowProps) => {
-  const numItems = logos.length
   const speed = "12s"
-  const itemWidth = "160px"
-  const itemGap = "0px"
 
   const outerStyle = {
-    containerType: "inline-size",
-    "--item-gap": itemGap,
     maskImage:
       "linear-gradient(to right, transparent, black 2rem, black calc(100% - 2rem), transparent)",
   } as CSSProperties
 
   const trackStyle = {
-    "--track-width": `calc(${itemWidth} * ${numItems})`,
-    "--track-gap": `calc(${itemGap} * ${numItems})`,
+    animation: `logo-marquee-move ${speed} linear infinite`,
+    animationDirection: direction,
   } as CSSProperties
 
   const doubled = [...logos, ...logos]
 
   return (
     <div className="max-w-full overflow-hidden" style={outerStyle}>
-      <div className="flex w-max" style={trackStyle}>
+      <div className="flex w-max items-center gap-8" style={trackStyle}>
         {doubled.map((logo, index) => (
           <div
             key={`${logo.id}-${index}`}
-            className="flex shrink-0 items-center justify-center rounded-2xl text-foreground"
-            style={
-              {
-                width: itemWidth,
-                aspectRatio: "1",
-                marginRight: itemGap,
-                animation: `logo-marquee-move ${speed} linear infinite`,
-                animationDirection: direction,
-              } as CSSProperties
-            }
+            className="flex shrink-0 items-center justify-center text-foreground [&_img]:max-h-none [&_img]:h-auto [&_img]:w-auto [&_img]:max-w-[min(40vw,12rem)] [&_img]:object-contain [&_svg]:h-auto [&_svg]:max-h-24 [&_svg]:w-auto [&_svg]:max-w-[min(40vw,12rem)]"
           >
-            <div className="h-auto w-3/5 [&_svg]:h-auto [&_svg]:w-full">
-              {logo.component}
-            </div>
+            {logo.component}
           </div>
         ))}
       </div>
@@ -71,7 +55,7 @@ export const LogoMarquee = ({
 }: LogoMarqueeProps) => {
   return (
     <div className="flex w-full flex-col items-center overflow-hidden">
-      <div className="flex w-full max-w-2xl flex-col">
+      <div className="flex w-full max-w-xl flex-col">
         <MarqueeRow logos={logos} direction={direction} />
       </div>
     </div>

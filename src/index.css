@@ -197,6 +197,6 @@
 
 @keyframes logo-marquee-move {
   to {
-    transform: translateX(calc(-100cqw - var(--item-gap, 25px)));
+    transform: translateX(-50%);
   }
 }

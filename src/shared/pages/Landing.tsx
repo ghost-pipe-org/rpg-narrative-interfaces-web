@@ -2,6 +2,12 @@ import { Link } from "react-router"
 import { ArrowRightIcon, PlusIcon } from "lucide-react"
 
 import {
+  bgArt,
+  bgHero,
+  bookCover,
+} from "@/shared/assets"
+
+import {
   Button,
   FaqCard,
   NewsCard,
@@ -9,60 +15,11 @@ import {
   MemberCard,
   LogoMarquee,
   RpgSessionCard,
-  type LogoItem,
 } from "@/shared/components"
 import { BookCover } from "book-cover-3d"
 
 import { menuLanding } from "@/shared/routes/menus"
-import {
-  bookCover,
-  bgHero,
-  bgArt,
-  logoUEPB,
-  logoConedu,
-} from "@/shared/assets"
-
-const logos: LogoItem[] = [
-  {
-    id: "1",
-    component: (
-      <img src={logoConedu} alt="Logo Conedu" className="h-36 object-contain" />
-    ),
-  },
-  {
-    id: "2",
-    component: (
-      <img src={logoUEPB} alt="Logo UEPB" className="h-48 object-contain" />
-    ),
-  },
-]
-
-const teamMembers = [
-  {
-    id: "1",
-    name: "Anniely Mariah",
-    role: "Desenvolvedora",
-    image: "https://avatars.githubusercontent.com/u/95944772?v=4",
-  },
-  {
-    id: "2",
-    name: "Victor Xavier",
-    role: "Designer",
-    image: "https://avatars.githubusercontent.com/u/104697605?v=4",
-  },
-  {
-    id: "3",
-    name: "Uemerson Lustosa",
-    role: "Designer",
-    image: "https://avatars.githubusercontent.com/u/173008440?v=4",
-  },
-  {
-    id: "3",
-    name: "Gabriel Menezes",
-    role: "Desenvolvedor",
-    image: "https://avatars.githubusercontent.com/u/130420155?v=4",
-  },
-]
+import { teamMembers, linkedEvents } from "@/shared/utils"
 
 export const Landing = () => {
   return (
@@ -92,7 +49,7 @@ export const Landing = () => {
             </p>
           </span>
           <div className="relative z-10 w-full">
-            <LogoMarquee logos={logos} direction="normal" />
+            <LogoMarquee logos={linkedEvents} direction="normal" />
           </div>
         </section>
 
@@ -265,22 +222,6 @@ export const Landing = () => {
               size="icon"
               className="size-12 bg-muted text-foreground"
             >
-              {/* <a href="https://www.linkedin.com/company/uepb-patos/">
-                <span className="sr-only">LinkedIn</span>
-                <svg
-                  aria-hidden
-                  viewBox="0 0 448 512"
-                  className="size-8 shrink-0 fill-current"
-                >
-                  <path d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z" />
-                </svg>
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="icon"
-              className="size-12 bg-muted text-foreground"
-            > */}
               <a href="mailto:rpg.uepbpatos@gmail.com">
                 <span className="sr-only">Gmail</span>
                 <svg
