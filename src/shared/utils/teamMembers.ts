@@ -21,6 +21,11 @@ export const orientationMembers: TeamMember[] = [
 
 export const developersMembers: TeamMember[] = [
   {
+    name: "Anniely Mariah",
+    role: "Desenvolvedora frontend",
+    image: "https://avatars.githubusercontent.com/u/95944772?v=4",
+  },
+  {
     name: "Gabriel Menezes",
     role: "Desenvolvedor backend",
     image: "https://avatars.githubusercontent.com/u/130420155?v=4",
