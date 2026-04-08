@@ -5,6 +5,7 @@ import {
   logoUepb,
   logoUepbDark,
   logoGhostPipe,
+  logoGhostPipeDark,
 } from "@/shared/assets"
 
 const linkedEvents: LogoItem[] = [
@@ -15,12 +16,12 @@ const linkedEvents: LogoItem[] = [
         <img
           src={logoConedu}
           alt="Logo Conedu"
-          className="h-36 object-contain dark:hidden"
+          className="object-contain dark:hidden"
         />
         <img
           src={logoConeduDark}
           alt="Logo Conedu"
-          className="hidden h-8 object-contain dark:block"
+          className="hidden object-contain dark:block"
         />
       </>
     ),
@@ -28,11 +29,18 @@ const linkedEvents: LogoItem[] = [
   {
     id: "2",
     component: (
-      <img
-        src={logoGhostPipe}
-        alt="Logo GhostPipe"
-        className="p-10 max-w-24 object-contain"
-      />
+      <>
+        <img
+          src={logoGhostPipe}
+          alt="Logo GhostPipe"
+          className="object-contain dark:hidden"
+        />
+        <img
+          src={logoGhostPipeDark}
+          alt="Logo GhostPipe"
+          className="hidden object-contain dark:block"
+        />
+      </>
     ),
   },
   {
@@ -42,17 +50,16 @@ const linkedEvents: LogoItem[] = [
         <img
           src={logoUepb}
           alt="Logo UEPB"
-          className="h-64 object-contain dark:hidden"
+          className="object-contain dark:hidden"
         />
         <img
           src={logoUepbDark}
           alt="Logo UEPB"
-          className="hidden h-64 object-contain dark:block"
+          className="hidden object-contain dark:block"
         />
       </>
     ),
   },
-
 ]
 
 export default linkedEvents

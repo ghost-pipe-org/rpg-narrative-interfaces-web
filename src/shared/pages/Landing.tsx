@@ -54,7 +54,7 @@ export const Landing = () => {
         </section>
 
         {/* SESSÕES */}
-        <section className="bg-reverted-background text-reverted-foreground flex w-full flex-col items-center justify-center gap-6 px-6 py-8 pt-0 sm:px-8 lg:px-12">
+        <section className="mt-10 bg-reverted-background text-reverted-foreground flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
           <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
           <RpgSessionCard
