@@ -152,10 +152,10 @@ export const Landing = () => {
         <section className="flex w-full flex-col items-center justify-center gap-4 px-6 py-8 sm:px-6 lg:px-12">
           <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
-          <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4">
-            {teamMembers.map((member) => (
+          <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4 h-full">
+            {teamMembers.slice(0, 3).map((member) => (
               <MemberCard
-                key={member.id}
+                key={member.name}
                 image={member.image}
                 name={member.name}
                 role={member.role}
