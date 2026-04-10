@@ -5,7 +5,7 @@ import { orientationMembers, developersMembers, designersMembers, rpgMembers } f
 export const Members = () => {
   return (
     <RootLayout menuItems={menuLanding}>
-      <main className="flex min-h-[70vh] w-full items-center justify-center px-6 py-10 flex-col gap-y-20">
+      <div className="pt-12 space-y-12">
         <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 text-center">
           <h1 className="text-2xl font-bold md:text-3xl">Membros</h1>
           <p className="text-sm text-muted-foreground">
@@ -48,7 +48,7 @@ export const Members = () => {
             ))}
           </div>
         </section>
-      </main>
+        </div>
     </RootLayout>
   )
 }

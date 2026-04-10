@@ -20,8 +20,8 @@ import { teamMembers, linkedEvents } from "@/shared/utils"
 export const Landing = () => {
   return (
     <RootLayout menuItems={menuLanding}>
-      <div className="flex w-full flex-col items-center gap-0 text-sm">
-        <section className="relative flex min-h-[80vh] w-full flex-col items-center justify-between">
+      <div className="w-full min-w-0 max-w-full overflow-x-clip">
+        <section className="relative flex min-h-[80vh] w-full min-w-0 flex-col">
           <div
             className="pointer-events-none absolute inset-0 bg-background bg-cover bg-center opacity-20 bg-blend-exclusion dark:bg-blend-color-dodge"
             style={{
@@ -33,24 +33,27 @@ export const Landing = () => {
             }}
             aria-hidden
           />
-          <p className="relative z-10 mt-16 text-center text-xs tracking-widest text-muted-foreground">
-            <span className="text-secondary">UEPB - PATOS</span>
-          </p>
-          <span className="relative z-10 flex flex-col gap-2 px-8">
-            <h1 className="text-center text-4xl font-medium">
-              Interfaces Narrativas
-            </h1>
-            <p className="text-center">
-              Um projeto de extensão da Universidade Estadual da Paraíba
+          <div className="relative z-10 mx-auto flex min-h-[80vh] w-full max-w-6xl flex-col items-center justify-between px-3 pt-16 pb-8">
+            <p className="text-center text-xs tracking-widest text-muted-foreground">
+              <span className="text-secondary">UEPB - PATOS</span>
             </p>
-          </span>
-          <div className="relative z-10 w-full">
-            <LogoMarquee logos={linkedEvents} direction="normal" />
+            <span className="flex flex-col gap-2">
+              <h1 className="text-center text-4xl font-medium">
+                Interfaces Narrativas
+              </h1>
+              <p className="text-center">
+                Um projeto de extensão da Universidade Estadual da Paraíba
+              </p>
+            </span>
+            <div className="w-full min-w-0">
+              <LogoMarquee logos={linkedEvents} direction="normal" />
+            </div>
           </div>
         </section>
 
         {/* SESSÕES */}
-        <section className="bg-reverted-background text-reverted-foreground mt-10 flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
+        <section className="bg-reverted-background text-reverted-foreground mt-10 flex w-full flex-col items-center py-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
           <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
           <RpgSessionCard
@@ -63,10 +66,11 @@ export const Landing = () => {
             hours="10:00"
             age_rating="18"
           />
+          </div>
         </section>
 
         {/* PROJETO */}
-        <section className="text-reverted-foreground relative my-12 flex w-full flex-col items-center gap-6 overflow-hidden bg-gray-400 px-6 py-24 sm:px-8 lg:px-12">
+        <section className="text-reverted-foreground relative my-12 flex w-full flex-col items-center gap-6 overflow-x-clip bg-gray-400 py-24">
           <div
             className="absolute inset-0 bg-cover bg-fixed bg-center bg-no-repeat"
             style={{
@@ -80,7 +84,7 @@ export const Landing = () => {
             aria-hidden
           />
 
-          <div className="relative z-10 flex w-full flex-col items-center gap-3 text-white">
+          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-3 text-white">
             <p className="mb-3 text-center text-xs tracking-widest text-white">
               <span className="text-white">KAOS</span> EM NOVA PATOS · 2224
             </p>
@@ -121,7 +125,7 @@ export const Landing = () => {
             </div>
 
             <Button asChild variant="secondary">
-              <Link to="/kaos-em-nova-patos">
+              <Link to="/kaos">
                 VEJA NOSSO PROJETO
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -130,7 +134,8 @@ export const Landing = () => {
         </section>
 
         {/* NOTÍCIAS */}
-        <section className="flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
+        <section className="flex w-full flex-col items-center justify-center py-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
           <h2 className="text-center text-xl font-medium text-primary">
             Principais Notícias
           </h2>
@@ -142,17 +147,19 @@ export const Landing = () => {
           />
 
           <Button asChild>
-            <Link to="/noticias">
+            <Link to="/blog">
               <PlusIcon className="size-4" data-icon="inline-end" />
               Notícias
             </Link>
           </Button>
+          </div>
         </section>
 
-        <section className="flex w-full flex-col items-center justify-center gap-4 px-6 py-8 sm:px-6 lg:px-12">
+        <section className="flex w-full flex-col items-center justify-center py-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-4 px-3">
           <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
-          <div className="flex w-full flex-col flex-wrap items-center justify-center gap-4 h-full">
+          <div className="flex h-full w-full flex-col flex-wrap items-center justify-center gap-4">
             {teamMembers.slice(0, 3).map((member) => (
               <MemberCard
                 key={member.name}
@@ -164,15 +171,17 @@ export const Landing = () => {
           </div>
 
           <Button asChild className="mt-2">
-            <Link to="/membros">
+            <Link to="/members">
               VER TODOS OS MEMBROS
               <ArrowRightIcon className="size-4" data-icon="inline-end" />
             </Link>
           </Button>
+          </div>
         </section>
 
         {/* FAQ */}
-        <section className="flex w-full flex-col items-center justify-center gap-4 px-6 py-8 sm:px-8 lg:px-12">
+        <section className="flex w-full flex-col items-center justify-center py-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-4 px-3">
           <h2 className="text-xl font-bold text-primary">FAQs</h2>
 
           <div className="flex w-full max-w-xl flex-col gap-3">
@@ -197,10 +206,12 @@ export const Landing = () => {
               answer="Sim, você pode participar de mais de uma mesa ao mesmo tempo."
             />
           </div>
+          </div>
         </section>
 
         {/* SOCIAL */}
-        <section className="flex w-full flex-col items-center justify-center gap-6 px-6 py-8 sm:px-8 lg:px-12">
+        <section className="flex w-full flex-col items-center justify-center py-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
           <h2 className="text-xl font-bold text-primary">Siga-nos</h2>
 
           <div className="flex w-full max-w-xl flex-wrap justify-center gap-3">
@@ -236,6 +247,7 @@ export const Landing = () => {
                 </svg>
               </a>
             </Button>
+          </div>
           </div>
         </section>
       </div>

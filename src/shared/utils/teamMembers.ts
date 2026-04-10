@@ -8,7 +8,6 @@ export const orientationMembers: TeamMember[] = [
   {
     name: "Vinícius Augustos",
     role: "Orientador",
-    image: "https://avatars.githubusercontent.com/u/130420155?v=4",
   },
   {
     name: "Suéllen Rodrigues",

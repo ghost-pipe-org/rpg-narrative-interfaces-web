@@ -5,7 +5,7 @@ import { menuLanding } from "@/shared/routes/menus"
 export const NotFound = () => {
   return (
     <RootLayout menuItems={menuLanding}>
-      <main className="flex min-h-screen w-full items-center justify-center p-6">
+      <div className="flex min-h-[70vh] w-full items-center justify-center p-6">
         <section className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center">
           <span className="text-sm tracking-[0.2em] text-muted-foreground">
             ERRO 404
@@ -24,7 +24,7 @@ export const NotFound = () => {
             Ir para inicio
           </Link>
         </section>
-      </main>
+      </div>
     </RootLayout>
   )
 }

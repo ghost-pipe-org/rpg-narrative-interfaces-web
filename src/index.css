@@ -178,6 +178,12 @@
 
   html {
     @apply font-heading;
+    scrollbar-gutter: stable;
+  }
+
+  #root {
+    width: 100%;
+    min-width: 0;
   }
 
   h1,
