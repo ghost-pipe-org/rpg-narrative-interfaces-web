@@ -12,6 +12,7 @@ interface LoginFormData {
 
 export const Login = () => {
   const { control, handleSubmit } = useForm<LoginFormData>({
+    mode: "onBlur",
     defaultValues: {
       email: "",
       password: "",
@@ -49,20 +50,13 @@ export const Login = () => {
                 },
               }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="email"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Email"
+                  type="email"
+                  autoComplete="email"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Controller
@@ -70,20 +64,13 @@ export const Login = () => {
               name="password"
               rules={{ required: "Informe a senha" }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Senha"
-                    type="password"
-                    autoComplete="current-password"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Senha"
+                  type="password"
+                  autoComplete="current-password"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Button type="submit" size="lg">

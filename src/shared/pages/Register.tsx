@@ -19,8 +19,9 @@ interface RegisterFormData {
 }
 
 export const Register = () => {
-  const { control, handleSubmit, setValue, clearErrors, } =
+  const { control, handleSubmit, setValue, clearErrors } =
     useForm<RegisterFormData>({
+      mode: "onBlur",
       defaultValues: {
         name: "",
         email: "",
@@ -69,18 +70,11 @@ export const Register = () => {
                 minLength: { value: 2, message: "Nome muito curto" },
               }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Nome"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Nome"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Controller
@@ -94,20 +88,13 @@ export const Register = () => {
                 },
               }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="email"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Email"
+                  type="email"
+                  autoComplete="email"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Controller
@@ -146,20 +133,13 @@ export const Register = () => {
                     "Matrícula obrigatória para mestres",
                 }}
                 render={({ field, fieldState }) => (
-                  <div className="text-left">
-                    <Input
-                      {...field}
-                      placeholder="Matrícula"
-                      type="text"
-                      autoComplete="off"
-                      aria-invalid={!!fieldState.error}
-                    />
-                    {fieldState.error?.message ? (
-                      <p className="mt-1 text-xs text-destructive">
-                        {fieldState.error.message}
-                      </p>
-                    ) : null}
-                  </div>
+                  <Input
+                    {...field}
+                    placeholder="Matrícula"
+                    type="text"
+                    autoComplete="off"
+                    errorMessage={fieldState.error?.message}
+                  />
                 )}
               />
             ) : null}
@@ -186,20 +166,13 @@ export const Register = () => {
                 },
               }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Senha"
-                    type="password"
-                    autoComplete="new-password"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Senha"
+                  type="password"
+                  autoComplete="new-password"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Controller
@@ -211,20 +184,13 @@ export const Register = () => {
                   value === values.password || "As senhas não coincidem",
               }}
               render={({ field, fieldState }) => (
-                <div className="text-left">
-                  <Input
-                    {...field}
-                    placeholder="Confirmar Senha"
-                    type="password"
-                    autoComplete="new-password"
-                    aria-invalid={!!fieldState.error}
-                  />
-                  {fieldState.error?.message ? (
-                    <p className="mt-1 text-xs text-destructive">
-                      {fieldState.error.message}
-                    </p>
-                  ) : null}
-                </div>
+                <Input
+                  {...field}
+                  placeholder="Confirmar Senha"
+                  type="password"
+                  autoComplete="new-password"
+                  errorMessage={fieldState.error?.message}
+                />
               )}
             />
             <Button type="submit" size="lg">

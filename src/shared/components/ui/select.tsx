@@ -29,31 +29,67 @@ function SelectValue({
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default"
-}) {
+const SelectTrigger = React.forwardRef<
+  React.ComponentRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
+    size?: "sm" | "default"
+    errorMessage?: string
+    containerClassName?: string
+  }
+>(function SelectTrigger(
+  {
+    className,
+    size = "default",
+    children,
+    id,
+    errorMessage,
+    containerClassName,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    ...props
+  },
+  ref
+) {
+  const uid = React.useId()
+  const triggerId = id ?? uid
+  const errorId = `${triggerId}-err`
+  const showError = Boolean(errorMessage)
+  const invalid = showError || ariaInvalid === true
+
+  const describedBy =
+    [ariaDescribedBy, showError ? errorId : undefined].filter(Boolean).join(" ") ||
+    undefined
+
   return (
-    <SelectPrimitive.Trigger
-      data-slot="select-trigger"
-      data-size={size}
-      className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
+    <div className={cn("w-full min-w-0 text-start", containerClassName)}>
+      <SelectPrimitive.Trigger
+        ref={ref}
+        id={triggerId}
+        data-slot="select-trigger"
+        data-size={size}
+        className={cn(
+          "flex w-fit min-w-0 max-w-full items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          className
+        )}
+        {...props}
+        aria-invalid={invalid}
+        aria-describedby={describedBy}
+      >
+        {children}
+        <SelectPrimitive.Icon asChild>
+          <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+      {showError ? (
+        <p id={errorId} className="mt-1 text-xs text-destructive" role="alert">
+          {errorMessage}
+        </p>
+      ) : null}
+    </div>
   )
-}
+})
+
+SelectTrigger.displayName = "SelectTrigger"
 
 function SelectContent({
   className,
