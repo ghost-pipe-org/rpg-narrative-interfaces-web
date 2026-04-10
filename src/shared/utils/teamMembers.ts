@@ -6,16 +6,20 @@ export interface TeamMember {
 
 export const orientationMembers: TeamMember[] = [
   {
-    name: "Vinícius Augustos",
-    role: "Orientador",
+    name: "Jannayna Filgueira",
+    role: "Orientadora",
+  },
+  {
+    name: "Maria Regina",
+    role: "Orientadora",
   },
   {
     name: "Suéllen Rodrigues",
     role: "Orientadora",
   },
   {
-    name: "Maria Regina",
-    role: "Orientadora",
+    name: "Vinícius Augustos",
+    role: "Orientador",
   },
 ]
 
@@ -49,9 +53,6 @@ export const developersMembers: TeamMember[] = [
     role: "Desenvolvedor frontend",
     image: "https://avatars.githubusercontent.com/u/130421705?v=4",
   },
-]
-
-export const designersMembers: TeamMember[] = [
   {
     name: "Uemerson Lustosa",
     role: "Product Designer",
@@ -89,38 +90,19 @@ export const rpgMembers: TeamMember[] = [
     name: "Pedro Sutra",
     role: "Mestre de Jogo",
   },
-  { 
+  {
     name: "Giovanni Miguel",
     role: "Mestre de Jogo",
   },
-  {	
+  {
     name: "Galvão Neto",
     role: "Mestre de Jogo",
     image: "https://avatars.githubusercontent.com/u/119622866?v=4",
-  }
-]
-
-export const comunicationMembers: TeamMember[] = [
-  {
-    name: "Adriano",
-    role: "X",
-  },
-  {
-    name: "Kayke",
-    role: "X",
-  },
-  {
-    name: "Rafael",
-    role: "X",
-  },
-  {
-    name: "Yuri",
-    role: "X",
-  },
-  {
-    name: "Isaac  ",
-    role: "X",
   },
 ]
 
-export const teamMembers: TeamMember[] = [...orientationMembers, ...developersMembers, ...designersMembers, ...rpgMembers, ...comunicationMembers]
+export const teamMembers: TeamMember[] = [
+  ...orientationMembers,
+  ...developersMembers,
+  ...rpgMembers,
+]

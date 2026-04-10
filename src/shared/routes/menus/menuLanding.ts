@@ -5,11 +5,11 @@ export const menuLanding = [
   },
   {
     label: "Sobre",
-    to: "/sobre",
+    to: "/about",
   },
   {
     label: "Membros",
-    to: "/membros",
+    to: "/members",
   },
   {
     label: "Blog",

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router"
-import { Landing, Login, Members, NotFound, Register } from "@/shared/pages"
+import { Landing, Login, Members, NotFound, Register, About } from "@/shared/pages"
 
 export const router = createBrowserRouter([
   {
@@ -9,6 +9,10 @@ export const router = createBrowserRouter([
   {
     path: "/members",
     element: <Members />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
   {
     path: "/kaos",
