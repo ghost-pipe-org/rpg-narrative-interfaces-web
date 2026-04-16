@@ -70,7 +70,7 @@ export const RpgSessionCard = ({
         enableGlow
         enableParallax
       >
-        <div className="relative flex h-full min-h-0 min-w-0 flex-col justify-end overflow-hidden rounded-2xl">
+        <div className="relative flex h-full min-h-0 min-w-0 flex-col justify-end overflow-hidden rounded-2xl pb-2">
           <div
             className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${image})` }}
@@ -81,11 +81,11 @@ export const RpgSessionCard = ({
             aria-hidden
           />
 
-          <div className="relative z-10 flex h-full w-full flex-col items-end justify-between gap-3 px-4 pb-4 sm:gap-4 sm:px-3 sm:pb-3">
-            <div className="flex w-full flex-row justify-between pt-2">
+          <div className="relative z-10 flex h-full w-full flex-col items-end justify-end gap-1 px-4 pb-1 sm:gap-2 sm:px-3 sm:pb-3">
+            <div className="flex w-full flex-row justify-between pt-2 items-end">
               <Badge
                 className="w-fit rounded-sm text-[10px] leading-tight"
-                variant={isOpen ? "black" : "destructive"}
+                variant={isOpen ? "success" : "destructive"}
               >
                 {status}
               </Badge>
@@ -97,7 +97,7 @@ export const RpgSessionCard = ({
               />
             </div>
 
-            <div className="flex w-full shrink-0 flex-row items-end justify-between gap-1">
+            <div className="flex w-full shrink-0 flex-row items-center justify-between gap-1">
               <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <CardTitle className="font-body text-base leading-snug text-white sm:text-lg">
                   {title}
