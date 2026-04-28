@@ -88,7 +88,7 @@ export const Members = () => {
 
             <div className="flex w-full flex-wrap justify-center gap-8 md:gap-12">
               {section.members.map((member) => (
-                <MemberCard key={member.name} {...member} />
+                <MemberCard key={member.name} {...member} orientation="column" />
               ))}
             </div>
           </section>

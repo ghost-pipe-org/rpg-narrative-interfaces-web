@@ -17,6 +17,121 @@ import { BookCover } from "book-cover-3d"
 import { menuLanding } from "@/shared/routes/menus"
 import { teamMembers, linkedEvents } from "@/shared/utils"
 
+const SESSION_VISIBILITY_CLASS_BY_INDEX = [
+  "block",
+  "block",
+  "block sm:hidden lg:block",
+  "hidden lg:block",
+] as const
+
+const landingSessions = [
+  {
+    title: "Sessão 1",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    system_icon:
+      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
+    system: "Ordem Paranormal",
+    status: "Disponível",
+    date: "2021-01-01",
+    hours: "10:00",
+    age_rating: "18" as const,
+  },
+  {
+    title: "Sessão 1",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    system_icon:
+      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
+    system: "Ordem Paranormal",
+    status: "Disponível",
+    date: "2021-01-01",
+    hours: "10:00",
+    age_rating: "18" as const,
+  },
+  {
+    title: "Sessão 1",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    system_icon:
+      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
+    system: "Ordem Paranormal",
+    status: "Disponível",
+    date: "2021-01-01",
+    hours: "10:00",
+    age_rating: "18" as const,
+  },
+  {
+    title: "Sessão 1",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    system_icon:
+      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
+    system: "Ordem Paranormal",
+    status: "Disponível",
+    date: "2021-01-01",
+    hours: "10:00",
+    age_rating: "18" as const,
+  },
+] as const
+
+type LandingNewsItem = {
+  title: string
+  image: string
+  description?: string
+  date?: string
+}
+
+// Uma lista única; depois você separa por slice quando vier do backend.
+const landingNews: readonly LandingNewsItem[] = [
+  {
+    title: "XI Congresso Nacional de Educação",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    description:
+      "O Interfaces Narrativas participou do XI Congresso Nacional de Educação, em João Pessoa, PB, no dia 10 de abril de 2026.",
+  },
+  {
+    title: "Mestres convocados para grande encontro de heróis",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    description:
+      "Um encontro reúne mestres e jogadores para trocar experiências, compartilhar ideias e fortalecer a comunidade.",
+  },
+  {
+    title: "Novas mesas, novos destinos: a guilda cresce",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+    description:
+      "Chegaram novas aventuras e novas vagas. Descubra como participar e acompanhar os próximos anúncios.",
+  },
+  {
+    date: "6 de Novembro, 2026",
+    title: "Nova expansão revoluciona mundo de RPG e atrai milhões de jogadores",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+  },
+  {
+    date: "14 de Fevereiro, 2026",
+    title: "Comunidade de RPG cria campanha épica que dura mais de 5 anos",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+  },
+  {
+    date: "6 de Abril, 2026",
+    title:
+      "Estúdio anuncia RPG inovador com escolhas que mudam completamente a história",
+    image:
+      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+  },
+] as const
+
+const landingMainNews = landingNews.slice(0, 3)
+const landingSideNews = landingNews.slice(3, 6)
+
+const LANDING_CONTAINER_CLASS = "mx-auto w-full max-w-6xl px-4 sm:px-6"
+const LANDING_SECTION_CLASS = "w-full py-12 md:py-14"
+
 export const Landing = () => {
   return (
     <RootLayout menuItems={menuLanding}>
@@ -33,7 +148,7 @@ export const Landing = () => {
             }}
             aria-hidden
           />
-          <div className="relative z-10 mx-auto flex min-h-[80vh] w-full max-w-6xl flex-col items-center justify-between px-3 pt-16 pb-8">
+          <div className={`relative z-10 ${LANDING_CONTAINER_CLASS} flex min-h-[80vh] flex-col items-center justify-between pt-16 pb-10`}>
             <p className="text-center text-xs tracking-widest text-muted-foreground">
               <span className="text-secondary">UEPB - PATOS</span>
             </p>
@@ -46,26 +161,41 @@ export const Landing = () => {
               </p>
             </span>
             <div className="w-full min-w-0">
-              <LogoMarquee logos={linkedEvents} direction="normal" />
+              <LogoMarquee
+                logos={linkedEvents}
+                direction="normal"
+                trackClassName="max-w-6xl"
+              />
             </div>
           </div>
         </section>
 
         {/* SESSÕES */}
-        <section className="bg-reverted-background text-reverted-foreground mt-10 flex w-full flex-col items-center py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
+        <section className={`bg-reverted-background text-reverted-foreground ${LANDING_SECTION_CLASS}`}>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
             <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
-            <RpgSessionCard
-              title="Sessão 1"
-              image="https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1"
-              system_icon="https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a"
-              system="Ordem Paranormal"
-              status="Disponível"
-              date="2021-01-01"
-              hours="10:00"
-              age_rating="18"
-            />
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {landingSessions.map((session, idx) => {
+                const visibilityClass =
+                  SESSION_VISIBILITY_CLASS_BY_INDEX[idx] ?? "hidden"
+
+                return (
+                  <div
+                    key={`${session.title}-${idx}`}
+                    className={visibilityClass}
+                  >
+                    <RpgSessionCard {...session} />
+                  </div>
+                )
+              })}
+            </div>
+            <Button asChild>
+              <Link to="/sessions">
+                Ver todas as sessões{" "}
+                <ArrowRightIcon className="size-4" data-icon="inline-end" />
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -84,7 +214,7 @@ export const Landing = () => {
             aria-hidden
           />
 
-          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-3 text-white">
+          <div className={`relative z-10 ${LANDING_CONTAINER_CLASS} flex flex-col items-center gap-3 text-white`}>
             <p className="mb-3 text-center text-xs tracking-widest text-white">
               <span className="text-white">KAOS</span> EM NOVA PATOS · 2224
             </p>
@@ -134,17 +264,68 @@ export const Landing = () => {
         </section>
 
         {/* NOTÍCIAS */}
-        <section className="flex w-full flex-col items-center justify-center py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
+        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
             <h2 className="text-center text-xl font-medium text-primary">
               Principais Notícias
             </h2>
 
-            <NewsCard
-              title="XI Congresso Nacional de Educação"
-              image="https://instagram.fcpv20-1.fna.fbcdn.net/v/t51.82787-15/564379974_17896950168331394_40318615177761691_n.webp?_nc_cat=108&ig_cache_key=Mzc0MzQwNzI5Mzc5MTg3OTM5MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=K5ofGOFsGQ4Q7kNvwEbXbqK&_nc_oc=Adr_scKHI2Y9TvoThD0OMJhgfXQMV5z6qSFpdL8jTEKGCEG04CwQhCRVe5gMaER9LYGT1eWbcQ4J3KemM97duF0s&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpv20-1.fna&_nc_gid=EEY_zUvmD8lyT1_3Cqihfw&_nc_ss=7a32e&oh=00_Af0V4ITz-mh0_pyOfwPcRWN_jRFidRyQbzvKtxmoOJyioQ&oe=69DF3BDB"
-              description="O Interfaces Narrativas participou do XI Congresso Nacional de Educação, em João Pessoa, PB, no dia 10 de abril de 2026."
-            />
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:hidden">
+              {landingMainNews.map((news, idx) => (
+                <NewsCard
+                  key={`${news.title}-${idx}`}
+                  title={news.title}
+                  image={news.image}
+                  description={news.description ?? ""}
+                  className="min-h-[220px]"
+                />
+              ))}
+            </div>
+
+            <div className="hidden w-full grid-cols-1 gap-4 lg:grid lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 lg:col-span-3 lg:grid-cols-3">
+                {landingMainNews.map((news, idx) => (
+                  <NewsCard
+                    key={`${news.title}-${idx}`}
+                    title={news.title}
+                    image={news.image}
+                    description={news.description ?? ""}
+                    className="min-h-[260px] lg:min-h-[340px]"
+                  />
+                ))}
+              </div>
+
+              <aside className="flex h-full flex-col gap-3">
+                {landingSideNews.map((item, idx) => (
+                  <div
+                    key={`${item.title}-${idx}`}
+                    className="group flex w-full items-center gap-3 rounded-2xl bg-card/0 p-2"
+                  >
+                    <div className="relative size-24 shrink-0 overflow-hidden rounded-xl">
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div
+                        className="pointer-events-none absolute inset-0 bg-black/15"
+                        aria-hidden
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[11px] leading-tight text-muted-foreground">
+                        {item.date}
+                      </p>
+                      <p className="mt-0.5 line-clamp-2 text-sm leading-snug">
+                        {item.title}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </aside>
+            </div>
 
             <Button asChild>
               <Link to="/blog">
@@ -155,17 +336,30 @@ export const Landing = () => {
           </div>
         </section>
 
-        <section className="flex w-full flex-col items-center justify-center py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-4 px-3">
+        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-4`}>
             <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
-            <div className="flex h-full w-full flex-col flex-wrap items-center justify-center gap-4">
-              {teamMembers.slice(0, 3).map((member) => (
+            <div className="h-full w-full flex-wrap items-center justify-center gap-4 flex-row hidden lg:flex">
+              {teamMembers.slice(0, 4).map((member) => (
                 <MemberCard
                   key={member.name}
                   image={member.image}
                   name={member.name}
                   role={member.role}
+                  orientation="column"
+                />
+              ))}
+            </div>
+
+            <div className="flex h-full w-full flex-col flex-wrap items-center justify-center gap-4 lg:hidden ">
+              {teamMembers.slice(0, 4).map((member) => (
+                <MemberCard
+                  key={member.name}
+                  image={member.image}
+                  name={member.name}
+                  role={member.role}
+                  orientation="row"
                 />
               ))}
             </div>
@@ -180,11 +374,11 @@ export const Landing = () => {
         </section>
 
         {/* FAQ */}
-        <section className="flex w-full flex-col items-center justify-center py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-4 px-3">
+        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-4`}>
             <h2 className="text-xl font-bold text-primary">FAQs</h2>
 
-            <div className="flex w-full max-w-xl flex-col gap-3">
+            <div className="flex w-full max-w-3xl flex-col gap-3">
               <FaqCard
                 question="O que é esta plataforma?"
                 answer="Esta plataforma é um sistema unificador do projeto de extensão Interfaces Narrativas da Universidade Estadual da Paraíba, campus Patos. Tendo como objetivo centralizar e organizar e registrar as atividades do projeto de extensão."
@@ -214,8 +408,8 @@ export const Landing = () => {
         </section>
 
         {/* SOCIAL */}
-        <section className="flex w-full flex-col items-center justify-center py-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-3">
+        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
             <h2 className="text-xl font-bold text-primary">Siga-nos</h2>
 
             <div className="flex w-full max-w-xl flex-wrap justify-center gap-3">

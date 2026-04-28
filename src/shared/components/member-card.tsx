@@ -1,23 +1,42 @@
 import { defaultUser } from "@/shared/assets"
+import { cn } from "@/shared/lib/utils"
 interface MemberCardProps {
   image?: string
   name: string
   role: string
+  orientation?: "row" | "column"
 }
 
-export const MemberCard = ({ image, name, role }: MemberCardProps) => {
+export const MemberCard = ({
+  image,
+  name,
+  role,
+  orientation = "row",
+}: MemberCardProps) => {
   return (
-    <div className="flex flex-row items-center justify-start gap-4 max-w-64">
+    <div
+      className={cn(
+        "flex max-w-56",
+        orientation === "row"
+          ? "flex-row items-center justify-start gap-3 text-left"
+          : "flex-col items-center justify-start gap-3 text-center"
+      )}
+    >
       <img
         src={image || defaultUser}
         alt={name}
-        className="min-h-38 max-h-38 min-w-32 max-w-32 rounded-2xl object-cover"
+        className={cn(
+          "rounded-2xl object-cover",
+          orientation === "row"
+            ? "h-28 w-24 shrink-0"
+            : "h-40 w-40 max-w-full"
+        )}
       />
       <span className="text-sm font-medium text-primary">
-        <h1 className="text-body text-lg font-medium text-foreground">
+        <h1 className="text-body text-base font-medium leading-snug text-foreground">
           {name}
         </h1>
-        <p className="text-muted-primary text-sm">{role}</p>
+        <p className="text-muted-primary text-xs leading-snug">{role}</p>
       </span>
     </div>
   )

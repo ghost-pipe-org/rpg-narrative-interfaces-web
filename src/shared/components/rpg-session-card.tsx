@@ -62,9 +62,9 @@ export const RpgSessionCard = ({
   const rating = ageRatingStyles[age_rating]
 
   return (
-    <div className="mx-auto w-full max-w-lg">
+    <div className="w-full max-w-none">
       <ThreeDCard
-        className={cn("aspect-video w-full ring-1 ring-white/15")}
+        className={cn("aspect-video w-full ring-1 ring-white/15 lg:aspect-square")}
         maxRotation={10}
         parallaxOffset={28}
         enableGlow

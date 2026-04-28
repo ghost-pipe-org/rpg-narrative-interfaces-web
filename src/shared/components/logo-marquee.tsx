@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { cn } from "@/shared/lib/utils"
 
 export interface LogoItem {
   id: string
@@ -26,11 +27,20 @@ export const MarqueeRow = ({
     animationDirection: direction,
   } as CSSProperties
 
-  const doubled = [...logos, ...logos]
+  const minUniqueItems = 3
+  const repeated: LogoItem[] = []
+  const safeLogos = logos.length ? logos : []
+
+  while (safeLogos.length && repeated.length < minUniqueItems) {
+    repeated.push(...safeLogos)
+  }
+
+  const base = repeated.length ? repeated : safeLogos
+  const doubled = [...base, ...base]
 
   return (
     <div className="max-w-full overflow-hidden" style={outerStyle}>
-      <div className="flex w-max items-center gap-8" style={trackStyle}>
+      <div className="flex w-max items-center gap-12" style={trackStyle}>
         {doubled.map((logo, index) => (
           <div
             key={`${logo.id}-${index}`}
@@ -47,15 +57,19 @@ export const MarqueeRow = ({
 export interface LogoMarqueeProps {
   logos: LogoItem[]
   direction?: "normal" | "reverse"
+  className?: string
+  trackClassName?: string
 }
 
 export const LogoMarquee = ({
   logos,
   direction = "normal",
+  className,
+  trackClassName,
 }: LogoMarqueeProps) => {
   return (
-    <div className="flex w-full flex-col items-center overflow-hidden">
-      <div className="flex w-full max-w-xl flex-col">
+    <div className={cn("flex w-full flex-col items-center overflow-hidden", className)}>
+      <div className={cn("flex w-full flex-col", trackClassName)}>
         <MarqueeRow logos={logos} direction={direction} />
       </div>
     </div>
