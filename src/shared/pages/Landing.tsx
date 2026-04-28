@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { ArrowRightIcon, PlusIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react"
 
 import { bgArt, bgHero, bookCover } from "@/shared/assets"
 
@@ -23,6 +23,9 @@ const SESSION_VISIBILITY_CLASS_BY_INDEX = [
   "block sm:hidden lg:block",
   "hidden lg:block",
 ] as const
+const LANDING_CONTAINER_CLASS = "mx-auto w-full max-w-6xl px-4 sm:px-6"
+const LANDING_SECTION_CLASS = "w-full py-12 md:py-14"
+const LANDING_CTA_LINK_CLASS = "inline-flex items-center gap-2"
 
 const landingSessions = [
   {
@@ -82,7 +85,6 @@ type LandingNewsItem = {
   date?: string
 }
 
-// Uma lista única; depois você separa por slice quando vier do backend.
 const landingNews: readonly LandingNewsItem[] = [
   {
     title: "XI Congresso Nacional de Educação",
@@ -129,8 +131,6 @@ const landingNews: readonly LandingNewsItem[] = [
 const landingMainNews = landingNews.slice(0, 3)
 const landingSideNews = landingNews.slice(3, 6)
 
-const LANDING_CONTAINER_CLASS = "mx-auto w-full max-w-6xl px-4 sm:px-6"
-const LANDING_SECTION_CLASS = "w-full py-12 md:py-14"
 
 export const Landing = () => {
   return (
@@ -172,8 +172,8 @@ export const Landing = () => {
 
         {/* SESSÕES */}
         <section className={`bg-reverted-background text-reverted-foreground ${LANDING_SECTION_CLASS}`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
-            <h2 className="text-xl font-medium text-primary">Sessões</h2>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+            <h2 className="mb-8 text-xl font-medium text-primary">Sessões</h2>
 
             <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {landingSessions.map((session, idx) => {
@@ -190,8 +190,8 @@ export const Landing = () => {
                 )
               })}
             </div>
-            <Button asChild>
-              <Link to="/sessions">
+            <Button asChild className="mt-6" variant="outline">
+              <Link to="/sessions" className={LANDING_CTA_LINK_CLASS}>
                 Ver todas as sessões{" "}
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -255,8 +255,8 @@ export const Landing = () => {
             </div>
 
             <Button asChild variant="secondary">
-              <Link to="/kaos">
-                VEJA NOSSO PROJETO
+              <Link to="/kaos" className={LANDING_CTA_LINK_CLASS}>
+                SAIBA MAIS
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
             </Button>
@@ -265,8 +265,8 @@ export const Landing = () => {
 
         {/* NOTÍCIAS */}
         <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
-            <h2 className="text-center text-xl font-medium text-primary">
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+            <h2 className="mb-8 text-center text-xl font-medium text-primary">
               Principais Notícias
             </h2>
 
@@ -327,18 +327,18 @@ export const Landing = () => {
               </aside>
             </div>
 
-            <Button asChild>
-              <Link to="/blog">
-                <PlusIcon className="size-4" data-icon="inline-end" />
-                Notícias
+            <Button asChild className="mt-6" variant="outline">
+              <Link to="/blog" className={LANDING_CTA_LINK_CLASS}>
+                Ver notícias
+                <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
             </Button>
           </div>
         </section>
 
         <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-4`}>
-            <h2 className="text-xl font-medium text-primary">Integrantes</h2>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+            <h2 className="mb-8 text-xl font-medium text-primary">Integrantes</h2>
 
             <div className="h-full w-full flex-wrap items-center justify-center gap-4 flex-row hidden lg:flex">
               {teamMembers.slice(0, 4).map((member) => (
@@ -364,9 +364,9 @@ export const Landing = () => {
               ))}
             </div>
 
-            <Button asChild className="mt-2">
-              <Link to="/members">
-                VER TODOS OS MEMBROS
+            <Button asChild className="mt-6" variant="outline">
+              <Link to="/members" className={LANDING_CTA_LINK_CLASS}>
+                Ver todos os membros
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
             </Button>
@@ -375,8 +375,8 @@ export const Landing = () => {
 
         {/* FAQ */}
         <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-4`}>
-            <h2 className="text-xl font-bold text-primary">FAQs</h2>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+            <h2 className="mb-8 text-xl font-bold text-primary">FAQs</h2>
 
             <div className="flex w-full max-w-3xl flex-col gap-3">
               <FaqCard
@@ -409,8 +409,8 @@ export const Landing = () => {
 
         {/* SOCIAL */}
         <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center gap-6`}>
-            <h2 className="text-xl font-bold text-primary">Siga-nos</h2>
+          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+            <h2 className="mb-8 text-xl font-bold text-primary">Siga-nos</h2>
 
             <div className="flex w-full max-w-xl flex-wrap justify-center gap-3">
               <Button
