@@ -1,8 +1,12 @@
 import type { ReactNode } from "react"
 import { Link } from "react-router"
-import { Mail } from "lucide-react"
 import { Button } from "../ui/button"
-import { logoDark, logoInstagram, logoLight } from "@/shared/assets"
+import {
+  logoDark,
+  logoLight,
+  logoGmail,
+  logoInstagram,
+} from "@/shared/assets"
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
 
 const EMAIL = "rpg.uepbpatos@gmail.com"
@@ -13,7 +17,10 @@ const MUTED = "text-sm font-light text-reverted-foreground/75"
 const NAV_LINK =
   "w-fit text-sm text-reverted-foreground/80 transition-colors hover:text-primary"
 const SOCIAL_BTN =
-  "size-9 rounded-sm bg-reverted-foreground text-reverted-background shadow-none hover:bg-primary hover:text-primary-foreground"
+  "size-9 rounded-sm border border-reverted-foreground/25 bg-reverted-foreground/10 shadow-none hover:border-primary hover:bg-primary"
+const SOCIAL_ICON = "size-4 shrink-0 dark:brightness-0 dark:invert"
+const GRADIENT_BORDER =
+  "bg-[linear-gradient(185deg,#7a6cff,#6f75f5,#647eeb,#5987e0,#4e90d6,#4398cc,#38a1c2,#2daab7,#22b3ad)]"
 
 function FooterHeading({ children }: Readonly<{ children: ReactNode }>) {
   return (
@@ -30,7 +37,11 @@ function FooterHeading({ children }: Readonly<{ children: ReactNode }>) {
 }
 
 export const Footer = () => (
-  <footer className="mt-auto w-full shrink-0 rounded-tl-[2.5rem] bg-linear-to-r from-secondary/10 to-background/30 backdrop-blur-lg supports-backdrop-filter:to-background/25 text-reverted-foreground sm:rounded-tl-[3rem]">
+  <footer className="mt-4 w-full shrink-0 rounded-tl-[2.5rem] bg-transparent border-t border-muted/80 text-reverted-foreground">
+    <div
+      className={`h-px w-full shrink-0 opacity-45 ${GRADIENT_BORDER}`}
+      aria-hidden
+    />
     <div className="mx-auto grid max-w-6xl gap-8 px-6 py-8 sm:px-8 sm:py-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
       <div className={COL}>
         <Link to="/" className="inline-flex w-fit">
@@ -75,21 +86,21 @@ export const Footer = () => (
           <Button asChild size="icon" className={SOCIAL_BTN}>
             <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">
               <span className="sr-only">Instagram</span>
-              <img src={logoInstagram} alt="" className="size-4" aria-hidden />
+              <img src={logoInstagram} alt="" className={SOCIAL_ICON} aria-hidden />
             </a>
           </Button>
           <Button asChild size="icon" className={SOCIAL_BTN}>
             <a href={`mailto:${EMAIL}`}>
               <span className="sr-only">E-mail</span>
-              <Mail className="size-4" aria-hidden />
+              <img src={logoGmail} alt="" className={SOCIAL_ICON} aria-hidden />
             </a>
           </Button>
         </div>
       </div>
     </div>
 
-    <div className="border-t border-reverted-foreground/15">
-      <p className="py-3 text-center text-xs text-reverted-foreground/70 font-extralight">
+    <div className="border-t border-muted/80">
+      <p className="py-3 text-center text-xs text-reverted-foreground/70 font-light">
         © {new Date().getFullYear()} Interfaces Narrativas · Universidade Estadual
         da Paraíba — Patos, PB
       </p>
