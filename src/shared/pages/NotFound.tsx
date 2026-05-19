@@ -5,8 +5,8 @@ import { menuLanding } from "@/shared/routes/menus"
 export const NotFound = () => {
   return (
     <RootLayout menuItems={menuLanding}>
-      <div className="flex pt-12 w-full items-center justify-center">
-        <section className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center">
+      <div className="flex flex-1 w-full items-center justify-center px-[5vw] py-8">
+        <section className="mx-auto flex w-full max-w-[min(36rem,90vw)] flex-col items-center gap-4 text-center">
           <span className="text-sm tracking-[0.2em] text-muted-foreground">
             ERRO 404
           </span>

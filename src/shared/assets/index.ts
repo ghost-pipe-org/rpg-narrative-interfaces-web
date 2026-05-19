@@ -15,3 +15,11 @@ export { default as logoGhostPipeDark } from "./logos/ghostpipe_dark_completed_l
 
 export { default as logoGmail } from "./envelope-regular.svg"
 export { default as logoInstagram } from "./instagram-brands-solid.svg"
+
+export { default as logoDnD } from "./systems/d&d.png"
+export { default as logoCallOfCthulhu } from "./systems/coc.png"
+export { default as logoTormenta20 } from "./systems/tormenta20.png"
+export { default as logoOrdemParanormal } from "./systems/op.png"
+export { default as logoOrdemParanormalDark } from "./systems/op_dark_mode.png"
+export { default as logoKaos } from "./systems/kaos.png"
+export { default as logoKaosDark } from "./systems/kaos_dark_mode.png"

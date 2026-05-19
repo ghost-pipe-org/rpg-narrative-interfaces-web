@@ -25,8 +25,8 @@ export const Login = () => {
 
   return (
     <RootLayout>
-      <div className="flex min-h-[90vh] w-full items-center justify-center p-6">
-        <section className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center">
+      <div className="flex flex-1 w-full items-center justify-center px-[5vw] py-8">
+        <section className="mx-auto flex w-full max-w-[min(36rem,90vw)] flex-col items-center gap-4 text-center">
           <span className="text-sm tracking-[0.2em] text-muted-foreground">
             INTERFACES NARRATIVAS
           </span>
@@ -37,7 +37,7 @@ export const Login = () => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-full max-w-md space-y-4"
+            className="w-full space-y-4"
           >
             <Controller
               control={control}

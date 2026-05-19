@@ -2,6 +2,13 @@ import { MemberCard, RootLayout } from "../components"
 import { menuLanding } from "../routes/menus"
 import { orientationMembers, developersMembers, rpgMembers } from "../utils"
 
+const LANDING_CONTAINER_CLASS =
+  "mx-auto w-full min-w-0 max-w-6xl px-4 sm:px-6"
+const LANDING_SECTION_CLASS = "w-full py-4 md:py-6"
+const SECTION_HEADING_CLASS = "mb-3 text-xl font-medium text-primary"
+const PAGE_CONTENT_CLASS =
+  "w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base"
+
 const memberSections = [
   {
     title: "Artes",
@@ -61,38 +68,48 @@ const memberSections = [
 
 export const Members = () => {
   return (
-    <RootLayout menuItems={menuLanding}>
-      <div className="space-y-12 pt-12">
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center">
+    <RootLayout menuItems={menuLanding} showFooter>
+      <div className="w-full min-w-0 max-w-full overflow-x-clip">
+      <section
+        className={`${LANDING_SECTION_CLASS} flex w-full min-w-0 flex-col items-center justify-center`}
+      >
+        <div
+          className={`${LANDING_CONTAINER_CLASS} flex max-w-xl flex-col items-center gap-4 text-center`}
+        >
           <span className="text-sm tracking-[0.2em] text-muted-foreground uppercase">
             Interfaces Narrativas
           </span>
-          <h1 className="text-3xl font-semibold md:text-4xl">
-            NOSSOS MEMBROS
-          </h1>
+          <h1 className="text-3xl font-semibold md:text-4xl">NOSSOS MEMBROS</h1>
         </div>
+      </section>
 
-        {memberSections.map((section) => (
-          <section
-            key={section.title}
-            className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 text-center px-6"
+      {memberSections.map((section) => (
+        <section
+          key={section.title}
+          className={`${LANDING_SECTION_CLASS} flex w-full min-w-0 flex-col items-center justify-center`}
+        >
+          <div
+            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
           >
-            <div className="space-y-1 max-w-xl">
-              <h2 className="text-xl font-semibold text-primary">
-                {section.title}
-              </h2>
-              <p className="text-sm leading-relaxed text-justify text-muted-foreground">
-                {section.description}
-              </p>
-            </div>
+            <h2 className={SECTION_HEADING_CLASS}>{section.title}</h2>
+            <p className={`mb-8 ${PAGE_CONTENT_CLASS}`}>
+              {section.description}
+            </p>
 
-            <div className="flex w-full flex-wrap justify-center gap-8 md:gap-12">
-              {section.members.map((member) => (
-                <MemberCard key={member.name} {...member} orientation="column" />
-              ))}
-            </div>
-          </section>
-        ))}
+            {section.members.length > 0 && (
+              <div className="flex w-full flex-wrap items-center justify-center gap-8 md:gap-12">
+                {section.members.map((member) => (
+                  <MemberCard
+                    key={member.name}
+                    {...member}
+                    orientation="column"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      ))}
       </div>
     </RootLayout>
   )

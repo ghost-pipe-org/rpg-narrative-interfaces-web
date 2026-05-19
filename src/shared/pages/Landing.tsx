@@ -26,7 +26,6 @@ const SESSION_VISIBILITY_CLASS_BY_INDEX = [
 const LANDING_CONTAINER_CLASS = "mx-auto w-full max-w-6xl px-4 sm:px-6"
 const LANDING_SECTION_CLASS = "w-full py-12 md:py-14"
 const LANDING_CTA_LINK_CLASS = "inline-flex items-center gap-2"
-
 const landingSessions = [
   {
     title: "Sessão 1",
@@ -134,7 +133,7 @@ const landingSideNews = landingNews.slice(3, 6)
 
 export const Landing = () => {
   return (
-    <RootLayout menuItems={menuLanding}>
+    <RootLayout menuItems={menuLanding} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
         <section className="relative flex min-h-[80vh] w-full min-w-0 flex-col">
           <div
@@ -378,7 +377,7 @@ export const Landing = () => {
           <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
             <h2 className="mb-8 text-xl font-bold text-primary">FAQs</h2>
 
-            <div className="flex w-full max-w-3xl flex-col gap-3">
+            <div className="flex w-full flex-col gap-3">
               <FaqCard
                 question="O que é esta plataforma?"
                 answer="Esta plataforma é um sistema unificador do projeto de extensão Interfaces Narrativas da Universidade Estadual da Paraíba, campus Patos. Tendo como objetivo centralizar e organizar e registrar as atividades do projeto de extensão."
@@ -403,48 +402,6 @@ export const Landing = () => {
                 question="Como funcionam os agendamentos das mesas?"
                 answer="Os agendamentos das mesas são feitos através da plataforma de agendamentos disponibilizada pelo projeto de extensão por meio do nosso sistema de inscrições."
               />
-            </div>
-          </div>
-        </section>
-
-        {/* SOCIAL */}
-        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
-            <h2 className="mb-8 text-xl font-bold text-primary">Siga-nos</h2>
-
-            <div className="flex w-full max-w-xl flex-wrap justify-center gap-3">
-              <Button
-                asChild
-                size="icon"
-                className="size-12 bg-muted text-foreground"
-              >
-                <a href="https://www.instagram.com/rpg.uepbpatos/">
-                  <span className="sr-only">Instagram</span>
-                  <svg
-                    aria-hidden
-                    viewBox="0 0 448 512"
-                    className="size-8 shrink-0 fill-current"
-                  >
-                    <path d="M224.3 141a115 115 0 1 0-.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1-.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1-53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-                  </svg>
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="icon"
-                className="size-12 bg-muted text-foreground"
-              >
-                <a href="mailto:rpg.uepbpatos@gmail.com">
-                  <span className="sr-only">Gmail</span>
-                  <svg
-                    aria-hidden
-                    viewBox="0 0 512 512"
-                    className="size-8 shrink-0 fill-current"
-                  >
-                    <path d="M61.4 64C27.5 64 0 91.5 0 125.4 0 126.3 0 127.1 .1 128L0 128 0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256-.1 0c0-.9 .1-1.7 .1-2.6 0-33.9-27.5-61.4-61.4-61.4L61.4 64zM464 192.3L464 384c0 8.8-7.2 16-16 16L64 400c-8.8 0-16-7.2-16-16l0-191.7 154.8 117.4c31.4 23.9 74.9 23.9 106.4 0L464 192.3zM48 125.4C48 118 54 112 61.4 112l389.2 0c7.4 0 13.4 6 13.4 13.4 0 4.2-2 8.2-5.3 10.7L280.2 271.5c-14.3 10.8-34.1 10.8-48.4 0L53.3 136.1c-3.3-2.5-5.3-6.5-5.3-10.7z" />
-                  </svg>
-                </a>
-              </Button>
             </div>
           </div>
         </section>

@@ -2,17 +2,20 @@ import { ToggleTheme } from "../toggle-theme"
 import { Button } from "../ui/button"
 //import { ProfileButton } from "../profile-button"
 import { Menu, type MenuItemProps } from "./menu"
+import { Footer } from "./footer"
 import { logoDark, logoLight } from "@/shared/assets"
 import { useNavigate } from "react-router"
 
 interface RootLayoutProps {
   children?: React.ReactNode
   menuItems?: MenuItemProps[]
+  showFooter?: boolean
 }
 
 export const RootLayout: React.FC<RootLayoutProps> = ({
   children,
   menuItems = [],
+  showFooter = false,
 }) => {
   const navigate = useNavigate()
 
@@ -60,6 +63,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
       <main className="relative z-10 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden">
         {children}
       </main>
+      {showFooter ? <Footer /> : null}
     </div>
   )
 }
