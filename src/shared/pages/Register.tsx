@@ -1,13 +1,18 @@
-import { useEffect } from "react"
-import { Link } from "react-router"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
+
+import { useAuth } from "@/shared/contexts/AuthContext"
+
+import { createUser } from "@/shared/services/userServices/user.services"
 
 import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
 import { Input } from "@/shared/components/ui/input"
 import RootLayout from "@/shared/components/layout/root-layout"
 
-import { emailPattern } from "@/shared/utils/patterns"
+import { emailPattern, phonePattern } from "@/shared/utils/patterns"
+import { formatPhoneNumber } from "@/shared/utils/formatPhoneNumber"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -22,6 +27,11 @@ interface RegisterFormData {
 }
 
 export const Register = () => {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
+  const [registerError, setRegisterError] = useState<string | null>(null)
+
   const { control, handleSubmit, setValue, clearErrors } =
     useForm<RegisterFormData>({
       mode: "onBlur",
@@ -39,14 +49,54 @@ export const Register = () => {
   const isMaster = useWatch({ control, name: "isMaster" })
 
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/")
+    }
+  }, [isAuthenticated, navigate])
+
+  useEffect(() => {
     if (!isMaster) {
       setValue("enrollment", "")
       clearErrors("enrollment")
     }
   }, [isMaster, setValue, clearErrors])
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log(data)
+  const onSubmit = async (data: RegisterFormData) => {
+    setRegisterError(null)
+    setIsLoading(true)
+
+    try {
+      await createUser({
+        name: data.name.trim(),
+        email: data.email.trim(),
+        password: data.password,
+        enrollment: data.isMaster ? data.enrollment.trim() : undefined,
+        phoneNumber: data.phone.replace(phonePattern, "") || undefined,
+        masterConfirm: data.isMaster,
+      })
+      navigate("/login")
+    } catch (error) {
+      setRegisterError(
+        error instanceof Error ? error.message : "Erro ao criar conta"
+      )
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isAuthenticated) {
+    return (
+      <RootLayout>
+        <div className="flex flex-1 w-full items-center justify-center px-[5vw] py-8">
+          <section className="mx-auto flex w-full max-w-[min(36rem,90vw)] flex-col items-center gap-4 text-center">
+            <h1 className="text-2xl font-semibold">Redirecionando...</h1>
+            <p className="text-sm text-muted-foreground">
+              Você já está logado. Redirecionando para a página inicial.
+            </p>
+          </section>
+        </div>
+      </RootLayout>
+    )
   }
 
   return (
@@ -75,7 +125,8 @@ export const Register = () => {
               render={({ field, fieldState }) => (
                 <Input
                   {...field}
-                  placeholder="Nome"
+                  placeholder="Nome completo"
+                  autoComplete="name"
                   errorMessage={fieldState.error?.message}
                 />
               )}
@@ -119,8 +170,8 @@ export const Register = () => {
                       Desejo mestrar
                     </label>
                     <p className="text-sm text-muted-foreground">
-                      Ao selecionar esta opção, você confirma que deseja emitir
-                      mesas de RPG.
+                      Ao selecionar esta opção, você confirma que{" "}
+                      <span className="text-primary">deseja emitir mesas de RPG.</span>
                     </p>
                   </div>
                 </div>
@@ -138,7 +189,7 @@ export const Register = () => {
                 render={({ field, fieldState }) => (
                   <Input
                     {...field}
-                    placeholder="Matrícula"
+                    placeholder="Número de matrícula"
                     type="text"
                     autoComplete="off"
                     errorMessage={fieldState.error?.message}
@@ -152,9 +203,10 @@ export const Register = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  placeholder="Telefone"
+                  placeholder="(00) 99999-9999"
                   type="tel"
                   autoComplete="tel"
+                  onChange={(e) => field.onChange(formatPhoneNumber(e.target.value))}
                 />
               )}
             />
@@ -189,21 +241,25 @@ export const Register = () => {
               render={({ field, fieldState }) => (
                 <Input
                   {...field}
-                  placeholder="Confirmar Senha"
+                  placeholder="Confirmar senha"
                   type="password"
                   autoComplete="new-password"
                   errorMessage={fieldState.error?.message}
                 />
               )}
             />
-            <Button type="submit" size="lg">
-              Criar Conta <ArrowRightIcon />
+            {registerError ? (
+              <p className="text-sm text-destructive">{registerError}</p>
+            ) : null}
+            <Button type="submit" size="lg" disabled={isLoading}>
+              {isLoading ? "Criando conta..." : "Criar conta"}
+              {!isLoading ? <ArrowRightIcon /> : null}
             </Button>
           </form>
-          <p className="text-sm text-muted-foreground md:text-base ">
+          <p className="text-sm text-muted-foreground md:text-base">
             Já tem uma conta?{" "}
             <Button asChild variant="link" className="text-primary pl-0">
-              <Link to="/login">Entrar</Link>
+              <Link to="/login">Faça login</Link>
             </Button>
           </p>
         </section>
