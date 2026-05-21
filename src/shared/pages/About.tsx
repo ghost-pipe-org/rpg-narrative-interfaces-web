@@ -14,7 +14,7 @@ import logoOrdemParanormalDark from "@/shared/assets/systems/op_dark_mode.png"
 import logoTormenta20 from "@/shared/assets/systems/tormenta20.png"
 
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
-import { teamMembers } from "@/shared/utils/teamMembers"
+import { teamMembers } from "@/shared/mocks/teamMembers"
 
 import { ArrowRightIcon } from "lucide-react"
 

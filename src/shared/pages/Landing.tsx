@@ -14,8 +14,9 @@ import bgArt from "@/shared/assets/backgrounds/bg_art.png"
 import bgHero from "@/shared/assets/backgrounds/bg_street.png"
 
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
-import { teamMembers } from "@/shared/utils/teamMembers"
-import linkedEvents from "@/shared/utils/linkedEvents"
+import { teamMembers } from "@/shared/mocks/teamMembers"
+
+import linkedEvents from "@/shared/mocks/linkedEvents"
 
 import { ArrowRightIcon } from "lucide-react"
 
