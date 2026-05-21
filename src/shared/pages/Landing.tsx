@@ -9,9 +9,9 @@ import { LogoMarquee } from "@/shared/components/custom/marquee/logo-marquee"
 import RootLayout from "@/shared/components/layout/root-layout"
 import { BookCover } from "book-cover-3d"
 
-import bookCover from "@/shared/assets/book.jpg"
-import bgArt from "@/shared/assets/backgrounds/bg_art.png"
-import bgHero from "@/shared/assets/backgrounds/bg_street.png"
+import bookCover from "@/shared/assets/books/cover.jpg"
+import bgArt from "@/shared/assets/backgrounds/art.png"
+import bgHero from "@/shared/assets/backgrounds/street.png"
 
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
 import { teamMembers } from "@/shared/mocks/teamMembers"

@@ -1,4 +1,4 @@
-import defaultUser from "@/shared/assets/default_icon.jpg"
+import defaultUser from "@/shared/assets/images/default-user.jpg"
 
 import { cn } from "@/shared/lib/utils"
 interface MemberCardProps {

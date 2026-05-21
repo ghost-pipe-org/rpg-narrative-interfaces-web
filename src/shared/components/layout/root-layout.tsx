@@ -7,8 +7,8 @@ import { Menu, type MenuItemProps } from "./menu"
 import { ToggleTheme } from "../theme/toggle-theme"
 //import { ProfileButton } from "./profile-button"
 
-import logoDark from "@/shared/assets/logos/dark_logo.svg"
-import logoLight from "@/shared/assets/logos/light_logo.svg"
+import logoDark from "@/shared/assets/logos/brand-dark.svg"
+import logoLight from "@/shared/assets/logos/brand-light.svg"
 
 interface RootLayoutProps {
   children?: ReactNode

@@ -1,11 +1,11 @@
 import type { LogoItem } from "@/shared/components/custom/marquee/logo-marquee"
 
-import logoConedu from "@/shared/assets/logos/conedu_logo.webp"
-import logoConeduDark from "@/shared/assets/logos/conedu_dark_logo.webp"
-import logoGhostPipe from "@/shared/assets/logos/ghostpipe_completed_logo.png"
-import logoGhostPipeDark from "@/shared/assets/logos/ghostpipe_dark_completed_logo.png"
-import logoUepb from "@/shared/assets/logos/uepb_logo.png"
-import logoUepbDark from "@/shared/assets/logos/uepb_dark_logo.png"
+import logoConedu from "@/shared/assets/logos/conedu.webp"
+import logoConeduDark from "@/shared/assets/logos/conedu-dark.webp"
+import logoGhostPipe from "@/shared/assets/logos/ghostpipe.png"
+import logoGhostPipeDark from "@/shared/assets/logos/ghostpipe-dark.png"
+import logoUepb from "@/shared/assets/logos/uepb.png"
+import logoUepbDark from "@/shared/assets/logos/uepb-dark.png"
 
 const linkedEvents: LogoItem[] = [
   {
