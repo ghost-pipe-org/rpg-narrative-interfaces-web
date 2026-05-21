@@ -1,6 +1,6 @@
 import { Link } from "react-router"
-import { RootLayout } from "@/shared/components"
-import { menuLanding } from "@/shared/routes/menus"
+import RootLayout from "@/shared/components/layout/root-layout"
+import { menuLanding } from "@/shared/routes/menus/menuLanding"
 
 export const NotFound = () => {
   return (

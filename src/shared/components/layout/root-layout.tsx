@@ -1,9 +1,10 @@
-import { ToggleTheme } from "../toggle-theme"
+import { ToggleTheme } from "../theme/toggle-theme"
 import { Button } from "../ui/button"
-//import { ProfileButton } from "../profile-button"
+//import { ProfileButton } from "./profile-button"
 import { Menu, type MenuItemProps } from "./menu"
 import { Footer } from "./footer"
-import { logoDark, logoLight } from "@/shared/assets"
+import logoDark from "@/shared/assets/logos/dark_logo.svg"
+import logoLight from "@/shared/assets/logos/light_logo.svg"
 import { useNavigate } from "react-router"
 
 interface RootLayoutProps {

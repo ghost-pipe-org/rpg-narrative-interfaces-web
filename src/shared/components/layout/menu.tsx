@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router"
-import { Button } from "../ui"
+import { Button } from "../ui/button"
 
 interface MenuItemProps {
   label: string

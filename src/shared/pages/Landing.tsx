@@ -1,31 +1,22 @@
 import { Link } from "react-router"
 import { ArrowRightIcon } from "lucide-react"
 
-import { bgArt, bgHero, bookCover } from "@/shared/assets"
-
-import {
-  Button,
-  FaqCard,
-  NewsCard,
-  RootLayout,
-  MemberCard,
-  LogoMarquee,
-  RpgSessionCard,
-} from "@/shared/components"
+import bookCover from "@/shared/assets/book.jpg"
+import bgArt from "@/shared/assets/backgrounds/bg_art.png"
+import bgHero from "@/shared/assets/backgrounds/bg_street.png"
+import { Button } from "@/shared/components/ui/button"
+import { FaqCard } from "@/shared/components/cards/faq-card"
+import { NewsCard } from "@/shared/components/cards/news-card"
+import { MemberCard } from "@/shared/components/cards/member-card"
+import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
+import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
+import RootLayout from "@/shared/components/layout/root-layout"
 import { BookCover } from "book-cover-3d"
 
-import { menuLanding } from "@/shared/routes/menus"
-import { teamMembers, linkedEvents } from "@/shared/utils"
+import { menuLanding } from "@/shared/routes/menus/menuLanding"
+import { teamMembers } from "@/shared/utils/teamMembers"
+import linkedEvents from "@/shared/utils/linkedEvents"
 
-const SESSION_VISIBILITY_CLASS_BY_INDEX = [
-  "block",
-  "block",
-  "block sm:hidden lg:block",
-  "hidden lg:block",
-] as const
-const LANDING_CONTAINER_CLASS = "mx-auto w-full max-w-6xl px-4 sm:px-6"
-const LANDING_SECTION_CLASS = "w-full py-12 md:py-14"
-const LANDING_CTA_LINK_CLASS = "inline-flex items-center gap-2"
 const landingSessions = [
   {
     title: "Sessão 1",
@@ -108,7 +99,8 @@ const landingNews: readonly LandingNewsItem[] = [
   },
   {
     date: "6 de Novembro, 2026",
-    title: "Nova expansão revoluciona mundo de RPG e atrai milhões de jogadores",
+    title:
+      "Nova expansão revoluciona mundo de RPG e atrai milhões de jogadores",
     image:
       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
   },
@@ -130,7 +122,6 @@ const landingNews: readonly LandingNewsItem[] = [
 const landingMainNews = landingNews.slice(0, 3)
 const landingSideNews = landingNews.slice(3, 6)
 
-
 export const Landing = () => {
   return (
     <RootLayout menuItems={menuLanding} showFooter>
@@ -147,7 +138,7 @@ export const Landing = () => {
             }}
             aria-hidden
           />
-          <div className={`relative z-10 ${LANDING_CONTAINER_CLASS} flex min-h-[80vh] flex-col items-center justify-between pt-16 pb-10`}>
+          <div className="relative z-10 mx-auto flex min-h-[80vh] w-full max-w-6xl flex-col items-center justify-between px-4 pt-16 pb-10 sm:px-6">
             <p className="text-center text-xs tracking-widest text-muted-foreground">
               <span className="text-secondary">UEPB - PATOS</span>
             </p>
@@ -170,27 +161,29 @@ export const Landing = () => {
         </section>
 
         {/* SESSÕES */}
-        <section className={`bg-reverted-background text-reverted-foreground ${LANDING_SECTION_CLASS}`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+        <section className="bg-reverted-background text-reverted-foreground w-full py-12 md:py-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
             <h2 className="mb-8 text-xl font-medium text-primary">Sessões</h2>
 
             <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {landingSessions.map((session, idx) => {
-                const visibilityClass =
-                  SESSION_VISIBILITY_CLASS_BY_INDEX[idx] ?? "hidden"
-
-                return (
-                  <div
-                    key={`${session.title}-${idx}`}
-                    className={visibilityClass}
-                  >
-                    <RpgSessionCard {...session} />
-                  </div>
-                )
-              })}
+              {landingSessions.map((session, idx) => (
+                <div
+                  key={`${session.title}-${idx}`}
+                  className={
+                    [
+                      "block",
+                      "block",
+                      "block sm:hidden lg:block",
+                      "hidden lg:block",
+                    ][idx] ?? "hidden"
+                  }
+                >
+                  <RpgSessionCard {...session} />
+                </div>
+              ))}
             </div>
             <Button asChild className="mt-6" variant="outline">
-              <Link to="/sessions" className={LANDING_CTA_LINK_CLASS}>
+              <Link to="/sessions" className="inline-flex items-center gap-2">
                 Ver todas as sessões{" "}
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -213,7 +206,7 @@ export const Landing = () => {
             aria-hidden
           />
 
-          <div className={`relative z-10 ${LANDING_CONTAINER_CLASS} flex flex-col items-center gap-3 text-white`}>
+          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-4 text-white sm:px-6">
             <p className="mb-3 text-center text-xs tracking-widest text-white">
               <span className="text-white">KAOS</span> EM NOVA PATOS · 2224
             </p>
@@ -254,7 +247,7 @@ export const Landing = () => {
             </div>
 
             <Button asChild variant="secondary">
-              <Link to="/kaos" className={LANDING_CTA_LINK_CLASS}>
+              <Link to="/kaos" className="inline-flex items-center gap-2">
                 SAIBA MAIS
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -263,8 +256,8 @@ export const Landing = () => {
         </section>
 
         {/* NOTÍCIAS */}
-        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+        <section className="flex w-full flex-col items-center justify-center py-12 md:py-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
             <h2 className="mb-8 text-center text-xl font-medium text-primary">
               Principais Notícias
             </h2>
@@ -327,7 +320,7 @@ export const Landing = () => {
             </div>
 
             <Button asChild className="mt-6" variant="outline">
-              <Link to="/blog" className={LANDING_CTA_LINK_CLASS}>
+              <Link to="/blog" className="inline-flex items-center gap-2">
                 Ver notícias
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -335,11 +328,13 @@ export const Landing = () => {
           </div>
         </section>
 
-        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
-            <h2 className="mb-8 text-xl font-medium text-primary">Integrantes</h2>
+        <section className="flex w-full flex-col items-center justify-center py-12 md:py-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
+            <h2 className="mb-8 text-xl font-medium text-primary">
+              Integrantes
+            </h2>
 
-            <div className="h-full w-full flex-wrap items-center justify-center gap-4 flex-row hidden lg:flex">
+            <div className="hidden h-full w-full flex-row flex-wrap items-center justify-center gap-4 lg:flex">
               {teamMembers.slice(0, 4).map((member) => (
                 <MemberCard
                   key={member.name}
@@ -351,7 +346,7 @@ export const Landing = () => {
               ))}
             </div>
 
-            <div className="flex h-full w-full flex-col flex-wrap items-center justify-center gap-4 lg:hidden ">
+            <div className="flex h-full w-full flex-col flex-wrap items-center justify-center gap-4 lg:hidden">
               {teamMembers.slice(0, 4).map((member) => (
                 <MemberCard
                   key={member.name}
@@ -364,7 +359,7 @@ export const Landing = () => {
             </div>
 
             <Button asChild className="mt-6" variant="outline">
-              <Link to="/members" className={LANDING_CTA_LINK_CLASS}>
+              <Link to="/members" className="inline-flex items-center gap-2">
                 Ver todos os membros
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -373,8 +368,8 @@ export const Landing = () => {
         </section>
 
         {/* FAQ */}
-        <section className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}>
-          <div className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}>
+        <section className="flex w-full flex-col items-center justify-center py-12 md:py-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
             <h2 className="mb-8 text-xl font-bold text-primary">FAQs</h2>
 
             <div className="flex w-full flex-col gap-3">

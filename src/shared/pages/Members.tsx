@@ -1,13 +1,11 @@
-import { MemberCard, RootLayout } from "../components"
-import { menuLanding } from "../routes/menus"
-import { orientationMembers, developersMembers, rpgMembers } from "../utils"
-
-const LANDING_CONTAINER_CLASS =
-  "mx-auto w-full min-w-0 max-w-6xl px-4 sm:px-6"
-const LANDING_SECTION_CLASS = "w-full py-4 md:py-6"
-const SECTION_HEADING_CLASS = "mb-3 text-xl font-medium text-primary"
-const PAGE_CONTENT_CLASS =
-  "w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base"
+import { MemberCard } from "../components/cards/member-card"
+import RootLayout from "../components/layout/root-layout"
+import { menuLanding } from "../routes/menus/menuLanding"
+import {
+  orientationMembers,
+  developersMembers,
+  rpgMembers,
+} from "../utils/teamMembers"
 
 const memberSections = [
   {
@@ -71,10 +69,10 @@ export const Members = () => {
     <RootLayout menuItems={menuLanding} showFooter>
       <div className="w-full min-w-0 max-w-full overflow-x-clip">
       <section
-        className={`${LANDING_SECTION_CLASS} flex w-full min-w-0 flex-col items-center justify-center`}
+        className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"
       >
         <div
-          className={`${LANDING_CONTAINER_CLASS} flex max-w-xl flex-col items-center gap-4 text-center`}
+          className="mx-auto flex w-full min-w-0 max-w-xl flex-col items-center gap-4 px-4 text-center sm:px-6"
         >
           <span className="text-sm tracking-[0.2em] text-muted-foreground uppercase">
             Interfaces Narrativas
@@ -86,13 +84,13 @@ export const Members = () => {
       {memberSections.map((section) => (
         <section
           key={section.title}
-          className={`${LANDING_SECTION_CLASS} flex w-full min-w-0 flex-col items-center justify-center`}
+          className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>{section.title}</h2>
-            <p className={`mb-8 ${PAGE_CONTENT_CLASS}`}>
+            <h2 className="mb-3 text-xl font-medium text-primary">{section.title}</h2>
+            <p className="mb-8 w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               {section.description}
             </p>
 

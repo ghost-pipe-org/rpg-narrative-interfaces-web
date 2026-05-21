@@ -1,16 +1,27 @@
+import { useState } from "react"
+import { Link, useNavigate } from "react-router"
 import { Controller, useForm } from "react-hook-form"
+
+import { ArrowRightIcon } from "lucide-react"
+
+import { Button } from "../components/ui/button"
 import { Input } from "@/shared/components/ui/input"
 import RootLayout from "../components/layout/root-layout"
-import { Button } from "../components/ui/button"
-import { ArrowRightIcon } from "lucide-react"
-import { Link } from "react-router"
-import { emailPattern } from "../utils"
+
+
+import { emailPattern } from "../utils/patterns"
+
+import { useAuth } from "../contexts/AuthContext"
+
 interface LoginFormData {
   email: string
   password: string
 }
 
 export const Login = () => {
+  const navigate = useNavigate()
+  const { login, isLoading } = useAuth()
+  const [loginError, setLoginError] = useState<string | null>(null)
   const { control, handleSubmit } = useForm<LoginFormData>({
     mode: "onBlur",
     defaultValues: {
@@ -19,8 +30,17 @@ export const Login = () => {
     },
   })
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data)
+  const onSubmit = async (data: LoginFormData) => {
+    setLoginError(null)
+
+    try {
+      await login(data)
+      navigate("/")
+    } catch (error) {
+      setLoginError(
+        error instanceof Error ? error.message : "Erro ao fazer login"
+      )
+    }
   }
 
   return (
@@ -73,7 +93,10 @@ export const Login = () => {
                 />
               )}
             />
-            <Button type="submit" size="lg">
+            {loginError ? (
+              <p className="text-sm text-destructive">{loginError}</p>
+            ) : null}
+            <Button type="submit" size="lg" disabled={isLoading}>
               Entrar <ArrowRightIcon />
             </Button>
           </form>

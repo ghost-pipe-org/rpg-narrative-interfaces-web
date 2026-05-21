@@ -1,5 +1,5 @@
 import { ChevronDownIcon, UserIcon } from "lucide-react"
-import { Button } from "./ui"
+import { Button } from "../ui/button"
 
 export const ProfileButton = () => {
   return (

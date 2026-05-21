@@ -1,6 +1,0 @@
-export { Landing } from "./Landing"
-export { Members } from "./Members"
-export { NotFound } from "./NotFound"
-export { Login } from "./Login"
-export { Register } from "./Register"
-export { About } from "./About"

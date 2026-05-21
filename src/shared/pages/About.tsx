@@ -2,37 +2,27 @@ import { Link } from "react-router"
 import { ArrowRightIcon } from "lucide-react"
 import { teamMembers } from "../utils/teamMembers"
 import { menuLanding } from "../routes/menus/menuLanding"
-import { Button, MemberCard, RootLayout } from "../components"
+import { Button } from "../components/ui/button"
+import { MemberCard } from "../components/cards/member-card"
+import RootLayout from "../components/layout/root-layout"
 import LogoInterfacesNarrativas from "../assets/interfaces_narrativas_art.png"
-import {
-  logoDnD,
-  logoKaos,
-  logoTormenta20,
-  logoCallOfCthulhu,
-  logoOrdemParanormal,
-  logoOrdemParanormalDark,
-  logoKaosDark,
-} from "../assets"
-
-const LANDING_CONTAINER_CLASS = "mx-auto w-full min-w-0 max-w-6xl px-4 sm:px-6"
-const PAGE_CONTENT_CLASS =
-  "w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base"
-const LANDING_SECTION_CLASS = "w-full py-4 md:py-6"
-const SECTION_HEADING_CLASS = "mb-3 text-xl font-medium text-primary"
-const LANDING_CTA_LINK_CLASS = "inline-flex items-center gap-2"
-const SYSTEM_LOGO_IMG_CLASS = "max-h-full max-w-full object-contain"
-const SYSTEM_LOGO_SLOT_CLASS =
-  "flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60"
+import logoDnD from "../assets/systems/d&d.png"
+import logoKaos from "../assets/systems/kaos.png"
+import logoKaosDark from "../assets/systems/kaos_dark_mode.png"
+import logoTormenta20 from "../assets/systems/tormenta20.png"
+import logoCallOfCthulhu from "../assets/systems/coc.png"
+import logoOrdemParanormal from "../assets/systems/op.png"
+import logoOrdemParanormalDark from "../assets/systems/op_dark_mode.png"
 
 export const About = () => {
   return (
     <RootLayout menuItems={menuLanding} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full min-w-0 flex-col items-center justify-center`}
+          className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex max-w-xl flex-col items-center gap-4 text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-xl flex-col items-center gap-4 px-4 text-center sm:px-6"
           >
             <span className="text-sm tracking-[0.2em] text-muted-foreground uppercase">
               Interfaces Narrativas
@@ -44,18 +34,18 @@ export const About = () => {
         </section>
 
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}
+          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>Quem somos?</h2>
+            <h2 className="mb-3 text-xl font-medium text-primary">Quem somos?</h2>
             <img
               src={LogoInterfacesNarrativas}
               alt="Logo Interfaces Narrativas"
               className="mb-6 max-h-64 w-full max-w-xs object-contain sm:max-w-sm md:max-w-md"
             />
-            <p className={PAGE_CONTENT_CLASS}>
+            <p className="w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Interfaces Narrativas é um projeto de extensão que visa estudar e
               difundir o RPG de mesa como uma boa ferramenta pedagógica para
               diversas áreas. Além de desenvolver habilidades comunicativas
@@ -73,38 +63,38 @@ export const About = () => {
         </section>
 
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}
+          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>Onde Atuamos?</h2>
-            <p className={PAGE_CONTENT_CLASS}>
+            <h2 className="mb-3 text-xl font-medium text-primary">Onde Atuamos?</h2>
+            <p className="w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Atuamos na Universidade Estadual da Paraíba, em Patos, PB.
             </p>
           </div>
         </section>
 
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}
+          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>Primeiros Passos</h2>
-            <p className={PAGE_CONTENT_CLASS}>
+            <h2 className="mb-3 text-xl font-medium text-primary">Primeiros Passos</h2>
+            <p className="w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Inserir História do Projeto de Extensão
             </p>
           </div>
         </section>
 
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}
+          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>Nossa Equipe</h2>
+            <h2 className="mb-3 text-xl font-medium text-primary">Nossa Equipe</h2>
 
             <div className="hidden h-full w-full flex-row flex-wrap items-center justify-center gap-4 lg:flex">
               {teamMembers.slice(0, 4).map((member) => (
@@ -131,7 +121,7 @@ export const About = () => {
             </div>
 
             <Button asChild className="mt-6" variant="outline">
-              <Link to="/members" className={LANDING_CTA_LINK_CLASS}>
+              <Link to="/members" className="inline-flex items-center gap-2">
                 Ver todos os membros
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
@@ -140,63 +130,63 @@ export const About = () => {
         </section>
 
         <section
-          className={`${LANDING_SECTION_CLASS} flex w-full flex-col items-center justify-center`}
+          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
         >
           <div
-            className={`${LANDING_CONTAINER_CLASS} flex flex-col items-center justify-center text-center`}
+            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
           >
-            <h2 className={SECTION_HEADING_CLASS}>Sistemas Mestrados</h2>
-            <p className={`mb-8 ${PAGE_CONTENT_CLASS}`}>
+            <h2 className="mb-3 text-xl font-medium text-primary">Sistemas Mestrados</h2>
+            <p className="mb-8 w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Conheça os sistemas de RPG de mesa com os quais nossos mestres já
               conduziram sessões e campanhas no projeto.
             </p>
             <div className="flex w-full max-w-4xl flex-col items-center gap-10">
               <div className="grid w-full grid-cols-1 items-center justify-items-center gap-6 sm:grid-cols-3 sm:gap-8">
-                <div className={SYSTEM_LOGO_SLOT_CLASS}>
+                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
                   <img
                     src={logoDnD}
                     alt="Dungeons & Dragons"
-                    className={SYSTEM_LOGO_IMG_CLASS}
+                    className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                <div className={SYSTEM_LOGO_SLOT_CLASS}>
+                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
                   <img
                     src={logoCallOfCthulhu}
                     alt="Call of Cthulhu"
-                    className={SYSTEM_LOGO_IMG_CLASS}
+                    className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                <div className={SYSTEM_LOGO_SLOT_CLASS}>
+                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
                   <img
                     src={logoTormenta20}
                     alt="Tormenta 20"
-                    className={SYSTEM_LOGO_IMG_CLASS}
+                    className="max-h-full max-w-full object-contain"
                   />
                 </div>
               </div>
               <div className="grid w-full max-w-md grid-cols-1 items-center justify-items-center gap-6 sm:max-w-xl sm:grid-cols-2 sm:gap-8">
-                <div className={SYSTEM_LOGO_SLOT_CLASS}>
+                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
                   <img
                     src={logoOrdemParanormal}
                     alt="Ordem Paranormal"
-                    className={`${SYSTEM_LOGO_IMG_CLASS} dark:hidden`}
+                    className="max-h-full max-w-full object-contain dark:hidden"
                   />
                   <img
                     src={logoOrdemParanormalDark}
                     alt="Ordem Paranormal"
-                    className={`${SYSTEM_LOGO_IMG_CLASS} hidden dark:block`}
+                    className="hidden max-h-full max-w-full object-contain dark:block"
                   />
                 </div>
-                <div className={SYSTEM_LOGO_SLOT_CLASS}>
+                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
                   <img
                     src={logoKaos}
                     alt="Kaos em Nova Patos"
-                    className={`${SYSTEM_LOGO_IMG_CLASS} dark:hidden`}
+                    className="max-h-full max-w-full object-contain dark:hidden"
                   />
                   <img
                     src={logoKaosDark}
                     alt="Kaos em Nova Patos"
-                    className={`${SYSTEM_LOGO_IMG_CLASS} hidden dark:block`}
+                    className="hidden max-h-full max-w-full object-contain dark:block"
                   />
                 </div>
               </div>

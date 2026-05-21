@@ -6,7 +6,7 @@ import RootLayout from "../components/layout/root-layout"
 import { Button } from "../components/ui/button"
 import { ArrowRightIcon } from "lucide-react"
 import { Link } from "react-router"
-import { emailPattern } from "../utils"
+import { emailPattern } from "../utils/patterns"
 
 interface RegisterFormData {
   name: string
