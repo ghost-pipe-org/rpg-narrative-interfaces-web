@@ -1,11 +1,11 @@
 import { Link } from "react-router"
 
 import { Button } from "@/shared/components/ui/button"
-import { FaqCard } from "@/shared/components/custom/cards/faq-card"
-import { MemberCard } from "@/shared/components/custom/cards/member-card"
-import { NewsCard } from "@/shared/components/custom/cards/news-card"
-import { RpgSessionCard } from "@/shared/components/custom/cards/rpg-session-card"
-import { LogoMarquee } from "@/shared/components/custom/marquee/logo-marquee"
+import { FaqCard } from "@/shared/components/cards/faq-card"
+import { MemberCard } from "@/shared/components/cards/member-card"
+import { NewsCard } from "@/shared/components/cards/news-card"
+import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
+import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
 import RootLayout from "@/shared/components/layout/root-layout"
 import { BookCover } from "book-cover-3d"
 
@@ -13,10 +13,10 @@ import bookCover from "@/shared/assets/books/cover.jpg"
 import bgArt from "@/shared/assets/backgrounds/art.png"
 import bgHero from "@/shared/assets/backgrounds/street.png"
 
-import { menuLanding } from "@/shared/routes/menus/menuLanding"
-import { teamMembers } from "@/shared/mocks/teamMembers"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
+import { teamMembers } from "@/shared/mocks/team-members"
 
-import linkedEvents from "@/shared/mocks/linkedEvents"
+import linkedEvents from "@/shared/mocks/linked-events"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -127,7 +127,7 @@ const landingSideNews = landingNews.slice(3, 6)
 
 export const Landing = () => {
   return (
-    <RootLayout menuItems={menuLanding} showFooter>
+    <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
         <section className="relative flex min-h-[80vh] w-full min-w-0 flex-col">
           <div

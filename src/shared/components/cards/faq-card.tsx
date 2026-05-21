@@ -1,6 +1,6 @@
 import { useId, useState } from "react"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 
 export interface FaqCardProps {
   question: string

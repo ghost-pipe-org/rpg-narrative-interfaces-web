@@ -1,7 +1,7 @@
 import { Link } from "react-router"
 
 import { Button } from "@/shared/components/ui/button"
-import { MemberCard } from "@/shared/components/custom/cards/member-card"
+import { MemberCard } from "@/shared/components/cards/member-card"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import LogoInterfacesNarrativas from "@/shared/assets/images/interfaces-narrativas-art.png"
@@ -11,16 +11,16 @@ import logoKaos from "@/shared/assets/systems/kaos.png"
 import logoKaosDark from "@/shared/assets/systems/kaos-dark.png"
 import logoOrdemParanormal from "@/shared/assets/systems/ordem-paranormal.png"
 import logoOrdemParanormalDark from "@/shared/assets/systems/ordem-paranormal-dark.png"
-import logoTormenta20 from "@/shared/assets/systems/tormenta20.png"
+import logoTormenta20 from "@/shared/assets/systems/tormenta-20.png"
 
-import { menuLanding } from "@/shared/routes/menus/menuLanding"
-import { teamMembers } from "@/shared/mocks/teamMembers"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
+import { teamMembers } from "@/shared/mocks/team-members"
 
 import { ArrowRightIcon } from "lucide-react"
 
 export const About = () => {
   return (
-    <RootLayout menuItems={menuLanding} showFooter>
+    <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
         <section
           className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"

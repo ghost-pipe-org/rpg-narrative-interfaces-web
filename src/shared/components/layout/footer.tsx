@@ -8,7 +8,7 @@ import logoInstagram from "@/shared/assets/icons/instagram.svg"
 import logoDark from "@/shared/assets/logos/brand-dark.svg"
 import logoLight from "@/shared/assets/logos/brand-light.svg"
 
-import { menuLanding } from "@/shared/routes/menus/menuLanding"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 const EMAIL = "rpg.uepbpatos@gmail.com"
 const INSTAGRAM = "https://www.instagram.com/rpg.uepbpatos/"
@@ -72,7 +72,7 @@ export const Footer = () => (
       <div className={COL}>
         <FooterHeading>Links</FooterHeading>
         <nav className="flex flex-col gap-2">
-          {menuLanding.map((item) => (
+          {landingMenu.map((item) => (
             <Link key={item.to} to={item.to} className={NAV_LINK}>
               {item.label}
             </Link>

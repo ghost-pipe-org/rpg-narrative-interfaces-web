@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 
-import api from "@/shared/services/apiConfig"
-import { authenticateUser } from "@/shared/services/userServices/user.services"
-import type { LoginCredentials, User } from "@/shared/services/userServices/user.types"
+import api from "@/shared/services/api"
+import { authenticateUser } from "@/shared/services/user/user.service"
+import type { LoginCredentials, User } from "@/shared/services/user/user.types"
 
 import Cookies from "js-cookie"
 

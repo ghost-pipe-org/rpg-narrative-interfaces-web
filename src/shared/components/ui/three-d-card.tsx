@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 
 const SHADOW_Y_BASE = 10
 const SHADOW_ALPHA = 0.22

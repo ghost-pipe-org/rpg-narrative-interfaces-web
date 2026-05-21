@@ -1,4 +1,4 @@
-import api from "@/shared/services/apiConfig"
+import api from "@/shared/services/api"
 import type {
   ApproveSessionRequest,
   CreateSessionRequest,

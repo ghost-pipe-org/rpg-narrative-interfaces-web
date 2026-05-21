@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 
 export interface LogoItem {
   id: string

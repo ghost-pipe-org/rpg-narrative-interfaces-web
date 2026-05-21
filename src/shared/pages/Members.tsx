@@ -1,13 +1,13 @@
-import { MemberCard } from "@/shared/components/custom/cards/member-card"
+import { MemberCard } from "@/shared/components/cards/member-card"
 import RootLayout from "@/shared/components/layout/root-layout"
 
-import { menuLanding } from "@/shared/routes/menus/menuLanding"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import {
   developersMembers,
   orientationMembers,
   rpgMembers,
-} from "@/shared/mocks/teamMembers"
+} from "@/shared/mocks/team-members"
 
 const memberSections = [
   {
@@ -68,7 +68,7 @@ const memberSections = [
 
 export const Members = () => {
   return (
-    <RootLayout menuItems={menuLanding} showFooter>
+    <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full min-w-0 max-w-full overflow-x-clip">
       <section
         className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"

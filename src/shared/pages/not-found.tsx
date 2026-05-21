@@ -2,11 +2,11 @@ import { Link } from "react-router"
 
 import RootLayout from "@/shared/components/layout/root-layout"
 
-import { menuLanding } from "@/shared/routes/menus/menuLanding"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 export const NotFound = () => {
   return (
-    <RootLayout menuItems={menuLanding}>
+    <RootLayout menuItems={landingMenu}>
       <div className="flex flex-1 w-full items-center justify-center px-[5vw] py-8">
         <section className="mx-auto flex w-full max-w-[min(36rem,90vw)] flex-col items-center gap-4 text-center">
           <span className="text-sm tracking-[0.2em] text-muted-foreground">

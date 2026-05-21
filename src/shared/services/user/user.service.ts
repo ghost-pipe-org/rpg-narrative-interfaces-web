@@ -1,4 +1,4 @@
-import api from "@/shared/services/apiConfig"
+import api from "@/shared/services/api"
 import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from "./user.types"
 
 export const authenticateUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {

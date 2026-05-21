@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 
 export interface NewsCardProps extends Omit<
   React.ComponentProps<typeof Card>,

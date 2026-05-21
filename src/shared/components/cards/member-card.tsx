@@ -1,6 +1,6 @@
 import defaultUser from "@/shared/assets/images/default-user.jpg"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 interface MemberCardProps {
   image?: string
   name: string

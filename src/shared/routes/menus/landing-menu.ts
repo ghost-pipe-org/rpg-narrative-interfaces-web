@@ -1,4 +1,4 @@
-export const menuLanding = [
+export const landingMenu = [
   {
     label: "Início",
     to: "/",

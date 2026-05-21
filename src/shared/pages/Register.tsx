@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
 
-import { useAuth } from "@/shared/contexts/AuthContext"
+import { useAuth } from "@/shared/contexts/auth-context"
 
-import { createUser } from "@/shared/services/userServices/user.services"
+import { createUser } from "@/shared/services/user/user.service"
 
 import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
@@ -12,7 +12,7 @@ import { Input } from "@/shared/components/ui/input"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import { emailPattern, phonePattern } from "@/shared/utils/patterns"
-import { formatPhoneNumber } from "@/shared/utils/formatPhoneNumber"
+import { formatPhoneNumber } from "@/shared/utils/format-phone-number"
 
 import { ArrowRightIcon } from "lucide-react"
 

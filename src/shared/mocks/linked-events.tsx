@@ -1,4 +1,4 @@
-import type { LogoItem } from "@/shared/components/custom/marquee/logo-marquee"
+import type { LogoItem } from "@/shared/components/marquee/logo-marquee"
 
 import logoConedu from "@/shared/assets/logos/conedu.webp"
 import logoConeduDark from "@/shared/assets/logos/conedu-dark.webp"

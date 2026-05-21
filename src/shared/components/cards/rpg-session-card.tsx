@@ -1,8 +1,8 @@
 import { Badge } from "@/shared/components/ui/badge"
 import { CardTitle } from "@/shared/components/ui/card"
-import ThreeDCard from "@/shared/components/ui/threed-card"
+import ThreeDCard from "@/shared/components/ui/three-d-card"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/cn"
 
 export type AgeRating = "L" | "10" | "12" | "14" | "16" | "18"
 

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm } from "react-hook-form"
 
-import { useAuth } from "@/shared/contexts/AuthContext"
+import { useAuth } from "@/shared/contexts/auth-context"
 
 import { Button } from "@/shared/components/ui/button"
 import { Input } from "@/shared/components/ui/input"
