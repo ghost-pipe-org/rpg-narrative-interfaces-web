@@ -1,14 +1,17 @@
-import { ToggleTheme } from "../theme/toggle-theme"
-import { Button } from "../ui/button"
-//import { ProfileButton } from "./profile-button"
-import { Menu, type MenuItemProps } from "./menu"
-import { Footer } from "./footer"
-import logoDark from "@/shared/assets/logos/dark_logo.svg"
-import logoLight from "@/shared/assets/logos/light_logo.svg"
+import type { ReactNode } from "react"
 import { useNavigate } from "react-router"
 
+import { Button } from "../ui/button"
+import { Footer } from "./footer"
+import { Menu, type MenuItemProps } from "./menu"
+import { ToggleTheme } from "../theme/toggle-theme"
+//import { ProfileButton } from "./profile-button"
+
+import logoDark from "@/shared/assets/logos/dark_logo.svg"
+import logoLight from "@/shared/assets/logos/light_logo.svg"
+
 interface RootLayoutProps {
-  children?: React.ReactNode
+  children?: ReactNode
   menuItems?: MenuItemProps[]
   showFooter?: boolean
 }

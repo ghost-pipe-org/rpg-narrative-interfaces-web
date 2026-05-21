@@ -1,21 +1,23 @@
 import { Link } from "react-router"
-import { ArrowRightIcon } from "lucide-react"
+
+import { Button } from "@/shared/components/ui/button"
+import { FaqCard } from "@/shared/components/custom/cards/faq-card"
+import { MemberCard } from "@/shared/components/custom/cards/member-card"
+import { NewsCard } from "@/shared/components/custom/cards/news-card"
+import { RpgSessionCard } from "@/shared/components/custom/cards/rpg-session-card"
+import { LogoMarquee } from "@/shared/components/custom/marquee/logo-marquee"
+import RootLayout from "@/shared/components/layout/root-layout"
+import { BookCover } from "book-cover-3d"
 
 import bookCover from "@/shared/assets/book.jpg"
 import bgArt from "@/shared/assets/backgrounds/bg_art.png"
 import bgHero from "@/shared/assets/backgrounds/bg_street.png"
-import { Button } from "@/shared/components/ui/button"
-import { FaqCard } from "@/shared/components/cards/faq-card"
-import { NewsCard } from "@/shared/components/cards/news-card"
-import { MemberCard } from "@/shared/components/cards/member-card"
-import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
-import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
-import RootLayout from "@/shared/components/layout/root-layout"
-import { BookCover } from "book-cover-3d"
 
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
 import { teamMembers } from "@/shared/utils/teamMembers"
 import linkedEvents from "@/shared/utils/linkedEvents"
+
+import { ArrowRightIcon } from "lucide-react"
 
 const landingSessions = [
   {

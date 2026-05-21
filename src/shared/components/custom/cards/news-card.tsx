@@ -1,12 +1,13 @@
 import * as React from "react"
 
-import { cn } from "@/shared/lib/utils"
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from "@/shared/components/ui/card"
+
+import { cn } from "@/shared/lib/utils"
 
 export interface NewsCardProps extends Omit<
   React.ComponentProps<typeof Card>,

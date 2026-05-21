@@ -1,12 +1,15 @@
 import { useEffect } from "react"
+import { Link } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
+
+import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
 import { Input } from "@/shared/components/ui/input"
-import RootLayout from "../components/layout/root-layout"
-import { Button } from "../components/ui/button"
+import RootLayout from "@/shared/components/layout/root-layout"
+
+import { emailPattern } from "@/shared/utils/patterns"
+
 import { ArrowRightIcon } from "lucide-react"
-import { Link } from "react-router"
-import { emailPattern } from "../utils/patterns"
 
 interface RegisterFormData {
   name: string

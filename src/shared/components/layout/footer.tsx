@@ -1,10 +1,13 @@
 import type { ReactNode } from "react"
 import { Link } from "react-router"
+
 import { Button } from "../ui/button"
-import logoDark from "@/shared/assets/logos/dark_logo.svg"
-import logoLight from "@/shared/assets/logos/light_logo.svg"
+
 import logoGmail from "@/shared/assets/envelope-regular.svg"
 import logoInstagram from "@/shared/assets/instagram-brands-solid.svg"
+import logoDark from "@/shared/assets/logos/dark_logo.svg"
+import logoLight from "@/shared/assets/logos/light_logo.svg"
+
 import { menuLanding } from "@/shared/routes/menus/menuLanding"
 
 const EMAIL = "rpg.uepbpatos@gmail.com"

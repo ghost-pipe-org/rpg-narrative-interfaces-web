@@ -1,5 +1,9 @@
-import api from "../apiConfig";
-import type { CreateSessionRequest, ApproveSessionRequest, RejectSessionRequest } from "./session.types";
+import api from "@/shared/services/apiConfig"
+import type {
+  ApproveSessionRequest,
+  CreateSessionRequest,
+  RejectSessionRequest,
+} from "./session.types"
 
 export const getSessions = async () => {
     const response = await api.get('/sessions');

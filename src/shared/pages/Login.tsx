@@ -2,16 +2,15 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm } from "react-hook-form"
 
-import { ArrowRightIcon } from "lucide-react"
+import { useAuth } from "@/shared/contexts/AuthContext"
 
-import { Button } from "../components/ui/button"
+import { Button } from "@/shared/components/ui/button"
 import { Input } from "@/shared/components/ui/input"
-import RootLayout from "../components/layout/root-layout"
+import RootLayout from "@/shared/components/layout/root-layout"
 
+import { emailPattern } from "@/shared/utils/patterns"
 
-import { emailPattern } from "../utils/patterns"
-
-import { useAuth } from "../contexts/AuthContext"
+import { ArrowRightIcon } from "lucide-react"
 
 interface LoginFormData {
   email: string

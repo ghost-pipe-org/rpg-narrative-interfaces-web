@@ -1,9 +1,10 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import Cookies from 'js-cookie';
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 
-import api from '../services/apiConfig';
-import { authenticateUser } from '../services/userServices/user.services';
-import type { LoginCredentials, User } from '../services/userServices/user.types';
+import api from "@/shared/services/apiConfig"
+import { authenticateUser } from "@/shared/services/userServices/user.services"
+import type { LoginCredentials, User } from "@/shared/services/userServices/user.types"
+
+import Cookies from "js-cookie"
 
 interface AuthContextType {
   user: User | null;

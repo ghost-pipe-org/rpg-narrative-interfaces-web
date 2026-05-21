@@ -1,5 +1,5 @@
-import api from '../apiConfig';
-import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from './user.types';
+import api from "@/shared/services/apiConfig"
+import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from "./user.types"
 
 export const authenticateUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/users/authenticate', credentials);

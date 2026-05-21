@@ -1,4 +1,4 @@
-import api from "../apiConfig";
+import api from "@/shared/services/apiConfig"
 
 export const getApprovedWorkshops = async () => {
     const response = await api.get('/workshops/approved');

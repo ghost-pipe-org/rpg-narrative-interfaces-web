@@ -1,18 +1,22 @@
 import { Link } from "react-router"
+
+import { Button } from "@/shared/components/ui/button"
+import { MemberCard } from "@/shared/components/custom/cards/member-card"
+import RootLayout from "@/shared/components/layout/root-layout"
+
+import LogoInterfacesNarrativas from "@/shared/assets/interfaces_narrativas_art.png"
+import logoCallOfCthulhu from "@/shared/assets/systems/coc.png"
+import logoDnD from "@/shared/assets/systems/d&d.png"
+import logoKaos from "@/shared/assets/systems/kaos.png"
+import logoKaosDark from "@/shared/assets/systems/kaos_dark_mode.png"
+import logoOrdemParanormal from "@/shared/assets/systems/op.png"
+import logoOrdemParanormalDark from "@/shared/assets/systems/op_dark_mode.png"
+import logoTormenta20 from "@/shared/assets/systems/tormenta20.png"
+
+import { menuLanding } from "@/shared/routes/menus/menuLanding"
+import { teamMembers } from "@/shared/utils/teamMembers"
+
 import { ArrowRightIcon } from "lucide-react"
-import { teamMembers } from "../utils/teamMembers"
-import { menuLanding } from "../routes/menus/menuLanding"
-import { Button } from "../components/ui/button"
-import { MemberCard } from "../components/cards/member-card"
-import RootLayout from "../components/layout/root-layout"
-import LogoInterfacesNarrativas from "../assets/interfaces_narrativas_art.png"
-import logoDnD from "../assets/systems/d&d.png"
-import logoKaos from "../assets/systems/kaos.png"
-import logoKaosDark from "../assets/systems/kaos_dark_mode.png"
-import logoTormenta20 from "../assets/systems/tormenta20.png"
-import logoCallOfCthulhu from "../assets/systems/coc.png"
-import logoOrdemParanormal from "../assets/systems/op.png"
-import logoOrdemParanormalDark from "../assets/systems/op_dark_mode.png"
 
 export const About = () => {
   return (

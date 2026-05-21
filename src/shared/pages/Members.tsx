@@ -1,11 +1,12 @@
-import { MemberCard } from "../components/cards/member-card"
-import RootLayout from "../components/layout/root-layout"
-import { menuLanding } from "../routes/menus/menuLanding"
+import { MemberCard } from "@/shared/components/custom/cards/member-card"
+import RootLayout from "@/shared/components/layout/root-layout"
+
+import { menuLanding } from "@/shared/routes/menus/menuLanding"
 import {
-  orientationMembers,
   developersMembers,
+  orientationMembers,
   rpgMembers,
-} from "../utils/teamMembers"
+} from "@/shared/utils/teamMembers"
 
 const memberSections = [
   {
