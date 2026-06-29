@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router"
 
 import { About } from "@/shared/pages/about"
-import { Landing } from "@/shared/pages/landing"
+import { Landing } from "@/shared/pages/landinggg"
 import { Login } from "@/shared/pages/login"
 import { Members } from "@/shared/pages/members"
 import { NotFound } from "@/shared/pages/not-found"
-import { Register } from "@/shared/pages/register"
+import { Register } from "@/shared/pages/registerrr"
 
 export const router = createBrowserRouter([
   {
