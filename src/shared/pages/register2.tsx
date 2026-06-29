@@ -6,9 +6,9 @@ import { useAuth } from "@/shared/contexts/auth-context"
 
 import { createUser } from "@/shared/services/user/user.service"
 
+import { Input } from "@/shared/components/ui/input"
 import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
-import { Input } from "@/shared/components/ui/input"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import { emailPattern, phonePattern } from "@/shared/utils/patterns"

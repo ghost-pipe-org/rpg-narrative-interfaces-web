@@ -1,20 +1,20 @@
 import { Link } from "react-router"
 
+import { BookCover } from "book-cover-3d"
 import { Button } from "@/shared/components/ui/button"
 import { FaqCard } from "@/shared/components/cards/faq-card"
-import { MemberCard } from "@/shared/components/cards/member-card"
 import { NewsCard } from "@/shared/components/cards/news-card"
-import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
-import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
 import RootLayout from "@/shared/components/layout/root-layout"
-import { BookCover } from "book-cover-3d"
+import { MemberCard } from "@/shared/components/cards/member-card"
+import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
+import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
 import bgArt from "@/shared/assets/backgrounds/art.png"
 import bgHero from "@/shared/assets/backgrounds/street.png"
 
-import { landingMenu } from "@/shared/routes/menus/landing-menu"
 import { teamMembers } from "@/shared/mocks/team-members"
+import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import linkedEvents from "@/shared/mocks/linked-events"
 

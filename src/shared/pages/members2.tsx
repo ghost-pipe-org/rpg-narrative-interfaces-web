@@ -1,5 +1,5 @@
-import { MemberCard } from "@/shared/components/cards/member-card"
 import RootLayout from "@/shared/components/layout/root-layout"
+import { MemberCard } from "@/shared/components/cards/member-card"
 
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
