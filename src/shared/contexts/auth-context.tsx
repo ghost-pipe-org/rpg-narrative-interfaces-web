@@ -2,18 +2,18 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 import api from "@/shared/services/api"
 import { postUsersAuthenticate } from "@/shared/services/user/user.service"
-import type { postUsersAuthenticateData, User } from "@/shared/services/user/user.types"
+import type { postUsersAuthenticateData } from "@/shared/services/user/user.types"
 
 import Cookies from "js-cookie"
 
 interface AuthContextType {
-  user: User | null;
+  user: any | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (credentials: postUsersAuthenticateData) => Promise<void>;
   logout: () => void;
   refreshUser: () => void;
-  updateUser: (userData: User) => void;
+  updateUser: (userData: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,12 +38,12 @@ function setAuthToken(token: string | null) {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const isAuthenticated = !!user;
 
-  const saveAuthData = (token: string, userData: User) => {
+  const saveAuthData = (token: string, userData: any) => {
     Cookies.set('auth_token', token, COOKIE_OPTIONS);
     Cookies.set('auth_user', JSON.stringify(userData), COOKIE_OPTIONS);
   };
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token && userData) {
       try {
-        const parsedUser = JSON.parse(userData) as User;
+        const parsedUser = JSON.parse(userData) as any;
         setUser(parsedUser);
         setAuthToken(token);
       } catch (error) {
@@ -92,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     loadAuthData();
   };
 
-  const updateUser = (userData: User) => {
+  const updateUser = (userData: any) => {
     const token = Cookies.get('auth_token');
     if (token) {
       saveAuthData(token, userData);
