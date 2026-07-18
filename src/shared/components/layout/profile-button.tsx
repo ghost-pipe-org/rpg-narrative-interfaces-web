@@ -24,10 +24,14 @@ export const ProfileButton = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button variant="ghost" size="sm">
-          <UserIcon className="size-4" />
-          <span>{user?.name ?? "Usuário"}</span>
-          <ChevronDownIcon className="size-4" />
+        <Button
+          variant="ghost"
+          size="sm"
+          className="max-w-36 min-w-0 shrink sm:max-w-44"
+        >
+          <UserIcon className="size-4 shrink-0" />
+          <span className="min-w-0 truncate">{user?.name ?? "Usuário"}</span>
+          <ChevronDownIcon className="size-4 shrink-0" />
         </Button>
       </DropdownMenu.Trigger>
 

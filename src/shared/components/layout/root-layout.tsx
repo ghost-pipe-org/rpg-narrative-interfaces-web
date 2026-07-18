@@ -41,7 +41,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
             <img src={logoDark} alt="Logo" className="size-7 dark:hidden" />
           </Button>
 
-          <span className="flex flex-row items-center justify-end gap-x-1">
+          <span className="flex min-w-0 flex-row items-center justify-end gap-x-1">
             <ToggleTheme />
             {isAuthenticated ? (
               <ProfileButton />
