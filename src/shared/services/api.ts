@@ -1,8 +1,10 @@
 import axios from "axios"
 
 const getBaseURL = () => {
+  // Dev only: Vite proxies /api → VITE_API_URL (avoids CORS locally).
+  // Production (GitHub Pages) has no proxy — API must allow the Pages origin.
   if (import.meta.env.DEV) {
-    return "/"
+    return "/api"
   }
 
   return import.meta.env.VITE_API_URL
