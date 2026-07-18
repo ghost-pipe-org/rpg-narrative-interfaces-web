@@ -1,56 +1,17 @@
-import api from "@/shared/services/api"
-import type {
-  ApproveSessionRequest,
-  CreateSessionRequest,
-  RejectSessionRequest,
-} from "./session.types"
+import api from "../api";
+import type { postSessionData } from "./session.types";
 
 export const getSessions = async () => {
-    const response = await api.get('/sessions');
-    return response.data;
+  const response = await api.get(`/sessions`);
+  return response.data;
 };
 
-export const getAprovedSessions = async () => {
-    const response = await api.get('/sessions/approved');
+export const postSession = async (data: postSessionData) => {
+    const response = await api.post(`/sessions`, data);
     return response.data;
-};
+}
 
-export const createSession = async (session: CreateSessionRequest) => {
-    const response = await api.post('/sessions', session);
+export const deleteSession = async (sessionId: string) => {
+    const response = await api.delete(`/sessions/${sessionId}`);
     return response.data;
-};
-
-export const getMyEmittedSessions = async () => {
-    const response = await api.get('/my-emmitted-sessions');
-    return response.data;
-};
-
-export const getMyEnrolledSessions = async () => {
-    const response = await api.get('/my-enrolled-sessions');
-    return response.data;
-};
-
-export const approveSession = async (sessionId: string, data: ApproveSessionRequest) => {
-    const response = await api.patch(`/sessions/${sessionId}/approve`, data);
-    return response.data;
-};
-
-export const rejectSession = async (sessionId: string, data: RejectSessionRequest) => {
-    const response = await api.patch(`/sessions/${sessionId}/reject`, data);
-    return response.data;
-};
-
-export const enrollInSession = async (sessionId: string) => {
-    const response = await api.post(`/sessions/${sessionId}/subscribe`);
-    return response.data;
-};
-
-export const cancelEnrollment = async (sessionId: string) => {
-    const response = await api.delete(`/sessions/${sessionId}/enrollments/me`);
-    return response.data;
-};
-
-export const cancelApprovedSession = async (sessionId: string, cancelEvent: string) => {
-    const response = await api.delete(`/sessions/${sessionId}/cancel`, { data: { cancelEvent } });
-    return response.data;
-};
+}
