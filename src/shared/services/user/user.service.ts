@@ -1,32 +1,32 @@
-import api from "@/shared/services/api"
-import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from "./user.types"
+import api from "../api";
+import type { postUsersData, patchUsersData, postUsersAuthenticateData } from "./user.types";
 
-export const authenticateUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
-  const response = await api.post<AuthResponse>('/users/authenticate', credentials);
+export const postUsers = async (data: postUsersData) => {
+  const response = await api.post(`/users`, data);
   return response.data;
 };
 
-export const createUser = async (user: RegisterCredentials) => {
-    const response = await api.post('/users', user);
-    return response.data;
-};
+export const getMyEmmittedSessions = async () => {
+  const response = await api.get(`/users/my-emmitted-sessions`);
+  return response.data;
+}
 
-export const updateUserProfile = async (data: User) => {
-    const response = await api.patch('/users/profile', data);
-    return response.data;
-};
+export const getMyEnrolledSessions = async () => {
+  const response = await api.get(`/users/my-enrolled-sessions`);
+  return response.data;
+}
 
-export const updateUserPassword = async (data: { password?: string, confirmPassword?: string }) => {
-    const response = await api.patch('/users/password', data);
-    return response.data;
-};
+export const getUsersProfile = async () => {
+  const response = await api.get(`/users/profile`);
+  return response.data;
+}
 
-export const updateUserEmail = async (data: { email?: string, confirmEmail?: string }) => {
-    const response = await api.patch('/users/email', data);
-    return response.data;
-};
+export const patchUsersProfile = async (data: patchUsersData) => {
+  const response = await api.patch(`/users/profile`, data);
+  return response.data;
+}
 
-export const searchUserByEmail = async (email: string) => {
-    const response = await api.get(`/users/search?email=${encodeURIComponent(email)}`);
-    return response.data;
-};
+export const postUsersAuthenticate = async (data: postUsersAuthenticateData) => {
+  const response = await api.post(`/users/authenticate`, data);
+  return response.data;
+}
