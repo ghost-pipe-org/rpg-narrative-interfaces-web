@@ -2,8 +2,9 @@ export interface postUsersData {
     name: string;
     email: string;
     password: string;
-    phoneNumber: string;
-    masterConfirmed: boolean;
+    enrollment: string | undefined;
+    phoneNumber: string | undefined;
+    masterConfirm: boolean;
 }
 
 export interface patchUsersData {

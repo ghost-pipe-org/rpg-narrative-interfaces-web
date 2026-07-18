@@ -4,7 +4,7 @@ import { Controller, useForm, useWatch } from "react-hook-form"
 
 import { useAuth } from "@/shared/contexts/auth-context"
 
-import { createUser } from "@/shared/services/user/user.service"
+import { postUsers } from "@/shared/services/user/user.service"
 
 import { Input } from "@/shared/components/ui/input"
 import { Button } from "@/shared/components/ui/button"
@@ -66,7 +66,7 @@ export const Register = () => {
     setIsLoading(true)
 
     try {
-      await createUser({
+      await postUsers({
         name: data.name.trim(),
         email: data.email.trim(),
         password: data.password,

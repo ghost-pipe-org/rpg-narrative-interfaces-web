@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 
 import api from "@/shared/services/api"
-import { authenticateUser } from "@/shared/services/user/user.service"
-import type { LoginCredentials, User } from "@/shared/services/user/user.types"
+import { postUsersAuthenticate } from "@/shared/services/user/user.service"
+import type { postUsersAuthenticateData, User } from "@/shared/services/user/user.types"
 
 import Cookies from "js-cookie"
 
@@ -10,7 +10,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
+  login: (credentials: postUsersAuthenticateData) => Promise<void>;
   logout: () => void;
   refreshUser: () => void;
   updateUser: (userData: User) => void;
@@ -69,10 +69,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const login = async (credentials: LoginCredentials) => {
+  const login = async (credentials: postUsersAuthenticateData) => {
     setIsLoading(true);
     try {
-      const response = await authenticateUser(credentials);
+      const response = await postUsersAuthenticate(credentials);
 
       saveAuthData(response.token, response.user);
       setUser(response.user);
