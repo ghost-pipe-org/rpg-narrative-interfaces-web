@@ -4,8 +4,9 @@ import { useNavigate } from "react-router"
 import { Button } from "../ui/button"
 import { Footer } from "./footer"
 import { Menu, type MenuItemProps } from "./menu"
+import { ProfileButton } from "./profile-button"
 import { ToggleTheme } from "../theme/toggle-theme"
-//import { ProfileButton } from "./profile-button"
+import { useAuth } from "@/shared/contexts/auth-context"
 
 import logoDark from "@/shared/assets/logos/brand-dark.svg"
 import logoLight from "@/shared/assets/logos/brand-light.svg"
@@ -22,6 +23,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
   showFooter = false,
 }) => {
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
 
   const menuDivider =
     "bg-[linear-gradient(185deg,#7a6cff,#6f75f5,#647eeb,#5987e0,#4e90d6,#4398cc,#38a1c2,#2daab7,#22b3ad)]"
@@ -41,17 +43,22 @@ export const RootLayout: React.FC<RootLayoutProps> = ({
 
           <span className="flex flex-row items-center justify-end gap-x-1">
             <ToggleTheme />
-            {/* <ProfileButton /> */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate("/login")}
-            >
-              entrar
-            </Button>
-            <Button size="sm" onClick={() => navigate("/register")}>
-              criar conta
-            </Button>
+            {isAuthenticated ? (
+              <ProfileButton />
+            ) : (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/login")}
+                >
+                  entrar
+                </Button>
+                <Button size="sm" onClick={() => navigate("/register")}>
+                  criar conta
+                </Button>
+              </>
+            )}
           </span>
         </div>
         {menuItems.length > 0 && (

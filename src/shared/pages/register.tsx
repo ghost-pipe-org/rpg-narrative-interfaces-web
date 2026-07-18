@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
+import { toast } from "sonner"
 
 import { useAuth } from "@/shared/contexts/auth-context"
 
@@ -13,6 +14,7 @@ import RootLayout from "@/shared/components/layout/root-layout"
 
 import { emailPattern, phonePattern } from "@/shared/utils/patterns"
 import { formatPhoneNumber } from "@/shared/utils/format-phone-number"
+import { getApiErrorMessage } from "@/shared/utils/get-api-error-message"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -30,7 +32,6 @@ export const Register = () => {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
-  const [registerError, setRegisterError] = useState<string | null>(null)
 
   const { control, handleSubmit, setValue, clearErrors } =
     useForm<RegisterFormData>({
@@ -62,7 +63,6 @@ export const Register = () => {
   }, [isMaster, setValue, clearErrors])
 
   const onSubmit = async (data: RegisterFormData) => {
-    setRegisterError(null)
     setIsLoading(true)
 
     try {
@@ -74,11 +74,10 @@ export const Register = () => {
         phoneNumber: data.phone.replace(phonePattern, "") || undefined,
         masterConfirm: data.isMaster,
       })
+      toast.success("Conta criada com sucesso")
       navigate("/login")
     } catch (error) {
-      setRegisterError(
-        error instanceof Error ? error.message : "Erro ao criar conta"
-      )
+      toast.error(getApiErrorMessage(error, "Erro ao criar conta"))
     } finally {
       setIsLoading(false)
     }
@@ -219,6 +218,9 @@ export const Register = () => {
                   value: 6,
                   message: "Senha deve ter pelo menos 6 caracteres",
                 },
+                validate: (value) =>
+                  /[A-Z]/.test(value) ||
+                  "A senha deve conter pelo menos uma letra maiúscula",
               }}
               render={({ field, fieldState }) => (
                 <Input
@@ -248,9 +250,6 @@ export const Register = () => {
                 />
               )}
             />
-            {registerError ? (
-              <p className="text-sm text-destructive">{registerError}</p>
-            ) : null}
             <Button type="submit" size="lg" disabled={isLoading}>
               {isLoading ? "Criando conta..." : "Criar conta"}
               {!isLoading ? <ArrowRightIcon /> : null}

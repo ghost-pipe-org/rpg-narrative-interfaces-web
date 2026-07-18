@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import { useAuth } from "@/shared/contexts/auth-context"
 
@@ -9,6 +9,7 @@ import { Input } from "@/shared/components/ui/input"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import { emailPattern } from "@/shared/utils/patterns"
+import { getApiErrorMessage } from "@/shared/utils/get-api-error-message"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -20,7 +21,6 @@ interface LoginFormData {
 export const Login = () => {
   const navigate = useNavigate()
   const { login, isLoading } = useAuth()
-  const [loginError, setLoginError] = useState<string | null>(null)
   const { control, handleSubmit } = useForm<LoginFormData>({
     mode: "onBlur",
     defaultValues: {
@@ -30,15 +30,12 @@ export const Login = () => {
   })
 
   const onSubmit = async (data: LoginFormData) => {
-    setLoginError(null)
-
     try {
       await login(data)
+      toast.success("Login realizado com sucesso")
       navigate("/")
     } catch (error) {
-      setLoginError(
-        error instanceof Error ? error.message : "Erro ao fazer login"
-      )
+      toast.error(getApiErrorMessage(error, "Erro ao fazer login"))
     }
   }
 
@@ -92,9 +89,6 @@ export const Login = () => {
                 />
               )}
             />
-            {loginError ? (
-              <p className="text-sm text-destructive">{loginError}</p>
-            ) : null}
             <Button type="submit" size="lg" disabled={isLoading}>
               Entrar <ArrowRightIcon />
             </Button>
