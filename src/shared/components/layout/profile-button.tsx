@@ -1,15 +1,18 @@
+import { useState } from "react"
 import { useNavigate } from "react-router"
 import { DropdownMenu } from "radix-ui"
 import { toast } from "sonner"
 
 import { Button } from "../ui/button"
 import { useAuth } from "@/shared/contexts/auth-context"
+import { cn } from "@/shared/utils/cn"
 
 import { ChevronDownIcon, LogOutIcon, UserIcon } from "lucide-react"
 
 export const ProfileButton = () => {
   const { user, isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
 
   if (!isAuthenticated) {
     return null
@@ -22,7 +25,7 @@ export const ProfileButton = () => {
   }
 
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
         <Button
           variant="ghost"
@@ -31,7 +34,13 @@ export const ProfileButton = () => {
         >
           <UserIcon className="size-4 shrink-0" />
           <span className="min-w-0 truncate">{user?.name ?? "Usuário"}</span>
-          <ChevronDownIcon className="size-4 shrink-0" />
+          <ChevronDownIcon
+            className={cn(
+              "size-4 shrink-0 transition-transform duration-200",
+              "motion-reduce:transition-none",
+              open && "rotate-180"
+            )}
+          />
         </Button>
       </DropdownMenu.Trigger>
 

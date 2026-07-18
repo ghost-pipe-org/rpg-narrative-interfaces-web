@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router"
+import { createBrowserRouter, Outlet, ScrollRestoration } from "react-router"
 
 import { About } from "@/shared/pages/about"
 import { Landing } from "@/shared/pages/landing"
@@ -7,37 +7,51 @@ import { Members } from "@/shared/pages/members"
 import { NotFound } from "@/shared/pages/not-found"
 import { Register } from "@/shared/pages/register"
 
+function Root() {
+  return (
+    <>
+      <ScrollRestoration />
+      <Outlet />
+    </>
+  )
+}
+
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Landing />,
-  },
-  {
-    path: "/members",
-    element: <Members />,
-  },
-  {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/kaos",
-    element: <NotFound />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/reset-password",
-    element: <NotFound />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Landing />,
+      },
+      {
+        path: "/members",
+        element: <Members />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/kaos",
+        element: <NotFound />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/reset-password",
+        element: <NotFound />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
   },
 ])

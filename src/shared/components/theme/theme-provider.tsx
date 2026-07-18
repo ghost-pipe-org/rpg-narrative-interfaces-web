@@ -41,9 +41,10 @@ function getSystemTheme(): ResolvedTheme {
 
 function disableTransitionsTemporarily() {
   const style = document.createElement("style")
+  // Keep transitions on [data-allow-transition] (e.g. theme toggle icons).
   style.appendChild(
     document.createTextNode(
-      "*,*::before,*::after{-webkit-transition:none!important;transition:none!important}"
+      "*:not([data-allow-transition]):not([data-allow-transition] *),*:not([data-allow-transition]):not([data-allow-transition] *)::before,*:not([data-allow-transition]):not([data-allow-transition] *)::after{-webkit-transition:none!important;transition:none!important}"
     )
   )
   document.head.appendChild(style)
