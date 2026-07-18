@@ -1,17 +1,10 @@
 import axios from "axios"
 
-const getBaseURL = () => {
-  // Dev only: Vite proxies /api → VITE_API_URL (avoids CORS locally).
-  // Production (GitHub Pages) has no proxy — API must allow the Pages origin.
-  if (import.meta.env.DEV) {
-    return "/api"
-  }
-
-  return import.meta.env.VITE_API_URL
-}
-
+// Always same-origin `/api`.
+// - Dev: Vite proxies to VITE_API_URL (.env.development)
+// - Prod (Vercel): rewrite in vercel.json → API remota
 const api = axios.create({
-  baseURL: getBaseURL(),
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
