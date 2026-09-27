@@ -8,12 +8,12 @@ export const landingMenu = [
     to: "/about",
   },
   {
-    label: "Membros",
-    to: "/members",
-  },
-  {
     label: "Kaos",
     to: "/kaos",
+  },
+  {
+    label: "Membros",
+    to: "/members",
   },
   {
     label: "Blog",
