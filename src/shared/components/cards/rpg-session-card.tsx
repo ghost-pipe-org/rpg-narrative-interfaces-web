@@ -60,7 +60,8 @@ export const RpgSessionCard = ({
   aspect = "cover",
 }: RpgSessionCardProps) => {
   const isOpen = /dispon/i.test(status) || status.toLowerCase() === "available"
-  const rating = age_rating ? ageRatingStyles[age_rating] : undefined
+  const isPoster = aspect === "poster"
+  const rating = !isPoster && age_rating ? ageRatingStyles[age_rating] : undefined
 
   return (
     <div className="w-full max-w-none">
@@ -93,7 +94,7 @@ export const RpgSessionCard = ({
             />
           ) : null}
 
-          {system_icon ? (
+          {isPoster ? null : system_icon ? (
             <img
               src={system_icon}
               alt={system ?? ""}

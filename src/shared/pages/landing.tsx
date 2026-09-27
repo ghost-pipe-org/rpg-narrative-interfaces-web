@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router"
 
 import { BookCover } from "book-cover-3d"
@@ -20,15 +21,15 @@ import type {
   Session,
   SessionPossibleDate,
 } from "@/shared/services/session/session.types"
+import { getSessionsApproved } from "@/shared/services/session/session.service"
+import { getApprovedWorkshops } from "@/shared/services/workshop/workshop.service"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
 import workshopPoster from "@/shared/assets/systems/workshop-poster.png"
 import bgArt from "@/shared/assets/backgrounds/art.png"
 import bgHero from "@/shared/assets/backgrounds/street.png"
 
-import { sessionMocks } from "@/shared/mocks/sessions"
 import { teamMembers } from "@/shared/mocks/team-members"
-import { workshopMocks } from "@/shared/mocks/workshops"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import linkedEvents from "@/shared/mocks/linked-events"
@@ -121,15 +122,21 @@ function ActivityCarousel({
   items: Session[]
   aspect?: "cover" | "poster"
 }) {
+  const canSlide = items.length > 1
+
   return (
     <Swiper
       modules={[Autoplay, Pagination, A11y]}
-      autoplay={{
-        delay: 3200,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      }}
-      loop
+      autoplay={
+        canSlide
+          ? {
+              delay: 3200,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }
+          : false
+      }
+      loop={canSlide}
       pagination={{ clickable: true }}
       spaceBetween={16}
       slidesPerView="auto"
@@ -151,7 +158,11 @@ function ActivityCarousel({
             >
               <RpgSessionCard
                 {...card}
-                image={card.image || workshopPoster}
+                image={
+                  aspect === "poster"
+                    ? card.image || workshopPoster
+                    : card.image
+                }
                 aspect={aspect}
               />
             </a>
@@ -217,6 +228,43 @@ function ActivityCarousel({
 // const landingSideNews = landingNews.slice(3, 6)
 
 export const Landing = () => {
+  const [sessions, setSessions] = useState<Session[]>([])
+  const [sessionsLoaded, setSessionsLoaded] = useState(false)
+  const [workshops, setWorkshops] = useState<Session[]>([])
+  const [workshopsLoaded, setWorkshopsLoaded] = useState(false)
+
+  useEffect(() => {
+    let active = true
+
+    getSessionsApproved()
+      .then((response) => {
+        if (!active) return
+        setSessions(Array.isArray(response?.data) ? response.data : [])
+      })
+      .catch(() => {
+        if (active) setSessions([])
+      })
+      .finally(() => {
+        if (active) setSessionsLoaded(true)
+      })
+
+    getApprovedWorkshops()
+      .then((response) => {
+        if (!active) return
+        setWorkshops(Array.isArray(response?.data) ? response.data : [])
+      })
+      .catch(() => {
+        if (active) setWorkshops([])
+      })
+      .finally(() => {
+        if (active) setWorkshopsLoaded(true)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
+
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
@@ -259,7 +307,13 @@ export const Landing = () => {
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
             <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
-            <ActivityCarousel items={sessionMocks} aspect="cover" />
+            {sessions.length > 0 ? (
+              <ActivityCarousel items={sessions} aspect="cover" />
+            ) : sessionsLoaded ? (
+              <p className="text-sm text-reverted-foreground/75">
+                Nenhuma sessão disponível no momento.
+              </p>
+            ) : null}
             <Button asChild variant="outline">
               <a
                 href="https://interfacesnarrativasrpg.vercel.app/"
@@ -277,7 +331,13 @@ export const Landing = () => {
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
             <h2 className="text-xl font-medium text-primary">Oficinas</h2>
 
-            <ActivityCarousel items={workshopMocks} />
+            {workshops.length > 0 ? (
+              <ActivityCarousel items={workshops} />
+            ) : workshopsLoaded ? (
+              <p className="text-sm text-muted-foreground">
+                Nenhuma oficina disponível no momento.
+              </p>
+            ) : null}
             <Button asChild variant="outline">
               <a
                 href="https://interfacesnarrativasrpg.vercel.app/"
