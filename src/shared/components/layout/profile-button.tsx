@@ -48,10 +48,10 @@ export const ProfileButton = () => {
         <DropdownMenu.Content
           align="end"
           sideOffset={4}
-          className="z-50 min-w-40 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
+          className="z-50 w-(--radix-dropdown-menu-trigger-width) overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
         >
           <DropdownMenu.Item
-            className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+            className="flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
             onSelect={handleLogout}
           >
             <LogOutIcon className="size-4" />
