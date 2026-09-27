@@ -38,13 +38,13 @@ const ageRatingStyles: Record<
 }
 interface RpgSessionCardProps {
   title: string
-  image: string
+  image?: string | null
   system: string
-  system_icon: string
+  system_icon?: string | null
   status: string
   date: string
-  hours: string
-  age_rating: AgeRating
+  hours?: string
+  age_rating?: AgeRating | null
 }
 
 export const RpgSessionCard = ({
@@ -59,7 +59,7 @@ export const RpgSessionCard = ({
 }: RpgSessionCardProps) => {
   const isOpen = /dispon/i.test(status) || status.toLowerCase() === "available"
 
-  const rating = ageRatingStyles[age_rating]
+  const rating = age_rating ? ageRatingStyles[age_rating] : undefined
 
   return (
     <div className="w-full max-w-none">
@@ -71,11 +71,13 @@ export const RpgSessionCard = ({
         enableParallax
       >
         <div className="relative flex h-full min-h-0 min-w-0 flex-col justify-end overflow-hidden rounded-2xl pb-2">
-          <div
-            className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${image})` }}
-            aria-hidden
-          />
+          {image ? (
+            <div
+              className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${image})` }}
+              aria-hidden
+            />
+          ) : null}
           <div
             className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/50 to-transparent"
             aria-hidden
@@ -90,11 +92,17 @@ export const RpgSessionCard = ({
                 {status}
               </Badge>
 
-              <img
-                src={system_icon}
-                alt={system}
-                className="h-8 object-contain object-right sm:h-9"
-              />
+              {system_icon ? (
+                <img
+                  src={system_icon}
+                  alt={system}
+                  className="h-8 object-contain object-right sm:h-9"
+                />
+              ) : (
+                <span className="max-w-[45%] truncate text-right text-[10px] leading-tight text-white/80">
+                  {system}
+                </span>
+              )}
             </div>
 
             <div className="flex w-full shrink-0 flex-row items-center justify-between gap-1">
@@ -103,20 +111,22 @@ export const RpgSessionCard = ({
                   {title}
                 </CardTitle>
                 <p className="text-xs leading-snug text-white/80">
-                  {date}, às {hours}
+                  {hours ? `${date}, às ${hours}` : date}
                 </p>
               </div>
-              <span
-                className={cn(
-                  "flex min-h-7 min-w-7 translate-z-0 items-center justify-center rounded-md border border-white/70 px-1 text-[10px] leading-none font-bold text-white tabular-nums ring-1 ring-inset",
-                  rating.bg,
-                  rating.ring,
-                  rating.textShadow && "shadow-[0_1px_2px_rgb(0_0_0/0.85)]"
-                )}
-                title={`Classificação indicativa: ${age_rating === "L" ? "Livre" : age_rating + " anos"}`}
-              >
-                {age_rating}
-              </span>
+              {rating ? (
+                <span
+                  className={cn(
+                    "flex min-h-7 min-w-7 translate-z-0 items-center justify-center rounded-md border border-white/70 px-1 text-[10px] leading-none font-bold text-white tabular-nums ring-1 ring-inset",
+                    rating.bg,
+                    rating.ring,
+                    rating.textShadow && "shadow-[0_1px_2px_rgb(0_0_0/0.85)]"
+                  )}
+                  title={`Classificação indicativa: ${age_rating === "L" ? "Livre" : age_rating + " anos"}`}
+                >
+                  {age_rating}
+                </span>
+              ) : null}
             </div>
           </div>
         </div>

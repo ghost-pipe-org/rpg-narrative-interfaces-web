@@ -1,6 +1,8 @@
 import { createBrowserRouter, Outlet, ScrollRestoration } from "react-router"
 
 import { About } from "@/shared/pages/about"
+import { InDevelopment } from "@/shared/pages/in-development"
+import { Kaos } from "@/shared/pages/kaos"
 import { Landing } from "@/shared/pages/landing"
 import { Login } from "@/shared/pages/login"
 import { Members } from "@/shared/pages/members"
@@ -34,7 +36,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/kaos",
-        element: <NotFound />,
+        element: <Kaos />,
+      },
+      {
+        path: "/blog",
+        element: <InDevelopment />,
       },
       {
         path: "/login",

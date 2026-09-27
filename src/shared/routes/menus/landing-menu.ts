@@ -12,6 +12,10 @@ export const landingMenu = [
     to: "/members",
   },
   {
+    label: "Kaos",
+    to: "/kaos",
+  },
+  {
     label: "Blog",
     to: "/blog",
   },

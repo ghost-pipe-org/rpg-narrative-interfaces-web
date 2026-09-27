@@ -1,5 +1,5 @@
 import api from "../api";
-import type { postSessionData } from "./session.types";
+import type { postSessionData, SessionsResponse } from "./session.types";
 
 export const getSessions = async () => {
   const response = await api.get(`/sessions`);
@@ -17,7 +17,7 @@ export const deleteSession = async (sessionId: string) => {
 }
 
 export const getSessionsApproved = async () => {
-  const response = await api.get(`/sessions/approved`);
+  const response = await api.get<SessionsResponse>(`/sessions/approved`);
   return response.data;
 };
 

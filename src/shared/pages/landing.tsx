@@ -1,13 +1,19 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router"
 
 import { BookCover } from "book-cover-3d"
 import { Button } from "@/shared/components/ui/button"
 import { FaqCard } from "@/shared/components/cards/faq-card"
-import { NewsCard } from "@/shared/components/cards/news-card"
+// import { NewsCard } from "@/shared/components/cards/news-card"
 import RootLayout from "@/shared/components/layout/root-layout"
 import { MemberCard } from "@/shared/components/cards/member-card"
 import { LogoMarquee } from "@/shared/components/marquee/logo-marquee"
-import { RpgSessionCard } from "@/shared/components/cards/rpg-session-card"
+import {
+  RpgSessionCard,
+  type AgeRating,
+} from "@/shared/components/cards/rpg-session-card"
+import { getSessionsApproved } from "@/shared/services/session/session.service"
+import type { Session } from "@/shared/services/session/session.types"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
 import bgArt from "@/shared/assets/backgrounds/art.png"
@@ -20,112 +26,156 @@ import linkedEvents from "@/shared/mocks/linked-events"
 
 import { ArrowRightIcon } from "lucide-react"
 
-const landingSessions = [
-  {
-    title: "Sessão 1",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    system_icon:
-      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
-    system: "Ordem Paranormal",
-    status: "Disponível",
-    date: "2021-01-01",
-    hours: "10:00",
-    age_rating: "18" as const,
-  },
-  {
-    title: "Sessão 1",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    system_icon:
-      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
-    system: "Ordem Paranormal",
-    status: "Disponível",
-    date: "2021-01-01",
-    hours: "10:00",
-    age_rating: "18" as const,
-  },
-  {
-    title: "Sessão 1",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    system_icon:
-      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
-    system: "Ordem Paranormal",
-    status: "Disponível",
-    date: "2021-01-01",
-    hours: "10:00",
-    age_rating: "18" as const,
-  },
-  {
-    title: "Sessão 1",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    system_icon:
-      "https://static.wikia.nocookie.net/a46d648c-95a7-47d8-bbd4-9b06ef3c8c9a",
-    system: "Ordem Paranormal",
-    status: "Disponível",
-    date: "2021-01-01",
-    hours: "10:00",
-    age_rating: "18" as const,
-  },
-] as const
+const ageRatings = ["L", "10", "12", "14", "16", "18"] as const
 
-type LandingNewsItem = {
-  title: string
-  image: string
-  description?: string
-  date?: string
+const sessionCardVisibility = [
+  "block",
+  "block",
+  "block sm:hidden lg:block",
+  "hidden lg:block",
+]
+
+function isAgeRating(value: string): value is AgeRating {
+  return (ageRatings as readonly string[]).includes(value)
 }
 
-const landingNews: readonly LandingNewsItem[] = [
-  {
-    title: "XI Congresso Nacional de Educação",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    description:
-      "O Interfaces Narrativas participou do XI Congresso Nacional de Educação, em João Pessoa, PB, no dia 10 de abril de 2026.",
-  },
-  {
-    title: "Mestres convocados para grande encontro de heróis",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    description:
-      "Um encontro reúne mestres e jogadores para trocar experiências, compartilhar ideias e fortalecer a comunidade.",
-  },
-  {
-    title: "Novas mesas, novos destinos: a guilda cresce",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-    description:
-      "Chegaram novas aventuras e novas vagas. Descubra como participar e acompanhar os próximos anúncios.",
-  },
-  {
-    date: "6 de Novembro, 2026",
-    title:
-      "Nova expansão revoluciona mundo de RPG e atrai milhões de jogadores",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-  },
-  {
-    date: "14 de Fevereiro, 2026",
-    title: "Comunidade de RPG cria campanha épica que dura mais de 5 anos",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-  },
-  {
-    date: "6 de Abril, 2026",
-    title:
-      "Estúdio anuncia RPG inovador com escolhas que mudam completamente a história",
-    image:
-      "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
-  },
-] as const
+function sessionStatusLabel(status?: string) {
+  if (!status) return "Disponível"
 
-const landingMainNews = landingNews.slice(0, 3)
-const landingSideNews = landingNews.slice(3, 6)
+  const normalized = status.toLowerCase()
+  if (
+    normalized === "approved" ||
+    normalized === "aprovada" ||
+    normalized === "available" ||
+    normalized === "disponível" ||
+    normalized === "disponivel"
+  ) {
+    return "Disponível"
+  }
+
+  return status
+}
+
+function sessionSchedule(session: Session) {
+  const raw = session.approvedDate ?? session.possibleDates?.[0]
+
+  if (!raw) {
+    return { date: session.period || "Data a definir", hours: "" }
+  }
+
+  const parsed = new Date(raw)
+  if (Number.isNaN(parsed.getTime())) {
+    return { date: raw, hours: "" }
+  }
+
+  return {
+    date: parsed.toLocaleDateString("pt-BR"),
+    hours: parsed.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  }
+}
+
+function toSessionCard(session: Session) {
+  const schedule = sessionSchedule(session)
+  const ageRating =
+    session.ageRating && isAgeRating(session.ageRating)
+      ? session.ageRating
+      : null
+
+  return {
+    title: session.title,
+    image: session.image,
+    system: session.system,
+    system_icon: session.systemIcon,
+    status: sessionStatusLabel(session.status),
+    date: schedule.date,
+    hours: schedule.hours,
+    age_rating: ageRating,
+  }
+}
+
+// type LandingNewsItem = {
+//   title: string
+//   image: string
+//   description?: string
+//   date?: string
+// }
+//
+// const landingNews: readonly LandingNewsItem[] = [
+//   {
+//     title: "XI Congresso Nacional de Educação",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//     description:
+//       "O Interfaces Narrativas participou do XI Congresso Nacional de Educação, em João Pessoa, PB, no dia 10 de abril de 2026.",
+//   },
+//   {
+//     title: "Mestres convocados para grande encontro de heróis",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//     description:
+//       "Um encontro reúne mestres e jogadores para trocar experiências, compartilhar ideias e fortalecer a comunidade.",
+//   },
+//   {
+//     title: "Novas mesas, novos destinos: a guilda cresce",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//     description:
+//       "Chegaram novas aventuras e novas vagas. Descubra como participar e acompanhar os próximos anúncios.",
+//   },
+//   {
+//     date: "6 de Novembro, 2026",
+//     title:
+//       "Nova expansão revoluciona mundo de RPG e atrai milhões de jogadores",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//   },
+//   {
+//     date: "14 de Fevereiro, 2026",
+//     title: "Comunidade de RPG cria campanha épica que dura mais de 5 anos",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//   },
+//   {
+//     date: "6 de Abril, 2026",
+//     title:
+//       "Estúdio anuncia RPG inovador com escolhas que mudam completamente a história",
+//     image:
+//       "https://i0.wp.com/jogaod20.com/wp-content/uploads/2025/09/Novos-suplementos-de-Ordem-Paranormal-RPG.webp?fit=810%2C456&ssl=1",
+//   },
+// ] as const
+//
+// const landingMainNews = landingNews.slice(0, 3)
+// const landingSideNews = landingNews.slice(3, 6)
 
 export const Landing = () => {
+  const [sessions, setSessions] = useState<Session[]>([])
+  const [sessionsLoaded, setSessionsLoaded] = useState(false)
+
+  useEffect(() => {
+    let active = true
+
+    getSessionsApproved()
+      .then((response) => {
+        if (!active) return
+        setSessions(Array.isArray(response?.data) ? response.data : [])
+      })
+      .catch(() => {
+        if (active) setSessions([])
+      })
+      .finally(() => {
+        if (active) setSessionsLoaded(true)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
+
+  const visibleSessions = sessions.slice(0, 4)
+
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
@@ -165,27 +215,26 @@ export const Landing = () => {
 
         {/* SESSÕES */}
         <section className="bg-reverted-background text-reverted-foreground w-full py-12 md:py-14">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
-            <h2 className="mb-8 text-xl font-medium text-primary">Sessões</h2>
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
+            <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
-            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {landingSessions.map((session, idx) => (
-                <div
-                  key={`${session.title}-${idx}`}
-                  className={
-                    [
-                      "block",
-                      "block",
-                      "block sm:hidden lg:block",
-                      "hidden lg:block",
-                    ][idx] ?? "hidden"
-                  }
-                >
-                  <RpgSessionCard {...session} />
-                </div>
-              ))}
-            </div>
-            <Button asChild className="mt-6" variant="outline">
+            {visibleSessions.length > 0 ? (
+              <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {visibleSessions.map((session, idx) => (
+                  <div
+                    key={session.id}
+                    className={sessionCardVisibility[idx] ?? "hidden"}
+                  >
+                    <RpgSessionCard {...toSessionCard(session)} />
+                  </div>
+                ))}
+              </div>
+            ) : sessionsLoaded ? (
+              <p className="text-sm text-muted-foreground">
+                Nenhuma sessão disponível no momento.
+              </p>
+            ) : null}
+            <Button asChild variant="outline">
               <Link to="/sessions" className="inline-flex items-center gap-2">
                 Ver todas as sessões{" "}
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
@@ -259,12 +308,17 @@ export const Landing = () => {
         </section>
 
         {/* NOTÍCIAS */}
-        <section className="flex w-full flex-col items-center justify-center py-12 md:py-14">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
-            <h2 className="mb-8 text-center text-xl font-medium text-primary">
+        <section className="flex w-full flex-col items-center justify-center pt-12 pb-6 md:pt-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
+            <h2 className="text-center text-xl font-medium text-primary">
               Principais Notícias
             </h2>
 
+            <p className="text-sm text-muted-foreground mb-6">
+              Nenhuma notícia no momento.
+            </p>
+
+            {/*
             <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:hidden">
               {landingMainNews.map((news, idx) => (
                 <NewsCard
@@ -328,12 +382,13 @@ export const Landing = () => {
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </Link>
             </Button>
+            */}
           </div>
         </section>
 
-        <section className="flex w-full flex-col items-center justify-center py-12 md:py-14">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 sm:px-6">
-            <h2 className="mb-8 text-xl font-medium text-primary">
+        <section className="flex w-full flex-col items-center justify-center pt-6 pb-12 md:pb-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
+            <h2 className="text-xl font-medium text-primary">
               Integrantes
             </h2>
 
@@ -361,7 +416,7 @@ export const Landing = () => {
               ))}
             </div>
 
-            <Button asChild className="mt-6" variant="outline">
+            <Button asChild variant="outline" className="mb-6">
               <Link to="/members" className="inline-flex items-center gap-2">
                 Ver todos os membros
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />

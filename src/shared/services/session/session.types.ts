@@ -8,3 +8,24 @@ export interface postSessionData {
     minPlayers: number;
     maxPlayers: number;
 }
+
+export interface Session {
+    id: string;
+    title: string;
+    description: string;
+    requirements: string;
+    system: string;
+    possibleDates: string[];
+    period: string;
+    minPlayers: number;
+    maxPlayers: number;
+    status?: string;
+    image?: string | null;
+    systemIcon?: string | null;
+    ageRating?: string | null;
+    approvedDate?: string | null;
+}
+
+export interface SessionsResponse {
+    data: Session[];
+}
