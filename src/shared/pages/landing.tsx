@@ -235,10 +235,13 @@ export const Landing = () => {
               </p>
             ) : null}
             <Button asChild variant="outline">
-              <Link to="/sessions" className="inline-flex items-center gap-2">
+              <a
+                href="https://interfacesnarrativasrpg.vercel.app/"
+                className="inline-flex items-center gap-2"
+              >
                 Ver todas as sessões{" "}
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
-              </Link>
+              </a>
             </Button>
           </div>
         </section>
