@@ -1,11 +1,12 @@
 import type { LogoItem } from "@/shared/components/marquee/logo-marquee"
 
-import logoConedu from "@/shared/assets/logos/conedu.webp"
-import logoConeduDark from "@/shared/assets/logos/conedu-dark.webp"
+import logoComputacao from "@/shared/assets/logos/ciencia-da-computacao.png"
+import logoComputacaoDark from "@/shared/assets/logos/ciencia-da-computacao-dark.png"
 import logoGhostPipe from "@/shared/assets/logos/ghostpipe.png"
 import logoGhostPipeDark from "@/shared/assets/logos/ghostpipe-dark.png"
 import logoUepb from "@/shared/assets/logos/uepb.png"
 import logoUepbDark from "@/shared/assets/logos/uepb-dark.png"
+import logoUepbCcea from "@/shared/assets/logos/uepb-ccea.png"
 
 const linkedEvents: LogoItem[] = [
   {
@@ -13,13 +14,13 @@ const linkedEvents: LogoItem[] = [
     component: (
       <>
         <img
-          src={logoConedu}
-          alt="Logo Conedu"
+          src={logoComputacao}
+          alt="Logo Ciência da Computação"
           className="object-contain dark:hidden"
         />
         <img
-          src={logoConeduDark}
-          alt="Logo Conedu"
+          src={logoComputacaoDark}
+          alt="Logo Ciência da Computação"
           className="hidden object-contain dark:block"
         />
       </>
@@ -57,6 +58,16 @@ const linkedEvents: LogoItem[] = [
           className="hidden object-contain dark:block"
         />
       </>
+    ),
+  },
+  {
+    id: "4",
+    component: (
+      <img
+        src={logoUepbCcea}
+        alt="Logo UEPB CCEA Campus VII"
+        className="!h-24 !w-24 object-contain"
+      />
     ),
   },
 ]
