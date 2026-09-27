@@ -7,15 +7,15 @@ import { landingMenu } from "@/shared/routes/menus/landing-menu"
 export const InDevelopment = () => {
   return (
     <RootLayout menuItems={landingMenu}>
-      <div className="flex w-full flex-1 items-center justify-center px-[5vw] py-8">
-        <section className="mx-auto flex w-full max-w-[min(36rem,90vw)] flex-col items-center gap-4 text-center">
-          <span className="text-sm tracking-[0.2em] text-muted-foreground">
+      <div className="flex w-full min-w-0 flex-1 items-center justify-center px-4 py-8 sm:px-[5vw]">
+        <section className="mx-auto flex w-full min-w-0 max-w-xl flex-col items-center gap-4 text-center">
+          <span className="text-xs tracking-[0.18em] text-muted-foreground sm:text-sm sm:tracking-[0.2em]">
             EM BREVE
           </span>
-          <h1 className="text-3xl font-semibold md:text-4xl">
+          <h1 className="w-full max-w-full text-balance text-[clamp(1.15rem,5.2vw,1.875rem)] leading-tight sm:text-3xl md:text-4xl">
             Página em <span className="text-primary">desenvolvimento</span>
           </h1>
-          <p className="text-sm text-muted-foreground md:text-base">
+          <p className="max-w-full text-sm text-balance text-muted-foreground md:text-base">
             Esta página ainda está em desenvolvimento. Volte para a tela
             inicial.
           </p>

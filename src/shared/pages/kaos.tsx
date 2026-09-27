@@ -1,6 +1,3 @@
-import type { MouseEvent } from "react"
-import { toast } from "sonner"
-
 import { Button } from "@/shared/components/ui/button"
 import RootLayout from "@/shared/components/layout/root-layout"
 
@@ -12,7 +9,8 @@ import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import { DownloadIcon } from "lucide-react"
 
-const kaosManualUrl = "/manuals/kaos-em-nova-patos.pdf"
+const kaosManualUrl =
+  "https://drive.google.com/file/d/1_lOr2OR_4kIyQtRjp1hQzgZyKSXfwKOi/view"
 
 const universeParagraphs = [
   "Em Nova Patos, onde a alta tecnologia se entrelaça de forma caótica com a desolação, a vida é uma batalha contínua entre a tirania implacável da Valianty e a esperança feroz dos resistentes. Nova Patos, situada no coração da Paraíba, é um cenário vibrante e fragmentado, dividido em 5 setores, cada um com sua própria atmosfera única e desafios intensos, tudo isso no ano de 2224.",
@@ -25,29 +23,6 @@ const universeParagraphs = [
 ]
 
 export const Kaos = () => {
-  const downloadManual = async (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
-
-    try {
-      const response = await fetch(kaosManualUrl)
-      const type = response.headers.get("content-type") ?? ""
-      if (!response.ok || !type.includes("pdf")) {
-        toast.error("O arquivo do manual ainda não está disponível.")
-        return
-      }
-
-      const file = await response.blob()
-      const url = URL.createObjectURL(file)
-      const link = document.createElement("a")
-      link.href = url
-      link.download = "kaos-em-nova-patos.pdf"
-      link.click()
-      URL.revokeObjectURL(url)
-    } catch {
-      toast.error("O arquivo do manual ainda não está disponível.")
-    }
-  }
-
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="relative w-full max-w-full min-w-0 overflow-x-clip">
@@ -93,9 +68,9 @@ export const Kaos = () => {
               <Button asChild size="lg" variant="secondary">
                 <a
                   href={kaosManualUrl}
-                  download="kaos-em-nova-patos.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2"
-                  onClick={downloadManual}
                 >
                   Baixar manual
                   <DownloadIcon className="size-4" data-icon="inline-end" />
