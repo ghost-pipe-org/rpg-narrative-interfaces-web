@@ -1,7 +1,8 @@
 import api from "@/shared/services/api"
+import type { SessionsResponse } from "@/shared/services/session/session.types"
 
 export const getApprovedWorkshops = async () => {
-    const response = await api.get('/workshops/approved');
+    const response = await api.get<SessionsResponse>('/workshops/approved');
     return response.data;
 };
 

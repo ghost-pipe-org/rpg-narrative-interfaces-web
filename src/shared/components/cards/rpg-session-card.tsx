@@ -39,71 +39,93 @@ const ageRatingStyles: Record<
 interface RpgSessionCardProps {
   title: string
   image?: string | null
-  system: string
+  system?: string | null
   system_icon?: string | null
   status: string
   date: string
-  hours?: string
+  period?: string | null
   age_rating?: AgeRating | null
+  variant?: "card" | "poster"
 }
 
 export const RpgSessionCard = ({
   title,
   date,
   image,
-  hours,
   system,
   status,
+  period,
   age_rating,
   system_icon,
+  variant = "card",
 }: RpgSessionCardProps) => {
   const isOpen = /dispon/i.test(status) || status.toLowerCase() === "available"
+  const isPoster = variant === "poster"
 
   const rating = age_rating ? ageRatingStyles[age_rating] : undefined
 
   return (
     <div className="w-full max-w-none">
       <ThreeDCard
-        className={cn("aspect-video w-full ring-1 ring-white/15 lg:aspect-square")}
+        className={cn(
+          "w-full ring-1 ring-white/15",
+          isPoster ? "aspect-[9/16]" : "aspect-video lg:aspect-square"
+        )}
         maxRotation={10}
         parallaxOffset={28}
         enableGlow
         enableParallax
       >
-        <div className="relative flex h-full min-h-0 min-w-0 flex-col justify-end overflow-hidden rounded-2xl pb-2">
+        <div className="relative flex h-full min-h-0 min-w-0 flex-col justify-end overflow-hidden rounded-2xl pb-0">
           {image ? (
-            <div
+            <div  
               className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${image})` }}
               aria-hidden
             />
           ) : null}
-          <div
-            className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/50 to-transparent"
-            aria-hidden
-          />
+          {isPoster ? null : (
+            <div
+              className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/25"
+              aria-hidden
+            />
+          )}
+          {image && !isPoster ? (
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-linear-to-b from-black/55 to-transparent"
+              aria-hidden
+            />
+          ) : null}
 
-          <div className="relative z-10 flex h-full w-full flex-col items-end justify-end gap-1 px-4 pb-1 sm:gap-2 sm:px-3 sm:pb-3">
-            <div className="flex w-full flex-row justify-between pt-2 items-end">
-              <Badge
-                className="w-fit rounded-sm text-[10px] leading-tight"
-                variant={isOpen ? "success" : "destructive"}
-              >
-                {status}
-              </Badge>
+          {isPoster ? null : system_icon ? (
+            <img
+              src={system_icon}
+              alt={system ?? ""}
+              className="absolute top-3 right-3 z-10 h-8 max-w-[46%] object-contain object-right mix-blend-lighten sm:top-4 sm:right-4 sm:h-9"
+            />
+          ) : system ? (
+            <span className="absolute top-3 right-3 z-10 max-w-[45%] truncate text-right text-[10px] leading-tight text-white/80 sm:top-4 sm:right-4">
+              {system}
+            </span>
+          ) : null}
 
-              {system_icon ? (
-                <img
-                  src={system_icon}
-                  alt={system}
-                  className="h-8 object-contain object-right sm:h-9"
-                />
-              ) : (
-                <span className="max-w-[45%] truncate text-right text-[10px] leading-tight text-white/80">
-                  {system}
-                </span>
-              )}
+          {isPoster ? (
+            <div className="relative z-10 mt-auto flex w-full flex-col gap-0.5 bg-linear-to-t from-black via-black/80 to-transparent px-3 pt-16 pb-3">
+              <CardTitle className="font-body text-base leading-snug text-white">
+                {title}
+              </CardTitle>
+              <p className="text-xs leading-snug text-white/80">
+                {period ? `${date} · ${period}` : date}
+              </p>
             </div>
+          ) : (
+          <div className="relative z-10 flex h-full w-full flex-col items-end justify-end gap-1 px-4 pb-1 sm:gap-2 sm:px-3 sm:pb-3">
+            <Badge
+              className="w-fit self-start rounded-sm text-[10px] leading-tight"
+              variant={isOpen ? "success" : "destructive"}
+            >
+              {status}
+            </Badge>
 
             <div className="flex w-full shrink-0 flex-row items-center justify-between gap-1">
               <div className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -111,7 +133,7 @@ export const RpgSessionCard = ({
                   {title}
                 </CardTitle>
                 <p className="text-xs leading-snug text-white/80">
-                  {hours ? `${date}, às ${hours}` : date}
+                  {period ? `${date} · ${period}` : date}
                 </p>
               </div>
               {rating ? (
@@ -129,6 +151,7 @@ export const RpgSessionCard = ({
               ) : null}
             </div>
           </div>
+          )}
         </div>
       </ThreeDCard>
     </div>

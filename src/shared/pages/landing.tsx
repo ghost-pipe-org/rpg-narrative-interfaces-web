@@ -13,9 +13,14 @@ import {
   type AgeRating,
 } from "@/shared/components/cards/rpg-session-card"
 import { getSessionsApproved } from "@/shared/services/session/session.service"
-import type { Session } from "@/shared/services/session/session.types"
+import type {
+  Session,
+  SessionPossibleDate,
+} from "@/shared/services/session/session.types"
+import { getApprovedWorkshops } from "@/shared/services/workshop/workshop.service"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
+import workshopPoster from "@/shared/assets/systems/workshop-poster.png"
 import bgArt from "@/shared/assets/backgrounds/art.png"
 import bgHero from "@/shared/assets/backgrounds/street.png"
 
@@ -23,17 +28,11 @@ import { teamMembers } from "@/shared/mocks/team-members"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import linkedEvents from "@/shared/mocks/linked-events"
+import { systemCoverFor, systemIconFor } from "@/shared/utils/system-icon"
 
 import { ArrowRightIcon } from "lucide-react"
 
 const ageRatings = ["L", "10", "12", "14", "16", "18"] as const
-
-const sessionCardVisibility = [
-  "block",
-  "block",
-  "block sm:hidden lg:block",
-  "hidden lg:block",
-]
 
 function isAgeRating(value: string): value is AgeRating {
   return (ageRatings as readonly string[]).includes(value)
@@ -56,29 +55,42 @@ function sessionStatusLabel(status?: string) {
   return status
 }
 
-function sessionSchedule(session: Session) {
-  const raw = session.approvedDate ?? session.possibleDates?.[0]
+function periodLabel(period?: string | null) {
+  if (!period) return ""
 
-  if (!raw) {
-    return { date: session.period || "Data a definir", hours: "" }
+  const key = period
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase()
+
+  const labels: Record<string, string> = {
+    MANHA: "Manhã",
+    TARDE: "Tarde",
+    NOITE: "Noite",
   }
+
+  return labels[key] ?? period
+}
+
+function scheduleSource(session: Session) {
+  const candidate = session.approvedDate ?? session.possibleDates?.[0]
+  if (!candidate) return null
+  if (typeof candidate === "string") return candidate
+  return (candidate as SessionPossibleDate).date
+}
+
+function sessionSchedule(session: Session) {
+  const raw = scheduleSource(session)
+
+  if (!raw) return "Data a definir"
 
   const parsed = new Date(raw)
-  if (Number.isNaN(parsed.getTime())) {
-    return { date: raw, hours: "" }
-  }
+  if (Number.isNaN(parsed.getTime())) return raw
 
-  return {
-    date: parsed.toLocaleDateString("pt-BR"),
-    hours: parsed.toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-  }
+  return parsed.toLocaleDateString("pt-BR")
 }
 
 function toSessionCard(session: Session) {
-  const schedule = sessionSchedule(session)
   const ageRating =
     session.ageRating && isAgeRating(session.ageRating)
       ? session.ageRating
@@ -86,14 +98,53 @@ function toSessionCard(session: Session) {
 
   return {
     title: session.title,
-    image: session.image,
+    image: systemCoverFor(session.system) || session.image,
     system: session.system,
-    system_icon: session.systemIcon,
+    system_icon: session.systemIcon || systemIconFor(session.system),
     status: sessionStatusLabel(session.status),
-    date: schedule.date,
-    hours: schedule.hours,
+    date: sessionSchedule(session),
+    period: periodLabel(session.period),
     age_rating: ageRating,
   }
+}
+
+const sessionsUrl = "https://interfacesnarrativasrpg.vercel.app/sessions"
+
+function ActivityCards({
+  items,
+  variant = "card",
+}: {
+  items: Session[]
+  variant?: "card" | "poster"
+}) {
+  const isPoster = variant === "poster"
+
+  return (
+    <div className="flex w-full flex-wrap justify-center gap-4">
+      {items.map((item) => {
+        const card = toSessionCard(item)
+
+        return (
+          <a
+            key={item.id}
+            href={sessionsUrl}
+            aria-label={item.title}
+            className={
+              isPoster
+                ? "block w-[min(100%,17rem)] cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[calc(50%-0.5rem)] sm:max-w-64 lg:w-[calc(25%-0.75rem)] lg:max-w-none"
+                : "block w-full cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            }
+          >
+            <RpgSessionCard
+              {...card}
+              image={isPoster ? workshopPoster : card.image}
+              variant={variant}
+            />
+          </a>
+        )
+      })}
+    </div>
+  )
 }
 
 // type LandingNewsItem = {
@@ -153,6 +204,8 @@ function toSessionCard(session: Session) {
 export const Landing = () => {
   const [sessions, setSessions] = useState<Session[]>([])
   const [sessionsLoaded, setSessionsLoaded] = useState(false)
+  const [workshops, setWorkshops] = useState<Session[]>([])
+  const [workshopsLoaded, setWorkshopsLoaded] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -169,12 +222,25 @@ export const Landing = () => {
         if (active) setSessionsLoaded(true)
       })
 
+    getApprovedWorkshops()
+      .then((response) => {
+        if (!active) return
+        setWorkshops(Array.isArray(response?.data) ? response.data : [])
+      })
+      .catch(() => {
+        if (active) setWorkshops([])
+      })
+      .finally(() => {
+        if (active) setWorkshopsLoaded(true)
+      })
+
     return () => {
       active = false
     }
   }, [])
 
   const visibleSessions = sessions.slice(0, 4)
+  const visibleWorkshops = workshops.slice(0, 4)
 
   return (
     <RootLayout menuItems={landingMenu} showFooter>
@@ -219,16 +285,7 @@ export const Landing = () => {
             <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
             {visibleSessions.length > 0 ? (
-              <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {visibleSessions.map((session, idx) => (
-                  <div
-                    key={session.id}
-                    className={sessionCardVisibility[idx] ?? "hidden"}
-                  >
-                    <RpgSessionCard {...toSessionCard(session)} />
-                  </div>
-                ))}
-              </div>
+              <ActivityCards items={visibleSessions} />
             ) : sessionsLoaded ? (
               <p className="text-sm text-muted-foreground">
                 Nenhuma sessão disponível no momento.
@@ -240,6 +297,30 @@ export const Landing = () => {
                 className="inline-flex items-center gap-2"
               >
                 Ver todas as sessões{" "}
+                <ArrowRightIcon className="size-4" data-icon="inline-end" />
+              </a>
+            </Button>
+          </div>
+        </section>
+
+        {/* OFICINAS */}
+        <section className="w-full py-12 md:py-14">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
+            <h2 className="text-xl font-medium text-primary">Oficinas</h2>
+
+            {visibleWorkshops.length > 0 ? (
+              <ActivityCards items={visibleWorkshops} variant="poster" />
+            ) : workshopsLoaded ? (
+              <p className="text-sm text-muted-foreground">
+                Nenhuma oficina disponível no momento.
+              </p>
+            ) : null}
+            <Button asChild variant="outline">
+              <a
+                href="https://interfacesnarrativasrpg.vercel.app/"
+                className="inline-flex items-center gap-2"
+              >
+                Ver todas as oficinas{" "}
                 <ArrowRightIcon className="size-4" data-icon="inline-end" />
               </a>
             </Button>
