@@ -52,6 +52,8 @@ function SystemLogo({ system }: { system: RpgSystem & { logo: string } }) {
 }
 
 export const About = () => {
+  const masteredSystems = rpgSystems.filter((system) => system.id !== "outro")
+
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
@@ -165,7 +167,7 @@ export const About = () => {
             </p>
             <div className="flex w-full max-w-4xl flex-col items-center gap-10">
               {chunkSystems(
-                rpgSystems.filter(
+                masteredSystems.filter(
                   (system): system is RpgSystem & { logo: string } =>
                     Boolean(system.logo)
                 ),
@@ -180,9 +182,9 @@ export const About = () => {
                   ))}
                 </div>
               ))}
-              {rpgSystems.some((system) => !system.logo) ? (
+              {masteredSystems.some((system) => !system.logo) ? (
                 <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3">
-                  {rpgSystems
+                  {masteredSystems
                     .filter((system) => !system.logo)
                     .map((system) => (
                       <span

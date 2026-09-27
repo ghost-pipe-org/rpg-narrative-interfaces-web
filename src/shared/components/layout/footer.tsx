@@ -59,7 +59,7 @@ export const Footer = () => (
         <FooterHeading>Contato</FooterHeading>
         <address className={`space-y-2 not-italic leading-relaxed ${MUTED}`}>
           <p>Universidade Estadual da Paraíba</p>
-          <p>Campus Patos, PB</p>
+          <p>Campus Patos, CCEA</p>
           <a
             href={`mailto:${EMAIL}`}
             className="block underline decoration-primary/60 underline-offset-2 transition-colors hover:text-primary"
