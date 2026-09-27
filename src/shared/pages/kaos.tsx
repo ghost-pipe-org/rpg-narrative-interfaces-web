@@ -2,12 +2,13 @@ import { Button } from "@/shared/components/ui/button"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import bgCela from "@/shared/assets/backgrounds/cela.png"
-import logoKaos from "@/shared/assets/systems/kaos.png"
-import logoKaosDark from "@/shared/assets/systems/kaos-dark.png"
 
+import { getRpgSystemById } from "@/shared/constants/systems"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import { DownloadIcon } from "lucide-react"
+
+const kaos = getRpgSystemById("kaos")
 
 const kaosManualUrl =
   "https://drive.google.com/file/d/1_lOr2OR_4kIyQtRjp1hQzgZyKSXfwKOi/view"
@@ -46,20 +47,22 @@ export const Kaos = () => {
           <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-8 px-4 text-center text-white sm:px-6">
             <div className="flex max-w-xl flex-col items-center gap-4">
               <img
-                src={logoKaos}
-                alt="Kaos em Nova Patos"
+                src={kaos.logo}
+                alt={kaos.name}
                 className="h-14 w-auto object-contain dark:hidden"
               />
-              <img
-                src={logoKaosDark}
-                alt="Kaos em Nova Patos"
-                className="hidden h-14 w-auto object-contain dark:block"
-              />
+              {kaos.logoDark ? (
+                <img
+                  src={kaos.logoDark}
+                  alt={kaos.name}
+                  className="hidden h-14 w-auto object-contain dark:block"
+                />
+              ) : null}
               <p className="text-xs tracking-[0.2em] text-white/80 uppercase">
                 Manual · Nova Patos · 2224
               </p>
               <h1 className="text-3xl font-semibold md:text-4xl">
-                Kaos em Nova Patos
+                {kaos.name}
               </h1>
               <p className="text-sm leading-relaxed text-white/85 md:text-base">
                 Um RPG de mesa no coração da Paraíba, onde a Valianty e o Neo
@@ -81,7 +84,7 @@ export const Kaos = () => {
         </section>
 
         <section className="relative z-10 flex w-full flex-col items-center justify-center py-12 md:py-16">
-          <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-6 px-4 sm:px-6">
+          <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-6 px-4 sm:px-6">
             <h2 className="text-center text-xl font-medium text-primary">
               O universo de Nova Patos
             </h2>

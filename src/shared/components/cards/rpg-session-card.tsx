@@ -86,7 +86,7 @@ export const RpgSessionCard = ({
           ) : null}
           {isPoster ? null : (
             <div
-              className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/25"
+              className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/50 via-black/30 to-black/25"
               aria-hidden
             />
           )}

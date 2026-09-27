@@ -5,29 +5,58 @@ import { MemberCard } from "@/shared/components/cards/member-card"
 import RootLayout from "@/shared/components/layout/root-layout"
 
 import LogoInterfacesNarrativas from "@/shared/assets/images/interfaces-narrativas-art.png"
-import logoCallOfCthulhu from "@/shared/assets/systems/call-of-cthulhu.png"
-import logoDnD from "@/shared/assets/systems/dnd.png"
-import logoKaos from "@/shared/assets/systems/kaos.png"
-import logoKaosDark from "@/shared/assets/systems/kaos-dark.png"
-import logoOrdemParanormal from "@/shared/assets/systems/ordem-paranormal.png"
-import logoOrdemParanormalDark from "@/shared/assets/systems/ordem-paranormal-dark.png"
-import logoTormenta20 from "@/shared/assets/systems/tormenta-20.png"
 
+import { rpgSystems, type RpgSystem } from "@/shared/constants/systems"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 import { teamMembers } from "@/shared/mocks/team-members"
 
 import { ArrowRightIcon } from "lucide-react"
 
+function chunkSystems<T>(items: readonly T[], size: number) {
+  const rows: T[][] = []
+
+  for (let index = 0; index < items.length; index += size) {
+    rows.push(items.slice(index, index + size))
+  }
+
+  return rows
+}
+
+const systemRowClassName: Record<number, string> = {
+  1: "sm:max-w-xs sm:grid-cols-1",
+  2: "max-w-md sm:max-w-xl sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+}
+
+function SystemLogo({ system }: { system: RpgSystem & { logo: string } }) {
+  return (
+    <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
+      <img
+        src={system.logo}
+        alt={system.name}
+        className={
+          system.logoDark
+            ? "max-h-full max-w-full object-contain dark:hidden"
+            : "max-h-full max-w-full object-contain"
+        }
+      />
+      {system.logoDark ? (
+        <img
+          src={system.logoDark}
+          alt={system.name}
+          className="hidden max-h-full max-w-full object-contain dark:block"
+        />
+      ) : null}
+    </div>
+  )
+}
+
 export const About = () => {
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
-        <section
-          className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-xl flex-col items-center gap-4 px-4 text-center sm:px-6"
-          >
+        <section className="flex w-full min-w-0 flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-xl min-w-0 flex-col items-center gap-4 px-4 text-center sm:px-6">
             <span className="text-sm tracking-[0.2em] text-muted-foreground uppercase">
               Interfaces Narrativas
             </span>
@@ -37,13 +66,11 @@ export const About = () => {
           </div>
         </section>
 
-        <section
-          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
-          >
-            <h2 className="mb-3 text-xl font-medium text-primary">Quem somos?</h2>
+        <section className="flex w-full flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-4 text-center sm:px-6">
+            <h2 className="mb-3 text-xl font-medium text-primary">
+              Quem somos?
+            </h2>
             <img
               src={LogoInterfacesNarrativas}
               alt="Logo Interfaces Narrativas"
@@ -66,39 +93,33 @@ export const About = () => {
           </div>
         </section>
 
-        <section
-          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
-          >
-            <h2 className="mb-3 text-xl font-medium text-primary">Onde Atuamos?</h2>
+        <section className="flex w-full flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-4 text-center sm:px-6">
+            <h2 className="mb-3 text-xl font-medium text-primary">
+              Onde Atuamos?
+            </h2>
             <p className="w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Atuamos na Universidade Estadual da Paraíba, em Patos, PB.
             </p>
           </div>
         </section>
 
-        <section
-          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
-          >
-            <h2 className="mb-3 text-xl font-medium text-primary">Primeiros Passos</h2>
+        <section className="flex w-full flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-4 text-center sm:px-6">
+            <h2 className="mb-3 text-xl font-medium text-primary">
+              Primeiros Passos
+            </h2>
             <p className="w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Inserir História do Projeto de Extensão
             </p>
           </div>
         </section>
 
-        <section
-          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 sm:px-6"
-          >
-            <h2 className="mb-3 text-xl font-medium text-primary">Nossa Equipe</h2>
+        <section className="flex w-full flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-4 sm:px-6">
+            <h2 className="mb-3 text-xl font-medium text-primary">
+              Nossa Equipe
+            </h2>
 
             <div className="hidden h-full w-full flex-row flex-wrap items-center justify-center gap-4 lg:flex">
               {teamMembers.slice(0, 4).map((member) => (
@@ -133,67 +154,46 @@ export const About = () => {
           </div>
         </section>
 
-        <section
-          className="flex w-full flex-col items-center justify-center py-4 md:py-6"
-        >
-          <div
-            className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center justify-center px-4 text-center sm:px-6"
-          >
-            <h2 className="mb-3 text-xl font-medium text-primary">Sistemas Mestrados</h2>
+        <section className="flex w-full flex-col items-center justify-center py-4 md:py-6">
+          <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-4 text-center sm:px-6">
+            <h2 className="mb-3 text-xl font-medium text-primary">
+              Sistemas Mestrados
+            </h2>
             <p className="mb-8 w-full text-center text-sm leading-relaxed text-muted-foreground md:text-base">
               Conheça os sistemas de RPG de mesa com os quais nossos mestres já
               conduziram sessões e campanhas no projeto.
             </p>
             <div className="flex w-full max-w-4xl flex-col items-center gap-10">
-              <div className="grid w-full grid-cols-1 items-center justify-items-center gap-6 sm:grid-cols-3 sm:gap-8">
-                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
-                  <img
-                    src={logoDnD}
-                    alt="Dungeons & Dragons"
-                    className="max-h-full max-w-full object-contain"
-                  />
+              {chunkSystems(
+                rpgSystems.filter(
+                  (system): system is RpgSystem & { logo: string } =>
+                    Boolean(system.logo)
+                ),
+                3
+              ).map((row) => (
+                <div
+                  key={row.map((system) => system.id).join("-")}
+                  className={`grid w-full grid-cols-1 items-center justify-items-center gap-6 sm:gap-8 ${systemRowClassName[row.length] ?? "sm:grid-cols-3"}`}
+                >
+                  {row.map((system) => (
+                    <SystemLogo key={system.id} system={system} />
+                  ))}
                 </div>
-                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
-                  <img
-                    src={logoCallOfCthulhu}
-                    alt="Call of Cthulhu"
-                    className="max-h-full max-w-full object-contain"
-                  />
+              ))}
+              {rpgSystems.some((system) => !system.logo) ? (
+                <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3">
+                  {rpgSystems
+                    .filter((system) => !system.logo)
+                    .map((system) => (
+                      <span
+                        key={system.id}
+                        className="text-sm font-medium tracking-wide md:text-base"
+                      >
+                        {system.name}
+                      </span>
+                    ))}
                 </div>
-                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
-                  <img
-                    src={logoTormenta20}
-                    alt="Tormenta 20"
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-              </div>
-              <div className="grid w-full max-w-md grid-cols-1 items-center justify-items-center gap-6 sm:max-w-xl sm:grid-cols-2 sm:gap-8">
-                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
-                  <img
-                    src={logoOrdemParanormal}
-                    alt="Ordem Paranormal"
-                    className="max-h-full max-w-full object-contain dark:hidden"
-                  />
-                  <img
-                    src={logoOrdemParanormalDark}
-                    alt="Ordem Paranormal"
-                    className="hidden max-h-full max-w-full object-contain dark:block"
-                  />
-                </div>
-                <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
-                  <img
-                    src={logoKaos}
-                    alt="Kaos em Nova Patos"
-                    className="max-h-full max-w-full object-contain dark:hidden"
-                  />
-                  <img
-                    src={logoKaosDark}
-                    alt="Kaos em Nova Patos"
-                    className="hidden max-h-full max-w-full object-contain dark:block"
-                  />
-                </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </section>

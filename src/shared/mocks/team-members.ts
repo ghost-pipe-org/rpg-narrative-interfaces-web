@@ -18,7 +18,7 @@ export const orientationMembers: TeamMember[] = [
     role: "Orientadora",
   },
   {
-    name: "Vinícius Augustos",
+    name: "Vinícius Augustus",
     role: "Orientador",
   },
 ]

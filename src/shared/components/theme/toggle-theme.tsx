@@ -6,8 +6,8 @@ import { cn } from "@/shared/utils/cn"
 import { MoonIcon, SunIcon } from "lucide-react"
 
 export function ToggleTheme() {
-  const { theme, setTheme } = useTheme()
-  const isDark = theme === "dark"
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
 
   return (
     <Button

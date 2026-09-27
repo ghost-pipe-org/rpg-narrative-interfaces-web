@@ -12,11 +12,11 @@ import {
   RpgSessionCard,
   type AgeRating,
 } from "@/shared/components/cards/rpg-session-card"
-import { getSessionsApproved } from "@/shared/services/session/session.service"
 import type {
   Session,
   SessionPossibleDate,
 } from "@/shared/services/session/session.types"
+import { getSessionsApproved } from "@/shared/services/session/session.service"
 import { getApprovedWorkshops } from "@/shared/services/workshop/workshop.service"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
@@ -28,7 +28,7 @@ import { teamMembers } from "@/shared/mocks/team-members"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import linkedEvents from "@/shared/mocks/linked-events"
-import { systemCoverFor, systemIconFor } from "@/shared/utils/system-icon"
+import { systemCoverFor, systemIconFor } from "@/shared/constants/systems"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -287,7 +287,7 @@ export const Landing = () => {
             {visibleSessions.length > 0 ? (
               <ActivityCards items={visibleSessions} />
             ) : sessionsLoaded ? (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-reverted-foreground/75">
                 Nenhuma sessão disponível no momento.
               </p>
             ) : null}
