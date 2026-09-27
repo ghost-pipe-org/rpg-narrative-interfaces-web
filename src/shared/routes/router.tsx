@@ -8,6 +8,7 @@ import { Login } from "@/shared/pages/login"
 import { Members } from "@/shared/pages/members"
 import { NotFound } from "@/shared/pages/not-found"
 import { Register } from "@/shared/pages/register"
+import { ResetPassword } from "@/shared/pages/reset-password"
 
 function Root() {
   return (
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reset-password",
-        element: <NotFound />,
+        element: <ResetPassword />,
       },
       {
         path: "*",

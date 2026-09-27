@@ -1,5 +1,5 @@
 import api from "../api";
-import type { postUsersData, patchUsersData, postUsersAuthenticateData } from "./user.types";
+import type { postUsersData, patchUsersData, postUsersAuthenticateData, postUsersForgotPasswordData, postUsersResetPasswordData } from "./user.types";
 
 export const postUsers = async (data: postUsersData) => {
   const response = await api.post(`/users`, data);
@@ -28,5 +28,15 @@ export const patchUsersProfile = async (data: patchUsersData) => {
 
 export const postUsersAuthenticate = async (data: postUsersAuthenticateData) => {
   const response = await api.post(`/users/authenticate`, data);
+  return response.data;
+}
+
+export const postUsersForgotPassword = async (data: postUsersForgotPasswordData) => {
+  const response = await api.post(`/users/forgot-password`, data);
+  return response.data;
+}
+
+export const postUsersResetPassword = async (data: postUsersResetPasswordData) => {
+  const response = await api.post(`/users/reset-password`, data);
   return response.data;
 }

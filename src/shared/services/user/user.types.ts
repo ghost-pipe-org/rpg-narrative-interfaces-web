@@ -16,3 +16,12 @@ export interface postUsersAuthenticateData {
     email: string;
     password: string;
 }
+
+export interface postUsersForgotPasswordData {
+    email: string;
+}
+
+export interface postUsersResetPasswordData {
+    token: string;
+    password: string;
+}
