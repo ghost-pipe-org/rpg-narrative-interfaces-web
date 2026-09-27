@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react"
 import { Link } from "react-router"
 
 import { BookCover } from "book-cover-3d"
+import { A11y, Autoplay, Pagination } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
+
+import "swiper/css"
+import "swiper/css/pagination"
 import { Button } from "@/shared/components/ui/button"
 import { FaqCard } from "@/shared/components/cards/faq-card"
 // import { NewsCard } from "@/shared/components/cards/news-card"
@@ -16,15 +20,15 @@ import type {
   Session,
   SessionPossibleDate,
 } from "@/shared/services/session/session.types"
-import { getSessionsApproved } from "@/shared/services/session/session.service"
-import { getApprovedWorkshops } from "@/shared/services/workshop/workshop.service"
 
 import bookCover from "@/shared/assets/books/cover.jpg"
 import workshopPoster from "@/shared/assets/systems/workshop-poster.png"
 import bgArt from "@/shared/assets/backgrounds/art.png"
 import bgHero from "@/shared/assets/backgrounds/street.png"
 
+import { sessionMocks } from "@/shared/mocks/sessions"
 import { teamMembers } from "@/shared/mocks/team-members"
+import { workshopMocks } from "@/shared/mocks/workshops"
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 
 import linkedEvents from "@/shared/mocks/linked-events"
@@ -110,40 +114,51 @@ function toSessionCard(session: Session) {
 
 const sessionsUrl = "https://interfacesnarrativasrpg.vercel.app/sessions"
 
-function ActivityCards({
+function ActivityCarousel({
   items,
-  variant = "card",
+  aspect = "poster",
 }: {
   items: Session[]
-  variant?: "card" | "poster"
+  aspect?: "cover" | "poster"
 }) {
-  const isPoster = variant === "poster"
-
   return (
-    <div className="flex w-full flex-wrap justify-center gap-4">
+    <Swiper
+      modules={[Autoplay, Pagination, A11y]}
+      autoplay={{
+        delay: 3200,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
+      loop
+      pagination={{ clickable: true }}
+      spaceBetween={16}
+      slidesPerView="auto"
+      className={
+        aspect === "cover"
+          ? "activity-swiper activity-swiper-wide w-full"
+          : "activity-swiper w-full"
+      }
+    >
       {items.map((item) => {
         const card = toSessionCard(item)
 
         return (
-          <a
-            key={item.id}
-            href={sessionsUrl}
-            aria-label={item.title}
-            className={
-              isPoster
-                ? "block w-[min(100%,17rem)] cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[calc(50%-0.5rem)] sm:max-w-64 lg:w-[calc(25%-0.75rem)] lg:max-w-none"
-                : "block w-full cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
-            }
-          >
-            <RpgSessionCard
-              {...card}
-              image={isPoster ? workshopPoster : card.image}
-              variant={variant}
-            />
-          </a>
+          <SwiperSlide key={item.id} className="h-auto">
+            <a
+              href={sessionsUrl}
+              aria-label={item.title}
+              className="block cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              <RpgSessionCard
+                {...card}
+                image={card.image || workshopPoster}
+                aspect={aspect}
+              />
+            </a>
+          </SwiperSlide>
         )
       })}
-    </div>
+    </Swiper>
   )
 }
 
@@ -202,46 +217,6 @@ function ActivityCards({
 // const landingSideNews = landingNews.slice(3, 6)
 
 export const Landing = () => {
-  const [sessions, setSessions] = useState<Session[]>([])
-  const [sessionsLoaded, setSessionsLoaded] = useState(false)
-  const [workshops, setWorkshops] = useState<Session[]>([])
-  const [workshopsLoaded, setWorkshopsLoaded] = useState(false)
-
-  useEffect(() => {
-    let active = true
-
-    getSessionsApproved()
-      .then((response) => {
-        if (!active) return
-        setSessions(Array.isArray(response?.data) ? response.data : [])
-      })
-      .catch(() => {
-        if (active) setSessions([])
-      })
-      .finally(() => {
-        if (active) setSessionsLoaded(true)
-      })
-
-    getApprovedWorkshops()
-      .then((response) => {
-        if (!active) return
-        setWorkshops(Array.isArray(response?.data) ? response.data : [])
-      })
-      .catch(() => {
-        if (active) setWorkshops([])
-      })
-      .finally(() => {
-        if (active) setWorkshopsLoaded(true)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [])
-
-  const visibleSessions = sessions.slice(0, 4)
-  const visibleWorkshops = workshops.slice(0, 4)
-
   return (
     <RootLayout menuItems={landingMenu} showFooter>
       <div className="w-full max-w-full min-w-0 overflow-x-clip">
@@ -284,13 +259,7 @@ export const Landing = () => {
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
             <h2 className="text-xl font-medium text-primary">Sessões</h2>
 
-            {visibleSessions.length > 0 ? (
-              <ActivityCards items={visibleSessions} />
-            ) : sessionsLoaded ? (
-              <p className="text-sm text-reverted-foreground/75">
-                Nenhuma sessão disponível no momento.
-              </p>
-            ) : null}
+            <ActivityCarousel items={sessionMocks} aspect="cover" />
             <Button asChild variant="outline">
               <a
                 href="https://interfacesnarrativasrpg.vercel.app/"
@@ -308,13 +277,7 @@ export const Landing = () => {
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
             <h2 className="text-xl font-medium text-primary">Oficinas</h2>
 
-            {visibleWorkshops.length > 0 ? (
-              <ActivityCards items={visibleWorkshops} variant="poster" />
-            ) : workshopsLoaded ? (
-              <p className="text-sm text-muted-foreground">
-                Nenhuma oficina disponível no momento.
-              </p>
-            ) : null}
+            <ActivityCarousel items={workshopMocks} />
             <Button asChild variant="outline">
               <a
                 href="https://interfacesnarrativasrpg.vercel.app/"
@@ -398,7 +361,7 @@ export const Landing = () => {
               Principais Notícias
             </h2>
 
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="mb-6 text-sm text-muted-foreground">
               Nenhuma notícia no momento.
             </p>
 
@@ -472,9 +435,7 @@ export const Landing = () => {
 
         <section className="flex w-full flex-col items-center justify-center pt-6 pb-12 md:pb-14">
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-6 px-4 sm:px-6">
-            <h2 className="text-xl font-medium text-primary">
-              Integrantes
-            </h2>
+            <h2 className="text-xl font-medium text-primary">Integrantes</h2>
 
             <div className="hidden h-full w-full flex-row flex-wrap items-center justify-center gap-4 lg:flex">
               {teamMembers.slice(0, 4).map((member) => (

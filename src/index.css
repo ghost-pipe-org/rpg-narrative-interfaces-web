@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -204,6 +204,33 @@
     @apply font-bold;
     font-family: var(--font-heading);
   }
+}
+
+.activity-swiper {
+  --swiper-theme-color: var(--primary);
+  --swiper-pagination-color: var(--primary);
+  --swiper-pagination-bullet-inactive-color: var(--muted-foreground);
+  --swiper-pagination-bullet-inactive-opacity: 0.45;
+  --swiper-pagination-bullet-size: 0.45rem;
+  --swiper-pagination-bullet-horizontal-gap: 0.3rem;
+  padding-bottom: 2.25rem;
+}
+
+.activity-swiper .swiper-slide {
+  width: min(17rem, 78vw);
+  height: auto;
+}
+
+.activity-swiper-wide .swiper-slide {
+  width: min(32rem, 88vw);
+}
+
+.activity-swiper .swiper-pagination {
+  bottom: 0;
+}
+
+.activity-swiper:has(.swiper-pagination-lock) {
+  padding-bottom: 0;
 }
 
 @keyframes logo-marquee-move {
