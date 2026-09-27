@@ -6,7 +6,9 @@ import RootLayout from "@/shared/components/layout/root-layout"
 
 import LogoInterfacesNarrativas from "@/shared/assets/images/interfaces-narrativas-art.png"
 
-import { rpgSystems, type RpgSystem } from "@/shared/constants/systems"
+import { rpgSystems } from "@/shared/constants/systems"
+
+type RpgSystemWithLogo = Extract<(typeof rpgSystems)[number], { logo: string }>
 import { landingMenu } from "@/shared/routes/menus/landing-menu"
 import { teamMembers } from "@/shared/mocks/team-members"
 
@@ -28,21 +30,23 @@ const systemRowClassName: Record<number, string> = {
   3: "sm:grid-cols-3",
 }
 
-function SystemLogo({ system }: { system: RpgSystem & { logo: string } }) {
+function SystemLogo({ system }: { system: RpgSystemWithLogo }) {
+  const logoDark = "logoDark" in system ? system.logoDark : undefined
+
   return (
     <div className="flex h-20 w-44 items-center justify-center sm:h-24 sm:w-52 md:h-28 md:w-60">
       <img
         src={system.logo}
         alt={system.name}
         className={
-          system.logoDark
+          logoDark
             ? "max-h-full max-w-full object-contain dark:hidden"
             : "max-h-full max-w-full object-contain"
         }
       />
-      {system.logoDark ? (
+      {logoDark ? (
         <img
-          src={system.logoDark}
+          src={logoDark}
           alt={system.name}
           className="hidden max-h-full max-w-full object-contain dark:block"
         />
@@ -168,8 +172,7 @@ export const About = () => {
             <div className="flex w-full max-w-4xl flex-col items-center gap-10">
               {chunkSystems(
                 masteredSystems.filter(
-                  (system): system is RpgSystem & { logo: string } =>
-                    Boolean(system.logo)
+                  (system): system is RpgSystemWithLogo => Boolean(system.logo)
                 ),
                 3
               ).map((row) => (

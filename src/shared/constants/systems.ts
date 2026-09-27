@@ -107,11 +107,15 @@ export const rpgSystems = [
 
 export type RpgSystemId = (typeof rpgSystems)[number]["id"]
 
+type RpgSystemEntry = (typeof rpgSystems)[number]
+
 const systemsById = Object.fromEntries(
   rpgSystems.map((system) => [system.id, system])
-) as Record<RpgSystemId, RpgSystem>
+) as unknown as {
+  [K in RpgSystemId]: Extract<RpgSystemEntry, { id: K }>
+}
 
-export function getRpgSystemById(id: RpgSystemId) {
+export function getRpgSystemById<T extends RpgSystemId>(id: T) {
   return systemsById[id]
 }
 
