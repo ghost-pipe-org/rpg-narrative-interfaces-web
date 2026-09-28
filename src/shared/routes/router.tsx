@@ -9,6 +9,7 @@ import { Members } from "@/shared/pages/members"
 import { NotFound } from "@/shared/pages/not-found"
 import { Register } from "@/shared/pages/register"
 import { ResetPassword } from "@/shared/pages/reset-password"
+import { VerifyEmail } from "@/shared/pages/verify-email"
 
 function Root() {
   return (
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "/reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "/verify-email",
+        element: <VerifyEmail />,
       },
       {
         path: "*",

@@ -32,6 +32,7 @@ export const ResetPassword = () => {
   const token = searchParams.get("token")?.trim() ?? ""
   const [isLoading, setIsLoading] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
+  const [devLink, setDevLink] = useState<string | null>(null)
 
   const forgotForm = useForm<ForgotPasswordFormData>({
     mode: "onBlur",
@@ -50,11 +51,16 @@ export const ResetPassword = () => {
     setIsLoading(true)
 
     try {
-      await postUsersForgotPassword({ email: data.email.trim() })
+      const response = await postUsersForgotPassword({ email: data.email.trim() })
       setEmailSent(true)
-      toast.success(
-        "Se existir uma conta com esse e-mail, enviaremos as instruções para redefinir a senha."
-      )
+      if (typeof response?.devLink === "string") {
+        setDevLink(response.devLink)
+        toast.message("Modo dev: use o link abaixo (SMTP não configurado)")
+      } else {
+        toast.success(
+          "Se existir uma conta com esse e-mail, enviaremos as instruções para redefinir a senha."
+        )
+      }
     } catch (error) {
       toast.error(
         getApiErrorMessage(error, "Não foi possível solicitar a recuperação")
@@ -147,10 +153,20 @@ export const ResetPassword = () => {
               </form>
             </>
           ) : emailSent ? (
-            <p className="text-sm text-muted-foreground md:text-base">
-              Se existir uma conta com esse e-mail, enviaremos as instruções
-              para redefinir a senha.
-            </p>
+            <div className="w-full space-y-3 text-sm text-muted-foreground md:text-base">
+              <p>
+                Se existir uma conta com esse e-mail, enviaremos as instruções
+                para redefinir a senha.
+              </p>
+              {devLink ? (
+                <p className="break-all text-left">
+                  Link de desenvolvimento:{" "}
+                  <a className="text-primary underline" href={devLink}>
+                    {devLink}
+                  </a>
+                </p>
+              ) : null}
+            </div>
           ) : (
             <>
               <p className="text-sm text-muted-foreground md:text-base">
