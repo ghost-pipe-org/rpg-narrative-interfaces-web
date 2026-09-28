@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router"
+import { Link, useNavigate, useSearchParams } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
+import type { CredentialResponse } from "@react-oauth/google"
 
 import { useAuth } from "@/shared/contexts/auth-context"
-
+import { GoogleLoginButton } from "@/shared/components/auth/google-login-button"
 import { postUsers } from "@/shared/services/user/user.service"
 
 import { Input } from "@/shared/components/ui/input"
@@ -15,6 +16,13 @@ import RootLayout from "@/shared/components/layout/root-layout"
 import { emailPattern, phonePattern } from "@/shared/utils/patterns"
 import { formatPhoneNumber } from "@/shared/utils/format-phone-number"
 import { getApiErrorMessage } from "@/shared/utils/get-api-error-message"
+import { getApiErrorCode } from "@/shared/utils/get-api-error-code"
+import { parseJwtPayload } from "@/shared/utils/parse-jwt"
+import {
+  clearGoogleRegisterSession,
+  readGoogleRegisterSession,
+  saveGoogleRegisterSession,
+} from "@/shared/utils/google-register-session"
 
 import { ArrowRightIcon } from "lucide-react"
 
@@ -30,8 +38,11 @@ interface RegisterFormData {
 
 export const Register = () => {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const [searchParams] = useSearchParams()
+  const { isAuthenticated, applyAuthSession, loginWithGoogle } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [googleIdToken, setGoogleIdToken] = useState<string | null>(null)
+  const isGoogleRegister = Boolean(googleIdToken)
 
   const { control, handleSubmit, setValue, clearErrors } =
     useForm<RegisterFormData>({
@@ -56,6 +67,15 @@ export const Register = () => {
   }, [isAuthenticated, navigate])
 
   useEffect(() => {
+    if (searchParams.get("from") !== "google") return
+    const session = readGoogleRegisterSession()
+    if (!session?.googleIdToken) return
+    setGoogleIdToken(session.googleIdToken)
+    if (session.name) setValue("name", session.name)
+    if (session.email) setValue("email", session.email)
+  }, [searchParams, setValue])
+
+  useEffect(() => {
     if (!isMaster) {
       setValue("enrollment", "")
       clearErrors("enrollment")
@@ -66,7 +86,24 @@ export const Register = () => {
     setIsLoading(true)
 
     try {
-      await postUsers({
+      if (googleIdToken) {
+        const response = await postUsers({
+          name: data.name.trim(),
+          googleIdToken,
+          enrollment: data.isMaster ? data.enrollment.trim() : undefined,
+          phoneNumber: data.phone.replace(phonePattern, "") || undefined,
+          masterConfirm: data.isMaster,
+        })
+        clearGoogleRegisterSession()
+        if (response.token && response.user) {
+          applyAuthSession(response.token, response.user)
+          toast.success("Conta criada com sucesso")
+          navigate("/")
+          return
+        }
+      }
+
+      const response = await postUsers({
         name: data.name.trim(),
         email: data.email.trim(),
         password: data.password,
@@ -74,12 +111,52 @@ export const Register = () => {
         phoneNumber: data.phone.replace(phonePattern, "") || undefined,
         masterConfirm: data.isMaster,
       })
-      toast.success("Conta criada com sucesso")
+      if (typeof response?.devLink === "string") {
+        toast.message("Conta criada. Em dev, abra o link de verificação", {
+          description: response.devLink,
+          duration: 15000,
+          action: {
+            label: "Abrir",
+            onClick: () => window.open(response.devLink, "_blank"),
+          },
+        })
+      } else {
+        toast.success("Conta criada! Verifique seu e-mail para ativar o login.")
+      }
       navigate("/login")
     } catch (error) {
       toast.error(getApiErrorMessage(error, "Erro ao criar conta"))
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+    const token = credentialResponse.credential
+    if (!token) {
+      toast.error("Não foi possível obter o token do Google")
+      return
+    }
+
+    try {
+      await loginWithGoogle(token)
+      toast.success("Login com Google realizado com sucesso")
+      navigate("/")
+    } catch (error) {
+      if (getApiErrorCode(error) === "REGISTRATION_REQUIRED") {
+        const payload = parseJwtPayload<{ email?: string; name?: string }>(token)
+        saveGoogleRegisterSession({
+          googleIdToken: token,
+          email: payload?.email || "",
+          name: payload?.name,
+        })
+        setGoogleIdToken(token)
+        if (payload?.name) setValue("name", payload.name)
+        if (payload?.email) setValue("email", payload.email)
+        toast.message("Complete os dados para finalizar o cadastro com Google")
+        return
+      }
+      toast.error(getApiErrorMessage(error, "Erro ao continuar com Google"))
     }
   }
 
@@ -107,13 +184,12 @@ export const Register = () => {
           </span>
           <h1 className="text-3xl font-semibold md:text-4xl">Criar Conta</h1>
           <p className="text-sm text-muted-foreground md:text-base">
-            Crie uma conta e tenha acesso aos recursos da plataforma.
+            {isGoogleRegister
+              ? "Finalize seu cadastro com Google."
+              : "Crie uma conta e tenha acesso aos recursos da plataforma."}
           </p>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="w-full space-y-4"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
             <Controller
               control={control}
               name="name"
@@ -134,7 +210,7 @@ export const Register = () => {
               control={control}
               name="email"
               rules={{
-                required: "Informe o e-mail",
+                required: !isGoogleRegister ? "Informe o e-mail" : false,
                 pattern: {
                   value: emailPattern,
                   message: "E-mail inválido",
@@ -146,6 +222,7 @@ export const Register = () => {
                   placeholder="Email"
                   type="email"
                   autoComplete="email"
+                  disabled={isGoogleRegister}
                   errorMessage={fieldState.error?.message}
                 />
               )}
@@ -209,51 +286,71 @@ export const Register = () => {
                 />
               )}
             />
-            <Controller
-              control={control}
-              name="password"
-              rules={{
-                required: "Informe a senha",
-                minLength: {
-                  value: 6,
-                  message: "Senha deve ter pelo menos 6 caracteres",
-                },
-                validate: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "A senha deve conter pelo menos uma letra maiúscula",
-              }}
-              render={({ field, fieldState }) => (
-                <Input
-                  {...field}
-                  placeholder="Senha"
-                  type="password"
-                  autoComplete="new-password"
-                  errorMessage={fieldState.error?.message}
+            {!isGoogleRegister ? (
+              <>
+                <Controller
+                  control={control}
+                  name="password"
+                  rules={{
+                    required: "Informe a senha",
+                    minLength: {
+                      value: 6,
+                      message: "Senha deve ter pelo menos 6 caracteres",
+                    },
+                    validate: (value) =>
+                      /[A-Z]/.test(value) ||
+                      "A senha deve conter pelo menos uma letra maiúscula",
+                  }}
+                  render={({ field, fieldState }) => (
+                    <Input
+                      {...field}
+                      placeholder="Senha"
+                      type="password"
+                      autoComplete="new-password"
+                      errorMessage={fieldState.error?.message}
+                    />
+                  )}
                 />
-              )}
-            />
-            <Controller
-              control={control}
-              name="confirmPassword"
-              rules={{
-                required: "Confirme a senha",
-                validate: (value, values) =>
-                  value === values.password || "As senhas não coincidem",
-              }}
-              render={({ field, fieldState }) => (
-                <Input
-                  {...field}
-                  placeholder="Confirmar senha"
-                  type="password"
-                  autoComplete="new-password"
-                  errorMessage={fieldState.error?.message}
+                <Controller
+                  control={control}
+                  name="confirmPassword"
+                  rules={{
+                    required: "Confirme a senha",
+                    validate: (value, values) =>
+                      value === values.password || "As senhas não coincidem",
+                  }}
+                  render={({ field, fieldState }) => (
+                    <Input
+                      {...field}
+                      placeholder="Confirmar senha"
+                      type="password"
+                      autoComplete="new-password"
+                      errorMessage={fieldState.error?.message}
+                    />
+                  )}
                 />
-              )}
-            />
+              </>
+            ) : null}
             <Button type="submit" size="lg" disabled={isLoading}>
               {isLoading ? "Criando conta..." : "Criar conta"}
               {!isLoading ? <ArrowRightIcon /> : null}
             </Button>
+
+            {!isGoogleRegister ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <div className="h-px flex-1 bg-border" />
+                  <span className="text-xs tracking-wide text-muted-foreground uppercase">
+                    ou
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <GoogleLoginButton
+                  onSuccess={handleGoogleSuccess}
+                  onError={() => toast.error("Erro ao continuar com Google")}
+                />
+              </>
+            ) : null}
           </form>
           <p className="text-sm text-muted-foreground md:text-base">
             Já tem uma conta?{" "}
