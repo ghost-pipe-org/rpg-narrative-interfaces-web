@@ -13,7 +13,7 @@ import { Button } from "@/shared/components/ui/button"
 import { Checkbox } from "@/shared/components/ui/checkbox"
 import RootLayout from "@/shared/components/layout/root-layout"
 
-import { emailPattern, phonePattern } from "@/shared/utils/patterns"
+import { emailPattern, enrollmentPattern, phonePattern } from "@/shared/utils/patterns"
 import { formatPhoneNumber } from "@/shared/utils/format-phone-number"
 import { getApiErrorMessage } from "@/shared/utils/get-api-error-message"
 import { getApiErrorCode } from "@/shared/utils/get-api-error-code"
@@ -111,18 +111,20 @@ export const Register = () => {
         phoneNumber: data.phone.replace(phonePattern, "") || undefined,
         masterConfirm: data.isMaster,
       })
+
+      toast.success("Conta criada! Verifique seu e-mail para ativar o login.")
+
       if (typeof response?.devLink === "string") {
-        toast.message("Conta criada. Em dev, abra o link de verificação", {
+        toast.message("Link de verificação", {
           description: response.devLink,
-          duration: 15000,
+          duration: 30000,
           action: {
             label: "Abrir",
-            onClick: () => window.open(response.devLink, "_blank"),
+            onClick: () => window.open(response.devLink, "_self"),
           },
         })
-      } else {
-        toast.success("Conta criada! Verifique seu e-mail para ativar o login.")
       }
+
       navigate("/login")
     } catch (error) {
       toast.error(getApiErrorMessage(error, "Erro ao criar conta"))
@@ -258,9 +260,16 @@ export const Register = () => {
                 control={control}
                 name="enrollment"
                 rules={{
-                  validate: (value) =>
-                    String(value ?? "").trim() !== "" ||
-                    "Matrícula obrigatória para mestres",
+                  validate: (value) => {
+                    const enrollment = String(value ?? "").trim()
+                    if (!enrollment) {
+                      return "Matrícula obrigatória para mestres"
+                    }
+                    if (!enrollmentPattern.test(enrollment)) {
+                      return "Matrícula deve ter exatamente 9 dígitos"
+                    }
+                    return true
+                  },
                 }}
                 render={({ field, fieldState }) => (
                   <Input

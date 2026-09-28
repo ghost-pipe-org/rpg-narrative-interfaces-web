@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -20,6 +20,8 @@ import { saveGoogleRegisterSession } from "@/shared/utils/google-register-sessio
 
 import { ArrowRightIcon } from "lucide-react"
 
+const UNVERIFIED_EMAIL_KEY = "unverified_login_email"
+
 interface LoginFormData {
   email: string
   password: string
@@ -28,10 +30,16 @@ interface LoginFormData {
 export const Login = () => {
   const navigate = useNavigate()
   const { login, loginWithGoogle, isLoading } = useAuth()
-  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null)
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem(UNVERIFIED_EMAIL_KEY)
+    } catch {
+      return null
+    }
+  })
   const [isResending, setIsResending] = useState(false)
 
-  const { control, handleSubmit, getValues } = useForm<LoginFormData>({
+  const { control, handleSubmit, getValues, setValue } = useForm<LoginFormData>({
     mode: "onBlur",
     defaultValues: {
       email: "",
@@ -39,15 +47,38 @@ export const Login = () => {
     },
   })
 
+  useEffect(() => {
+    if (!unverifiedEmail) return
+    setValue("email", unverifiedEmail)
+  }, [unverifiedEmail, setValue])
+
+  const rememberUnverifiedEmail = (email: string) => {
+    setUnverifiedEmail(email)
+    try {
+      sessionStorage.setItem(UNVERIFIED_EMAIL_KEY, email)
+    } catch {
+      // ignore
+    }
+  }
+
+  const clearUnverifiedEmail = () => {
+    setUnverifiedEmail(null)
+    try {
+      sessionStorage.removeItem(UNVERIFIED_EMAIL_KEY)
+    } catch {
+      return;
+    }
+  }
+
   const onSubmit = async (data: LoginFormData) => {
     try {
-      setUnverifiedEmail(null)
       await login({ email: data.email, password: data.password })
+      clearUnverifiedEmail()
       toast.success("Login realizado com sucesso")
       navigate("/")
     } catch (error) {
       if (getApiErrorCode(error) === "EMAIL_NOT_VERIFIED") {
-        setUnverifiedEmail(data.email)
+        rememberUnverifiedEmail(data.email)
         toast.error("Confirme seu e-mail antes de entrar")
         return
       }
@@ -60,21 +91,10 @@ export const Login = () => {
     if (!email) return
     setIsResending(true)
     try {
-      const response = await postUsersResendVerification({ email })
-      if (typeof response?.devLink === "string") {
-        toast.message("Modo dev: abra o link de verificação", {
-          description: response.devLink,
-          duration: 15000,
-          action: {
-            label: "Abrir",
-            onClick: () => window.open(response.devLink, "_blank"),
-          },
-        })
-      } else {
-        toast.success(
-          "Se a conta existir e estiver pendente, enviamos um novo e-mail",
-        )
-      }
+      await postUsersResendVerification({ email })
+      toast.success(
+        "Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada — reenviamos o link.",
+      )
     } catch (error) {
       toast.error(getApiErrorMessage(error, "Erro ao reenviar verificação"))
     } finally {
@@ -91,6 +111,7 @@ export const Login = () => {
 
     try {
       await loginWithGoogle(googleIdToken)
+      clearUnverifiedEmail()
       toast.success("Login com Google realizado com sucesso")
       navigate("/")
     } catch (error) {
@@ -103,6 +124,12 @@ export const Login = () => {
         })
         toast.message("Complete seu cadastro para continuar")
         navigate("/register?from=google")
+        return
+      }
+      if (getApiErrorCode(error) === "EMAIL_NOT_VERIFIED") {
+        const payload = parseJwtPayload<{ email?: string }>(googleIdToken)
+        if (payload?.email) rememberUnverifiedEmail(payload.email)
+        toast.error("Confirme seu e-mail antes de entrar")
         return
       }
       toast.error(getApiErrorMessage(error, "Erro ao fazer login com Google"))
