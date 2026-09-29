@@ -2,10 +2,8 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
-import type { CredentialResponse } from "@react-oauth/google"
 
 import { useAuth } from "@/shared/contexts/auth-context"
-import { GoogleLoginButton } from "@/shared/components/auth/google-login-button"
 import { postUsers } from "@/shared/services/user/user.service"
 
 import { Input } from "@/shared/components/ui/input"
@@ -16,12 +14,9 @@ import RootLayout from "@/shared/components/layout/root-layout"
 import { emailPattern, enrollmentPattern, phonePattern } from "@/shared/utils/patterns"
 import { formatPhoneNumber } from "@/shared/utils/format-phone-number"
 import { getApiErrorMessage } from "@/shared/utils/get-api-error-message"
-import { getApiErrorCode } from "@/shared/utils/get-api-error-code"
-import { parseJwtPayload } from "@/shared/utils/parse-jwt"
 import {
   clearGoogleRegisterSession,
   readGoogleRegisterSession,
-  saveGoogleRegisterSession,
 } from "@/shared/utils/google-register-session"
 
 import { ArrowRightIcon } from "lucide-react"
@@ -39,7 +34,7 @@ interface RegisterFormData {
 export const Register = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { isAuthenticated, applyAuthSession, loginWithGoogle } = useAuth()
+  const { isAuthenticated, applyAuthSession } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [googleIdToken, setGoogleIdToken] = useState<string | null>(null)
   const isGoogleRegister = Boolean(googleIdToken)
@@ -130,35 +125,6 @@ export const Register = () => {
       toast.error(getApiErrorMessage(error, "Erro ao criar conta"))
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
-    const token = credentialResponse.credential
-    if (!token) {
-      toast.error("Não foi possível obter o token do Google")
-      return
-    }
-
-    try {
-      await loginWithGoogle(token)
-      toast.success("Login com Google realizado com sucesso")
-      navigate("/")
-    } catch (error) {
-      if (getApiErrorCode(error) === "REGISTRATION_REQUIRED") {
-        const payload = parseJwtPayload<{ email?: string; name?: string }>(token)
-        saveGoogleRegisterSession({
-          googleIdToken: token,
-          email: payload?.email || "",
-          name: payload?.name,
-        })
-        setGoogleIdToken(token)
-        if (payload?.name) setValue("name", payload.name)
-        if (payload?.email) setValue("email", payload.email)
-        toast.message("Complete os dados para finalizar o cadastro com Google")
-        return
-      }
-      toast.error(getApiErrorMessage(error, "Erro ao continuar com Google"))
     }
   }
 
@@ -344,22 +310,6 @@ export const Register = () => {
               {isLoading ? "Criando conta..." : "Criar conta"}
               {!isLoading ? <ArrowRightIcon /> : null}
             </Button>
-
-            {!isGoogleRegister ? (
-              <>
-                <div className="flex items-center gap-3">
-                  <div className="h-px flex-1 bg-border" />
-                  <span className="text-xs tracking-wide text-muted-foreground uppercase">
-                    ou
-                  </span>
-                  <div className="h-px flex-1 bg-border" />
-                </div>
-                <GoogleLoginButton
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => toast.error("Erro ao continuar com Google")}
-                />
-              </>
-            ) : null}
           </form>
           <p className="text-sm text-muted-foreground md:text-base">
             Já tem uma conta?{" "}
